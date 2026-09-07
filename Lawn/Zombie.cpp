@@ -8811,7 +8811,7 @@ void Zombie::DropLoot()
         auto check = 0;
         for (auto wave : waves) {
             // Find out which flag location we need
-            int64_t absoluteWave = mApp->IsSurvivalMode()
+            int64_t absoluteWave = (mApp->IsSurvivalMode() || mApp->IsLastStand())
                 ? static_cast<int64_t>(mBoard->mChallenge->mSurvivalStage) * mBoard->GetNumWavesPerSurvivalStage() + wave
                 : static_cast<int64_t>(wave);
             int64_t location = PVZRAPData::Locations::Wave(mApp->CurrentAPLevelId(), absoluteWave);
@@ -9014,7 +9014,7 @@ void Zombie::DieNoLoot()
             auto check = 0;
             for (auto wave : waves) {
                 // Find out which flag location we need
-                int64_t absoluteWave = mApp->IsSurvivalMode()
+                int64_t absoluteWave = (mApp->IsSurvivalMode() || mApp->IsLastStand())
                     ? static_cast<int64_t>(mBoard->mChallenge->mSurvivalStage) * mBoard->GetNumWavesPerSurvivalStage() + wave
                     : static_cast<int64_t>(wave);
                 int64_t location = PVZRAPData::Locations::Wave(mApp->CurrentAPLevelId(), absoluteWave);
