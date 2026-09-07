@@ -513,7 +513,7 @@ Board::Board(LawnApp* theApp)
 						auto plantType = this->RandomSeed(true, aPlant->mSeedType == SeedType::SEED_LILYPAD || aPlant->mSeedType == SeedType::SEED_TANGLEKELP || aPlant->mSeedType == SeedType::SEED_SEASHROOM || aPlant->mSeedType == SeedType::SEED_CATTAIL);
 						
 						aPlant->RemoveEffects();
-						aPlant->Die();
+						aPlant->Die(false);
 						aPlant->PlantInitialize(aPlant->mPlantCol, aPlant->mRow, plantType, aPlant->mImitaterType);
 					}
 					

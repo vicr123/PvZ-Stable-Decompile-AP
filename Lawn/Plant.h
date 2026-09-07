@@ -217,7 +217,7 @@ public:
     void                    DoSpecial();
     void                    Fire(Zombie* theTargetZombie, int theRow, PlantWeapon thePlantWeapon = PlantWeapon::WEAPON_PRIMARY);
     Zombie*                 FindTargetZombie(int theRow, PlantWeapon thePlantWeapon = PlantWeapon::WEAPON_PRIMARY);
-    void                    Die();
+    void                    Die(bool send_lawn_link = true);
     void                    UpdateProductionPlant();
     void                    UpdateShooter();
     bool                    FindTargetAndFire(int theRow, PlantWeapon thePlantWeapon = PlantWeapon::WEAPON_PRIMARY);

@@ -6534,7 +6534,7 @@ int Plant::DistanceToClosestZombie()
 }
 
 //0x4679B0
-void Plant::Die()
+void Plant::Die(bool send_lawn_link)
 {
     if (IsOnBoard() && !mApp->GetDialog(DIALOG_ALMANAC) && mApp->ChallengeHasScores(mApp->mGameMode) && mApp->IsIZombieLevel()) {
         mBoard->mChallenge->mChallengePoints += GetCost(mApp, mSeedType, mImitaterType);
@@ -6589,18 +6589,21 @@ void Plant::Die()
         }
     }
     
-    // Send LawnLink if required
-    constexpr SeedType suicidal_plants[] = {SeedType::SEED_CHERRYBOMB, SeedType::SEED_GRAVEBUSTER, SeedType::SEED_ICESHROOM, SeedType::SEED_DOOMSHROOM, SeedType::SEED_JALAPENO, SeedType::SEED_BLOVER, SeedType::SEED_INSTANT_COFFEE};
-    
-    if (ranges::find(suicidal_plants, mSeedType) == std::end(suicidal_plants) && !mApp->IsWallnutBowlingLevel() && mApp->mGameScene == GameScenes::SCENE_PLAYING && (mBoard->ChooseSeedsOnCurrentLevel(true) || mBoard->HasConveyorBeltSeedBank()))
+    if (send_lawn_link)
     {
-        mApp->mAP->SendLawnLink({
-            APWrapper::LawnLinkAction::PlantRemoved,
-            this->mRow,
-            this->mPlantCol,
-            this->mSeedType,
-            mBoard->HasConveyorBeltSeedBank()
-        });
+        // Send LawnLink if required
+        constexpr SeedType suicidal_plants[] = {SeedType::SEED_CHERRYBOMB, SeedType::SEED_GRAVEBUSTER, SeedType::SEED_ICESHROOM, SeedType::SEED_DOOMSHROOM, SeedType::SEED_JALAPENO, SeedType::SEED_BLOVER, SeedType::SEED_INSTANT_COFFEE};
+    
+        if (ranges::find(suicidal_plants, mSeedType) == std::end(suicidal_plants) && !mApp->IsWallnutBowlingLevel() && mApp->mGameScene == GameScenes::SCENE_PLAYING && (mBoard->ChooseSeedsOnCurrentLevel(true) || mBoard->HasConveyorBeltSeedBank()))
+        {
+            mApp->mAP->SendLawnLink({
+                APWrapper::LawnLinkAction::PlantRemoved,
+                this->mRow,
+                this->mPlantCol,
+                this->mSeedType,
+                mBoard->HasConveyorBeltSeedBank()
+            });
+        }
     }
 }
 
