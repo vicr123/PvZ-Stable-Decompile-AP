@@ -548,101 +548,30 @@ std::string SEHCatcher::IntelWalk(PCONTEXT theContext, int theSkipCount)
 	return aDebugDump;
 }
 
+#pragma comment(lib, "DbgHelp.lib")
 std::string SEHCatcher::ImageHelpWalk(PCONTEXT theContext, int theSkipCount)
 {
-	char aBuffer[2048];
-	std::string aDebugDump;
-
-	STACKFRAME sf;
-	memset( &sf, 0, sizeof(sf) );	
-
-	// Initialize the STACKFRAME structure for the first call.  This is only
-	// necessary for Intel CPUs, and isn't mentioned in the documentation.
-
-#ifdef _WIN64
-	sf.AddrPC.Offset = theContext->Rip; 
-	sf.AddrPC.Mode = AddrModeFlat;
-	sf.AddrStack.Offset = theContext->Rsp;   
-	sf.AddrStack.Mode = AddrModeFlat;
-	sf.AddrFrame.Offset = theContext->Rbp;  
-	sf.AddrFrame.Mode = AddrModeFlat;
-#else
-	sf.AddrPC.Offset = theContext->Eip;
-	sf.AddrPC.Mode = AddrModeFlat;
-	sf.AddrStack.Offset = theContext->Esp;
-	sf.AddrStack.Mode = AddrModeFlat;
-	sf.AddrFrame.Offset = theContext->Ebp;
-	sf.AddrFrame.Mode = AddrModeFlat;
-#endif
+	// -_-
+#undef max
+	const ushort MAX_USHORT = std::numeric_limits<ushort>::max();
+#define max(a,b)            (((a) > (b)) ? (a) : (b))
 	
-	int aLevelCount = 0;
-
-	for (;;)
+	void* stacks[MAX_USHORT];
+	auto stacks_len = CaptureStackBackTrace(0, MAX_USHORT, stacks, nullptr);
+	auto symbol = reinterpret_cast<SYMBOL_INFO*>(calloc(sizeof(SYMBOL_INFO) + 256 * sizeof(char), 1));
+	symbol->MaxNameLen = 255;
+	symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
+	std::string stringling;
+	
+	auto process = GetCurrentProcess();
+	
+	for (int i = 1; i < stacks_len; i++)
 	{
-#ifdef _WIN64
-		if (!mStackWalk(IMAGE_FILE_MACHINE_AMD64, GetCurrentProcess(), GetCurrentThread(),
-			&sf, NULL /*theContext*/, NULL,
-			(PFUNCTION_TABLE_ACCESS_ROUTINE64)mSymFunctionTableAccess,
-			(PGET_MODULE_BASE_ROUTINE64)mSymGetModuleBase, 0))
-#else
-		if (!mStackWalk(IMAGE_FILE_MACHINE_I386, GetCurrentProcess(), GetCurrentThread(),
-			&sf, NULL  /*theContext*/, NULL, mSymFunctionTableAccess, mSymGetModuleBase, 0))
-#endif
-		{
-			DWORD lastErr = GetLastError();
-			sprintf(aBuffer, "StackWalk failed (error %d)\r\n", lastErr);
-			aDebugDump += aBuffer;
-			break;
-		}
-
-		if ((sf.AddrFrame.Offset == 0) || (sf.AddrPC.Offset == 0))
-			break;
-
-		if (theSkipCount > 0)
-		{
-			theSkipCount--;
-			continue;
-		}
-
-		BYTE symbolBuffer[sizeof(IMAGEHLP_SYMBOL) + 512];
-		PIMAGEHLP_SYMBOL pSymbol = (PIMAGEHLP_SYMBOL)symbolBuffer;
-		pSymbol->SizeOfStruct = sizeof(symbolBuffer);
-		pSymbol->MaxNameLength = 512;
-			
-		DWORD symDisplacement = 0;  // Displacement of the input address,
-									// relative to the start of the symbol
-			
-		if (mSymGetSymFromAddr(GetCurrentProcess(), sf.AddrPC.Offset, &symDisplacement, pSymbol))
-		{
-			char aUDName[256];
-			mUnDecorateSymbolName(pSymbol->Name, aUDName, 256, 
-								 UNDNAME_NO_ALLOCATION_MODEL | UNDNAME_NO_ALLOCATION_LANGUAGE | 
-								 UNDNAME_NO_MS_THISTYPE | UNDNAME_NO_ACCESS_SPECIFIERS | 
-								 UNDNAME_NO_THISTYPE | UNDNAME_NO_MEMBER_TYPE | 
-								 UNDNAME_NO_RETURN_UDT_MODEL | UNDNAME_NO_THROW_SIGNATURES |
-								 UNDNAME_NO_SPECIAL_SYMS);
-				
-			sprintf(aBuffer, "%08X %08X %hs+%X\r\n", 
-					sf.AddrFrame.Offset, sf.AddrPC.Offset, aUDName, symDisplacement);
-		}
-		else // No symbol found.  Print out the logical address instead.
-		{
-			char szModule[MAX_PATH];            
-			DWORD section = 0, offset = 0;
-
-			GetLogicalAddress((PVOID)sf.AddrPC.Offset, szModule, sizeof(szModule), section, offset);				
-			sprintf(aBuffer, "%08X %08X %04X:%08X %s\r\n", sf.AddrFrame.Offset, sf.AddrPC.Offset, section, offset, GetFilename(szModule).c_str());
-		}
-		aDebugDump += aBuffer;
-		
-		sprintf(aBuffer, "Params: %08X %08X %08X %08X\r\n", sf.Params[0], sf.Params[1], sf.Params[2], sf.Params[3]);
-		aDebugDump += aBuffer;		
-		aDebugDump += "\r\n";
-
-		aLevelCount++;
+		SymFromAddr(process, (DWORD64)(stacks[i]), 0, symbol);
+		stringling += std::string(symbol->Name) + "\n";
 	}
-
-	return aDebugDump;
+	
+	return stringling;
 }
 
 bool SEHCatcher::GetLogicalAddress(void* addr, char* szModule, DWORD len, DWORD& section, DWORD& offset)
