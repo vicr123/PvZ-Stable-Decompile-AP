@@ -580,6 +580,7 @@ void Challenge::StartLevel()
 	}
 	if (aGameMode == GAMEMODE_CHALLENGE_COLUMN)
 	{
+		std::fill_n(std::begin(mBoard->mFlagAwardSkipped), 9, true);
 		mBoard->mCurrentWave = 9;
 		mBoard->mZombieCountDown = 2400;
 	}
