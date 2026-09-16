@@ -12,6 +12,23 @@ public:
         return "1.10";
     }
     
+    std::optional<std::vector<SeedType>> banned_plants_for_level(int level) override
+    {
+        auto root_map = slot_data["plant_banlist"];
+        if (root_map.is_null())
+        {
+            return {};
+        }
+        
+        auto level_data = root_map[std::to_string(level)];
+        if (level_data.is_null())
+        {
+            return {};
+        }
+
+        return level_data.get<std::vector<SeedType>>();
+    }
+    
     std::optional<std::map<SeedType, int>> vasebreaker_seeds_for_level(int level, int wave) override
     {
         return extract_vasebreaker_data<SeedType>("vasebreaker_plants_map",level,wave);

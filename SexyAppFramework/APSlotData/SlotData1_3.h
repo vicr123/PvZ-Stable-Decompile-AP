@@ -126,6 +126,12 @@ public:
         return {};
     }
     
+    std::optional<std::vector<SeedType>> banned_plants_for_level(int level) override
+    {
+        // Not supported in 1.3
+        return {};
+    }
+    
     bool lock_conveyor() override
     {
         // Not supported in 1.3

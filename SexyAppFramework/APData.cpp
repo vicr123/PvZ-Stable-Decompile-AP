@@ -95,6 +95,11 @@ public:
         return {};
     }
     
+    std::optional<std::vector<SeedType>> banned_plants_for_level(int level) override
+    {
+        return {};
+    }
+    
     bool lock_conveyor() override
     {
         return {};
@@ -318,6 +323,11 @@ std::optional<std::vector<SeedType>> PVZRAPData::SlotData::conveyor_order_for_le
 std::optional<std::map<ZombieType, int>> PVZRAPData::SlotData::zombie_weights_for_level(int level) const
 {
     return inner->zombie_weights_for_level(level);
+}
+
+std::optional<std::vector<SeedType>> PVZRAPData::SlotData::banned_plants_for_level(int level) const
+{
+    return inner->banned_plants_for_level(level);
 }
 
 std::optional<std::map<SeedType, int>> PVZRAPData::SlotData::vasebreaker_seeds_for_level(int level, int wave) const

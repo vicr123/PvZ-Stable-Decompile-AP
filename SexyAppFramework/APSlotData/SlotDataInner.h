@@ -28,6 +28,7 @@ public:
     virtual std::optional<std::map<SeedType, int>> conveyor_seeds_for_level(int level) = 0;
     virtual std::optional<std::vector<SeedType>> conveyor_order_for_level(int level) = 0;
     virtual std::optional<std::map<ZombieType, int>> zombie_weights_for_level(int level) = 0;
+    virtual std::optional<std::vector<SeedType>> banned_plants_for_level(int level) = 0;
     
     virtual std::optional<std::map<SeedType, int>> vasebreaker_seeds_for_level(int level, int wave) = 0;
     virtual std::optional<std::map<ZombieType, int>> vasebreaker_zombies_for_level(int level, int wave) = 0;

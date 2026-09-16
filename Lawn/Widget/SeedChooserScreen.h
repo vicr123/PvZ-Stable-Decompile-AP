@@ -98,6 +98,7 @@ public:
     /*inline*/ unsigned int SeedNotRecommendedToPick(SeedType theSeedType);
     /*inline*/ bool         SeedNotAllowedToPick(SeedType theSeedType);
     /*inline*/ bool         SeedNotAllowedDuringTrial(SeedType theSeedType);
+    bool                    SeedNotAllowedByAp(SeedType theSeedType);
     virtual void            Draw(Graphics* g);
     void                    UpdateViewLawn();
     void                    LandFlyingSeed(ChosenSeed& theChosenSeed);

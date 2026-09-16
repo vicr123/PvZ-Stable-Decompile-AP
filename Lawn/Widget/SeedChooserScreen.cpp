@@ -387,14 +387,28 @@ unsigned int SeedChooserScreen::SeedNotRecommendedToPick(SeedType theSeedType)
 //0x484620
 bool SeedChooserScreen::SeedNotAllowedToPick(SeedType theSeedType)
 {
-	return mApp->IsLastStand() && (theSeedType == SEED_SUNFLOWER || theSeedType == SEED_SUNSHROOM ||
-		theSeedType == SEED_TWINSUNFLOWER || theSeedType == SEED_SEASHROOM || theSeedType == SEED_PUFFSHROOM);
+	return (mApp->IsLastStand() && (theSeedType == SEED_SUNFLOWER || theSeedType == SEED_SUNSHROOM ||
+		theSeedType == SEED_TWINSUNFLOWER || theSeedType == SEED_SEASHROOM || theSeedType == SEED_PUFFSHROOM)) || this->SeedNotAllowedByAp(theSeedType);
 }
 
 //0x484640
 bool SeedChooserScreen::SeedNotAllowedDuringTrial(SeedType theSeedType)
 {
 	return mApp->IsTrialStageLocked() && (theSeedType == SEED_SQUASH || theSeedType == SEED_THREEPEATER);
+}
+
+bool SeedChooserScreen::SeedNotAllowedByAp(SeedType theSeedType)
+{
+	auto banned_plants = mApp->mSlotData->banned_plants_for_level(mApp->CurrentAPLevelId());
+	if (banned_plants.has_value())
+	{
+		if (std::find(banned_plants.value().begin(), banned_plants.value().end(), theSeedType) != banned_plants.value().end())
+		{
+			return true;
+		}
+	}
+	
+	return false;
 }
 
 //0x484690
@@ -1067,7 +1081,11 @@ void SeedChooserScreen::ShowToolTip()
 				RemoveToolTip();
 				ChosenSeed& aChosenSeed = mChosenSeeds[aSeedType];
 				uint aRecFlags = SeedNotRecommendedToPick(aSeedType);
-				if (SeedNotAllowedToPick(aSeedType))
+				if (SeedNotAllowedByAp(aSeedType))
+				{
+					mToolTip->SetWarningText("Banned on this level by Archipelago");
+				}
+				else if (SeedNotAllowedToPick(aSeedType))
 				{
 					mToolTip->SetWarningText(_S("[NOT_ALLOWED_ON_THIS_LEVEL]"));
 				}
