@@ -116,12 +116,20 @@ void ArchipelagoStatusDialog::Draw(Graphics* g)
 	TodDrawString(g, "Archipelago Slot Name", mContentInsets.mLeft + 12, mSlotEditWidget->Top() - 15, FONT_DWARVENTODCRAFT15, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
 	TodDrawString(g, "Archipelago Password (optional)", mContentInsets.mLeft + 12, mPasswordEditWidget->Top() - 15, FONT_DWARVENTODCRAFT15, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
 	
-	if (!mHostEditWidget->mVisible)
+	if (mHostEditWidget->mVisible)
+	{
+		if (mHostEditWidget->mString.empty())
+		{
+			Sexy::Color aTextColor(150, 150, 150);
+			TodDrawString(g, "archipelago.gg:12345", mContentInsets.mLeft + 16, mHostEditWidget->Top() + 18, FONT_PICO129, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
+		}
+	}
+	else
 	{
 		Sexy::Color aTextColor(255, 255, 255);
-		TodDrawString(g, mApp->mAP->ServerName(), mContentInsets.mLeft + 12, mHostEditWidget->Top() + 17, FONT_PICO129, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
-		TodDrawString(g, mApp->mAP->SlotName(), mContentInsets.mLeft + 12, mSlotEditWidget->Top() + 17, FONT_PICO129, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
-		TodDrawString(g, mApp->mAP->Password(), mContentInsets.mLeft + 12, mPasswordEditWidget->Top() + 17, FONT_PICO129, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
+		TodDrawString(g, mApp->mAP->ServerName(), mContentInsets.mLeft + 16, mHostEditWidget->Top() + 18, FONT_PICO129, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
+		TodDrawString(g, mApp->mAP->SlotName(), mContentInsets.mLeft + 16, mHostEditWidget->Top() + 18, FONT_PICO129, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
+		TodDrawString(g, mApp->mAP->Password(), mContentInsets.mLeft + 16, mHostEditWidget->Top() + 18, FONT_PICO129, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
 	}
 }
 
