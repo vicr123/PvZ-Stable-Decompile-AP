@@ -2,11 +2,7 @@
 
 #include <nlohmann/json.hpp>
 
-#include "APSlotData/SlotData1_3.h"
-#include "APSlotData/SlotData1_7.h"
-#include "APSlotData/SlotData1_8.h"
-#include "APSlotData/SlotData1_9.h"
-
+#include "APSlotData/SlotData1_10.h"
 
 class SlotDataInvalid : public PVZRAPData::SlotData::SlotDataInner
 {
@@ -183,6 +179,16 @@ public:
     {
         return {};
     }
+    
+    std::optional<std::map<SeedType, int>> vasebreaker_seeds_for_level(int level, int wave) override
+    {
+        return {};
+    }
+    
+    std::optional<std::map<ZombieType, int>> vasebreaker_zombies_for_level(int level, int wave) override
+    {
+        return {};
+    }
 };
 
 
@@ -219,6 +225,11 @@ PVZRAPData::SlotData PVZRAPData::SlotData::get_slot_data(const nlohmann::json& s
     if (gen_version_string == "1.9")
     {
         return SlotData(std::make_shared<SlotData1_9>(slot_data));
+    }
+    
+    if (gen_version_string == "1.10")
+    {
+        return SlotData(std::make_shared<SlotData1_10>(slot_data));
     }
 
     return SlotData(std::make_shared<SlotDataInvalid>(gen_version_string));
@@ -307,6 +318,16 @@ std::optional<std::vector<SeedType>> PVZRAPData::SlotData::conveyor_order_for_le
 std::optional<std::map<ZombieType, int>> PVZRAPData::SlotData::zombie_weights_for_level(int level) const
 {
     return inner->zombie_weights_for_level(level);
+}
+
+std::optional<std::map<SeedType, int>> PVZRAPData::SlotData::vasebreaker_seeds_for_level(int level, int wave) const
+{
+    return inner->vasebreaker_seeds_for_level(level, wave);
+}
+
+std::optional<std::map<ZombieType, int>> PVZRAPData::SlotData::vasebreaker_zombies_for_level(int level, int wave) const
+{
+    return inner->vasebreaker_zombies_for_level(level, wave);
 }
 
 bool PVZRAPData::SlotData::lock_conveyor() const

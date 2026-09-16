@@ -1357,6 +1357,7 @@ EXIT /B 0</Command>
     <ClInclude Include="..\Sexy.TodLib\TodStringFile.h" />
     <ClInclude Include="..\Sexy.TodLib\Trail.h" />
     <ClInclude Include="APData.h" />
+    <ClInclude Include="APSlotData\SlotData1_10.h" />
     <ClInclude Include="APSlotData\SlotData1_3.h" />
     <ClInclude Include="APSlotData\SlotData1_4.h" />
     <ClInclude Include="APSlotData\SlotData1_5.h" />

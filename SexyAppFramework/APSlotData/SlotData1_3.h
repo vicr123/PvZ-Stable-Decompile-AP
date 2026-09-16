@@ -264,6 +264,18 @@ public:
         // Not supported in 1.3
         return {};
     }
+    
+    std::optional<std::map<SeedType, int>> vasebreaker_seeds_for_level(int level, int wave) override
+    {
+        // Not supported in 1.3
+        return {};
+    }
+    
+    std::optional<std::map<ZombieType, int>> vasebreaker_zombies_for_level(int level, int wave) override
+    {
+        // Not supported in 1.3
+        return {};
+    }
 
 private:
     static PVZRAPData::SlotData::AdventureModeProgression parse_adventure_mode_progression(int adventure_mode_progression)

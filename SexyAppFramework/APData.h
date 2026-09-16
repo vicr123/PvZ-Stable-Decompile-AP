@@ -185,6 +185,11 @@ namespace PVZRAPData
         constexpr int64_t TRAP_ZOMBIE_HYPNOSIS = 79;
         constexpr int64_t TRAP_CRATER = 80;
         constexpr int64_t SUN_BURST = 81;
+        constexpr int64_t TRAP_INVISIGHOUL = 98;
+        constexpr int64_t TRAP_SEED_BANK_RANDOMISER = 99;
+        
+        constexpr int64_t TRAP_PARANOIA = 2001;
+        constexpr int64_t TRAP_LADDER = 2002;
         
         inline SeedType SeedItem(int64_t item)
         {
@@ -349,6 +354,9 @@ namespace PVZRAPData
         std::optional<std::map<SeedType, int>> conveyor_seeds_for_level(int level) const;
         std::optional<std::vector<SeedType>> conveyor_order_for_level(int level) const;
         std::optional<std::map<ZombieType, int>> zombie_weights_for_level(int level) const;
+    
+        std::optional<std::map<SeedType, int>> vasebreaker_seeds_for_level(int level, int wave) const;
+        std::optional<std::map<ZombieType, int>> vasebreaker_zombies_for_level(int level, int wave) const;
         
         bool lock_conveyor() const;
         bool lock_vasebreaker() const;
