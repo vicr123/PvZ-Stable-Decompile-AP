@@ -285,6 +285,7 @@ public:
 	int								mQECounter;
 #endif
 	bool							mIsReplay;
+	int                             mJackboxAPCounter;
 	//std::vector<std::pair<int, Rect>>	mLightSourceV; // int -> duration, Rect -> lightRect
 	
 

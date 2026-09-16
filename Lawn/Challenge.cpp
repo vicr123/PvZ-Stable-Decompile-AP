@@ -1335,7 +1335,7 @@ void Challenge::AdvanceCrazyDaveDialog()
 	{
 		ScaryPotterPopulate();
 		mApp->PlayFoley(FOLEY_PLANT);
-		mBoard->PlaceRake();
+		// mBoard->PlaceRake();
 	}
 }
 

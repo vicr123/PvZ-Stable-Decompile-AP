@@ -5643,7 +5643,7 @@ void LawnApp::ProcessAPItem(const APItem& item)
 				
 		mPlayerInfo->mLastItemIndex = item.index;
 		
-		if (!is_start_item)
+		if (!is_start_item && item.item != PVZRAPData::Items::TRAP_PARANOIA)
 		{
 			DisplayAPUpdate(items_string);
 		}

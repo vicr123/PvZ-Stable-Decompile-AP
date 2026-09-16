@@ -649,7 +649,7 @@ void CutScene::PlaceLawnItems()
 
 	if (!IsSurvivalRepick())
 	{
-		mBoard->PlaceRake();
+		// mBoard->PlaceRake();
 	}
 
 #ifdef _DS_MINIGAMES

@@ -80,6 +80,7 @@ Board::Board(LawnApp* theApp)
 	mSpecialGraveStoneY = -1;
 	memset(mBushesID, 0, sizeof(mBushesID));
 	mPoleX = mTreeX = WIDE_BOARD_WIDTH + WIDESCREEN_OFFSETX + 70;
+	mJackboxAPCounter = 0;
 	for (int i = 0; i < MAX_GRID_SIZE_X; i++)
 	{
 		for (int j = 0; j < MAX_GRID_SIZE_Y; j++)
@@ -537,6 +538,75 @@ Board::Board(LawnApp* theApp)
 						aZombie->StartMindControlled();
 					}
 					break;
+				}
+			case PVZRAPData::Items::RAKE:
+				{
+					this->PlaceRake();
+					break;
+				}
+			case PVZRAPData::Items::TRAP_INVISIGHOUL:
+				{
+					Zombie* aZombie = nullptr;
+					while (IterateZombies(aZombie))
+					{
+						if (aZombie->mZombieType == ZombieType::ZOMBIE_BOSS)
+						{
+							continue;
+						}\
+						aZombie->mVisible = false;
+					}
+					mApp->PlaySample(SOUND_MINDCONTROLLED);
+					break;
+				}
+			case PVZRAPData::Items::TRAP_SEED_BANK_RANDOMISER:
+				{
+					if (!ChooseSeedsOnCurrentLevel(true))
+					{
+						break;
+					}
+					
+					std::set<SeedType> chosen_packets;
+					for (auto i = 0; i < this->mSeedBank->mNumPackets; i++)
+					{
+						auto seed_packet = this->mSeedBank->mSeedPackets + i;
+						if (seed_packet->mPacketType != SeedType::SEED_NONE)
+						{
+							do
+							{
+								seed_packet->mPacketType = this->RandomSeed(true, false);
+							} while (chosen_packets.contains(seed_packet->mPacketType));
+							chosen_packets.insert(seed_packet->mPacketType);
+							
+							seed_packet->mRefreshCounter = 0;
+							seed_packet->mRefreshTime = Plant::GetRefreshTime(mApp, seed_packet->mPacketType, seed_packet->mImitaterType);
+							seed_packet->mRefreshing = true;
+							seed_packet->mActive = false;
+						}
+					}
+					break;
+				}
+			case PVZRAPData::Items::TRAP_PARANOIA:
+				{
+					mApp->mSoundSystem->PlayFoley(FOLEY_JACKINTHEBOX);
+					mJackboxAPCounter = RandRangeInt(120 * 7, 120 * 20);
+					break;
+				}
+			case PVZRAPData::Items::TRAP_LADDER:
+				{
+					if (mApp->IsIZombieLevel())
+					{
+						break;
+					}
+					
+					Plant* aPlant = nullptr;
+					while (IteratePlants(aPlant))
+					{
+						if (!this->GetGridItemAt(GridItemType::GRIDITEM_LADDER, aPlant->mPlantCol, aPlant->mRow))
+						{
+							this->AddALadder(aPlant->mPlantCol, aPlant->mRow);
+						}
+					}
+					mApp->PlaySample(SOUND_LADDER_ZOMBIE);
 				}
 			}
 		}
@@ -2412,8 +2482,8 @@ Reanimation* Board::CreateRakeReanim(float theRakeX, float theRakeY, int theRend
 //0x40B9C0
 void Board::PlaceRake()
 {
-	if (!mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_RAKE])
-		return;
+	// if (!mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_RAKE])
+	// 	return;
 
 	int aGridX = 7;
 	if (mApp->IsScaryPotterLevel())
@@ -2449,7 +2519,7 @@ void Board::PlaceRake()
 		return;
 
 	int aGridY = TodPickFromWeightedArray(aPickArray, aPickCount);
-	mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_RAKE]--;
+	// mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_RAKE]--;
 	GridItem* aRake = mGridItems.DataArrayAlloc();
 	aRake->mGridItemType = GridItemType::GRIDITEM_RAKE;
 	aRake->mGridX = aGridX;
@@ -7506,6 +7576,14 @@ void Board::Update()
 		else
 		{
 			i++;
+		}
+	}
+	
+	if (mJackboxAPCounter > 0)
+	{
+		if (--mJackboxAPCounter == 0)
+		{
+			mApp->mSoundSystem->StopFoley(FOLEY_JACKINTHEBOX);
 		}
 	}
 }
