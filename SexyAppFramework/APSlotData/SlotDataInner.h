@@ -45,11 +45,13 @@ public:
     virtual bool progressive_sun_capacity_items() = 0;
     virtual bool individual_tile_unlock_items() = 0;
     virtual bool is_eligible_for_individual_tile_unlock_items(int level) = 0;
+    virtual bool is_eligible_for_harder_zombie_spawns(int level) = 0;
     
     virtual bool energylink_enabled() = 0;
     virtual bool ringlink_enabled() = 0;
     virtual bool lawnlink_enabled() = 0;
     virtual bool seedlink_enabled() = 0;
+    virtual bool harder_zombie_spawns() = 0;
     
     virtual std::optional<LawnlinkChance> lawnlink_chances() = 0;
     

@@ -150,6 +150,11 @@ public:
         return {};
     }
     
+    bool harder_zombie_spawns() override
+    {
+        return {};
+    }
+    
     std::optional<PVZRAPData::SlotData::LawnlinkChance> lawnlink_chances() override
     {
         return {};
@@ -166,6 +171,11 @@ public:
     }
     
     bool is_eligible_for_individual_tile_unlock_items(int level) override
+    {
+        return {};
+    }
+    
+    bool is_eligible_for_harder_zombie_spawns(int level) override
     {
         return {};
     }
@@ -390,6 +400,11 @@ bool PVZRAPData::SlotData::is_eligible_for_individual_tile_unlock_items(int leve
     return inner->is_eligible_for_individual_tile_unlock_items(level);
 }
 
+bool PVZRAPData::SlotData::is_eligible_for_harder_zombie_spawns(int level) const
+{
+    return inner->is_eligible_for_harder_zombie_spawns(level);
+}
+
 bool PVZRAPData::SlotData::energylink_enabled() const
 {
     return inner->energylink_enabled();
@@ -408,6 +423,11 @@ bool PVZRAPData::SlotData::lawnlink_enabled() const
 bool PVZRAPData::SlotData::seedlink_enabled() const
 {
     return inner->seedlink_enabled();
+}
+
+bool PVZRAPData::SlotData::harder_zombie_spawns() const
+{
+    return inner->harder_zombie_spawns();
 }
 
 std::optional<PVZRAPData::SlotData::LawnlinkChance> PVZRAPData::SlotData::lawnlink_chances() const

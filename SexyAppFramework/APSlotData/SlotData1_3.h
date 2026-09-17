@@ -189,6 +189,12 @@ public:
         return false;
     }
     
+    bool harder_zombie_spawns() override
+    {
+        // Not supported in 1.3
+        return false;
+    }
+    
     std::optional<PVZRAPData::SlotData::LawnlinkChance> lawnlink_chances() override
     {
         // Not supported in 1.3
@@ -208,6 +214,12 @@ public:
     }
     
     bool is_eligible_for_individual_tile_unlock_items(int level) override
+    {
+        // Not supported in 1.3
+        return false;
+    }
+    
+    bool is_eligible_for_harder_zombie_spawns(int level) override
     {
         // Not supported in 1.3
         return false;

@@ -1367,6 +1367,11 @@ void Board::PickZombieWaves()
 		}
 #endif
 		
+		if (mApp->mSlotData->harder_zombie_spawns() && mApp->mSlotData->is_eligible_for_harder_zombie_spawns(mApp->CurrentAPLevelId()))
+		{
+			aZombiePoints *= 1.5;
+		}
+		
 		// ------------------------------------------------------------------------------------------------
 		// △ 向出怪列表中加入固定刷出的僵尸
 		// ------------------------------------------------------------------------------------------------
@@ -2094,6 +2099,11 @@ void Board::InitZombieWaves()
 	mLevelAwardSpawned = false;
 	mZombieCountDownStart = mZombieCountDown;
 	mZombieHealthToNextWave = -1;
+	
+	if (mApp->mSlotData->harder_zombie_spawns() && mApp->mSlotData->is_eligible_for_harder_zombie_spawns(mApp->CurrentAPLevelId()))
+	{
+		mZombieCountDown = mZombieCountDown * 0.3;
+	}
 }
 
 //0x40ACB0
@@ -3537,6 +3547,10 @@ ZombieType Board::PickZombieType(int theZombiePoints, int theWaveIndex, ZombiePi
 		//else if (aGameMode != GameMode::GAMEMODE_CHALLENGE_POGO_PARTY && aGameMode != GameMode::GAMEMODE_CHALLENGE_BOBSLED_BONANZA && aGameMode != GameMode::GAMEMODE_CHALLENGE_AIR_RAID)
 		{
 			int aFirstAllowedWave = aZombieDef.mFirstAllowedWave;
+			if (mApp->mSlotData->harder_zombie_spawns() && mApp->mSlotData->is_eligible_for_harder_zombie_spawns(mApp->CurrentAPLevelId()))
+			{
+				aFirstAllowedWave = 1;
+			}
 			// 无尽模式中，僵尸最早可出现的波数逐渐前移
 			if (mApp->IsSurvivalEndless(aGameMode) || mApp->IsLastStand())
 			{

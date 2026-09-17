@@ -12,6 +12,21 @@ public:
         return "1.10";
     }
     
+    bool harder_zombie_spawns() override
+    {
+        return slot_data["harder_zombie_spawns"].get<int>();
+    }
+    
+    bool is_eligible_for_harder_zombie_spawns(int level) override
+    {
+        const int ineligible_levels[] = {45, 54, 61, 62, 63, 66, 69, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 104};
+        if (std::ranges::find(ineligible_levels, level) != std::ranges::end(ineligible_levels))
+        {
+            return false;
+        }
+        return true;
+    }
+    
     std::optional<std::vector<SeedType>> banned_plants_for_level(int level) override
     {
         auto root_map = slot_data["plant_banlist"];

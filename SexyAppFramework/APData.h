@@ -371,11 +371,13 @@ namespace PVZRAPData
         bool progressive_sun_capacity_items() const;
         bool individual_tile_unlock_items() const;
         bool is_eligible_for_individual_tile_unlock_items(int level) const;
+        bool is_eligible_for_harder_zombie_spawns(int level) const;
         
         bool energylink_enabled() const;
         bool ringlink_enabled() const;
         bool lawnlink_enabled() const;
         bool seedlink_enabled() const;
+        bool harder_zombie_spawns() const;
         
         std::optional<LawnlinkChance> lawnlink_chances() const;
         
