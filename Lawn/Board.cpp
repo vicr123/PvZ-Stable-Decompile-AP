@@ -2615,9 +2615,20 @@ bool Board::ChooseSeedsOnCurrentLevel(bool ignore_seed_count_check)
 	
 	auto banned_plants = mApp->mSlotData->banned_plants_for_level(mApp->CurrentAPLevelId()).value_or({});
 	auto numSeedsAvailable = 0;
+	bool have_banned_plant = false;
 	for (auto i = SEED_PEASHOOTER; i <= SEED_IMITATER; i = (SeedType)(i + 1))
 	{
-		if (mApp->mAP->ReceivedItemCount(PVZRAPData::Items::Seed(i)) != 0 && ranges::find(banned_plants, i) == banned_plants.end()) numSeedsAvailable++;
+		if (mApp->mAP->ReceivedItemCount(PVZRAPData::Items::Seed(i)) != 0)
+		{
+			if (ranges::find(banned_plants, i) == banned_plants.end())
+			{
+				numSeedsAvailable++;
+			}
+			else
+			{
+				have_banned_plant = true;
+			}
+		}
 	}
 	
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_SEEING_STARS && mApp->mAP->ReceivedItemCount(PVZRAPData::Items::Seed(SEED_STARFRUIT)) == 0)
@@ -2625,7 +2636,7 @@ bool Board::ChooseSeedsOnCurrentLevel(bool ignore_seed_count_check)
 		numSeedsAvailable++;
 	}
 	
-	return numSeedsAvailable != GetNumSeedsInBank() || mApp->mAP->ReceivedItemCount(PVZRAPData::Items::Seed(SEED_IMITATER)) > 0;
+	return numSeedsAvailable != GetNumSeedsInBank() || mApp->mAP->ReceivedItemCount(PVZRAPData::Items::Seed(SEED_IMITATER)) > 0 || have_banned_plant;
 }
 
 //0x40BE00
@@ -11737,8 +11748,15 @@ int Board::GetNumSeedsInBank()
 		// Force the starfruit to be available
 		extra_seeds++;
 	}
+	
+	auto banned_plants = mApp->mSlotData->banned_plants_for_level(mApp->CurrentAPLevelId()).value_or({});
+	int availableSeeds = 0;
+	for (auto seed = SeedType::SEED_PEASHOOTER; seed <= SEED_IMITATER; seed = (SeedType)(seed + 1))
+	{
+		availableSeeds += mApp->mAP->ReceivedItemCount(PVZRAPData::Items::Seed(seed)) > 0 && ranges::find(banned_plants, seed) == banned_plants.end() ? 1 : 0;
+	}
 
-	int aSeedsAvailable = mApp->GetSeedsAvailable() + extra_seeds;
+	int aSeedsAvailable = availableSeeds + extra_seeds;
 	return min(aNumSeeds, aSeedsAvailable);
 }
 
