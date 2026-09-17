@@ -2613,10 +2613,11 @@ bool Board::ChooseSeedsOnCurrentLevel(bool ignore_seed_count_check)
 		return true;
 	}
 	
+	auto banned_plants = mApp->mSlotData->banned_plants_for_level(mApp->CurrentAPLevelId()).value_or({});
 	auto numSeedsAvailable = 0;
 	for (auto i = SEED_PEASHOOTER; i <= SEED_IMITATER; i = (SeedType)(i + 1))
 	{
-		if (mApp->mAP->ReceivedItemCount(PVZRAPData::Items::Seed(i)) != 0) numSeedsAvailable++;
+		if (mApp->mAP->ReceivedItemCount(PVZRAPData::Items::Seed(i)) != 0 && ranges::find(banned_plants, i) == banned_plants.end()) numSeedsAvailable++;
 	}
 	
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_SEEING_STARS && mApp->mAP->ReceivedItemCount(PVZRAPData::Items::Seed(SEED_STARFRUIT)) == 0)
@@ -2624,7 +2625,7 @@ bool Board::ChooseSeedsOnCurrentLevel(bool ignore_seed_count_check)
 		numSeedsAvailable++;
 	}
 	
-	return numSeedsAvailable > GetNumSeedsInBank() || mApp->mAP->ReceivedItemCount(PVZRAPData::Items::Seed(SEED_IMITATER)) > 0;
+	return numSeedsAvailable != GetNumSeedsInBank() || mApp->mAP->ReceivedItemCount(PVZRAPData::Items::Seed(SEED_IMITATER)) > 0;
 }
 
 //0x40BE00
