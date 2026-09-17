@@ -67,6 +67,7 @@
 
 #include "Lawn/MessageWidget.h"
 #include "Lawn/Widget/ArchipelagoConnectingDialog.h"
+#include "Lawn/Widget/ArchipelagoReconfigDialog.h"
 #include "Lawn/Widget/ArchipelagoStatusDialog.h"
 #include "Lawn/Widget/ArchipelagoTextClient.h"
 #include "SexyAppFramework/APData.h"
@@ -1729,6 +1730,18 @@ void LawnApp::DoArchipelagoStatusDialog()
 	ArchipelagoStatusDialog* aDialog = new ArchipelagoStatusDialog(this);
 	CenterDialog(aDialog, aDialog->mWidth, aDialog->mHeight);
 	AddDialog(Dialogs::DIALOG_ARCHIPELAGO_STATUS, aDialog);
+}
+
+void LawnApp::DoArchipelagoOptionsDialog()
+{
+	this->EnsureArchipelagoConnected([this]
+	{
+		KillDialog(Dialogs::DIALOG_APOPTIONS);
+
+		auto* aDialog = new ArchipelagoReconfigDialog(this);
+		CenterDialog(aDialog, aDialog->mWidth, aDialog->mHeight);
+		AddDialog(Dialogs::DIALOG_APOPTIONS, aDialog);
+	});
 }
 
 //0x450E20

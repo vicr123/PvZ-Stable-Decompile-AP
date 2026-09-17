@@ -217,7 +217,8 @@ public:
 	void							DoCheatDialog();
 	void							FinishCheatDialog(bool isYes);
 	void							FinishCreateUserDialog(bool isYes);
-	void DoArchipelagoStatusDialog();
+	void							DoArchipelagoStatusDialog();
+	void							DoArchipelagoOptionsDialog();
 	void							DoConfirmDeleteUserDialog(const SexyString& theName);
 	void							FinishConfirmDeleteUserDialog(bool isYes);
 	void							DoRenameUserDialog(const SexyString& theName);

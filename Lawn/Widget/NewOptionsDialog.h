@@ -30,7 +30,9 @@ protected:
 		NewOptionsDialog_VideoGraphics,
 		NewOptionsDialog_SoundSystem,
 		NewOptionsDialog_Language,
-		NewOptionsDialog_PauseOnLostFocus
+		NewOptionsDialog_PauseOnLostFocus,
+		NewOptionsDialog_Options2,
+		NewOptionsDialog_ApOptions,
 	};
 
 public:
@@ -39,7 +41,7 @@ public:
 	Sexy::Slider*			mSfxVolumeSlider;					//+0x160
 	Sexy::Checkbox*			mFullscreenCheckbox;				//+0x164
 	Sexy::Checkbox*			mHardwareAccelerationCheckbox;		//+0x168
-	Sexy::Checkbox*			mPauseOnLostFocusCheckbox;	;		//+0x168
+	Sexy::Checkbox*			mPauseOnLostFocusCheckbox;	 		//+0x168
 	LawnStoneButton*		mAlmanacButton;						//+0x16C
 	LawnStoneButton*		mBackToMainButton;					//+0x170
 	LawnStoneButton*		mRestartButton;						//+0x174
@@ -47,6 +49,8 @@ public:
 	LawnStoneButton*		mGameplayButton;
 	LawnStoneButton*		mControllerButton;
 	LawnStoneButton*		mLanguageButton;
+	LawnStoneButton*		mOptions2Button;						//+0x174
+	LawnStoneButton*		mApOptionsButton;						//+0x174
 	bool					mFromGameSelector;					//+0x17C
 
 public:

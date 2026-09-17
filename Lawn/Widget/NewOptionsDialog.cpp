@@ -7,6 +7,8 @@
 #include "../System/Music.h"
 #include "../../Resources.h"
 #include "NewOptionsDialog.h"
+
+#include "NewNewOptionsDialog.h"
 #include "../../ConstEnums.h"
 #include "../../Sexy.TodLib/TodFoley.h"
 #include "../../SexyAppFramework/Slider.h"
@@ -16,8 +18,8 @@
 using namespace Sexy;
 
 //0x45C050
-NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector) : 
-	Dialog(nullptr, nullptr, Dialogs::DIALOG_NEWOPTIONS, true, _S("[OPTIONS]"), _S(""), _S(""), Dialog::BUTTONS_NONE)
+NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector) :
+    Dialog(nullptr, nullptr, Dialogs::DIALOG_NEWOPTIONS, true, _S("[OPTIONS]"), _S(""), _S(""), Dialog::BUTTONS_NONE)
 {
     mApp = theApp;
     mFromGameSelector = theFromGameSelector;
@@ -25,18 +27,20 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector) :
     mAlmanacButton = MakeButton(NewOptionsDialog::NewOptionsDialog_Almanac, this, _S("[VIEW_ALMANAC_BUTTON]"));
     mRestartButton = MakeButton(NewOptionsDialog::NewOptionsDialog_Restart, this, _S("[RESTART_LEVEL_BUTTON]"));
     mBackToMainButton = MakeButton(NewOptionsDialog::NewOptionsDialog_MainMenu, this, _S("[MAIN_MENU_BUTTON]"));
+    mOptions2Button = MakeButton(NewOptionsDialog::NewOptionsDialog_Options2, this, _S("Game Options"));
+    mApOptionsButton = MakeButton(NewOptionsDialog::NewOptionsDialog_ApOptions, this, _S("AP Reconfig"));
 
-   /* mGameplayButton = MakeButton(NewOptionsDialog::NewOptionsDialog_VideoGraphics, this, _S("[GAMEPLAY_SETTINGS_BUTTON]"));
-    mControllerButton = MakeButton(NewOptionsDialog::NewOptionsDialog_SoundSystem, this, _S("[CONTROLLER_BUTTON]"));
-    mLanguageButton = MakeButton(NewOptionsDialog::NewOptionsDialog_Language, this, _S("[LANGUAGE_BUTTON]"));*/
+    /* mGameplayButton = MakeButton(NewOptionsDialog::NewOptionsDialog_VideoGraphics, this, _S("[GAMEPLAY_SETTINGS_BUTTON]"));
+     mControllerButton = MakeButton(NewOptionsDialog::NewOptionsDialog_SoundSystem, this, _S("[CONTROLLER_BUTTON]"));
+     mLanguageButton = MakeButton(NewOptionsDialog::NewOptionsDialog_Language, this, _S("[LANGUAGE_BUTTON]"));*/
 
     mBackToGameButton = MakeNewButton(
-        Dialog::ID_OK, 
-        this, 
-        _S("[BACK_TO_GAME]"), 
-        nullptr, 
-        IMAGE_OPTIONS_BACKTOGAMEBUTTON0, 
-        IMAGE_OPTIONS_BACKTOGAMEBUTTON0, 
+        Dialog::ID_OK,
+        this,
+        _S("[BACK_TO_GAME]"),
+        nullptr,
+        IMAGE_OPTIONS_BACKTOGAMEBUTTON0,
+        IMAGE_OPTIONS_BACKTOGAMEBUTTON0,
         IMAGE_OPTIONS_BACKTOGAMEBUTTON2
     );
     mBackToGameButton->mTranslateX = 0;
@@ -49,21 +53,26 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector) :
     mBackToGameButton->SetColor(ButtonWidget::COLOR_LABEL, Color::White);
     mBackToGameButton->SetColor(ButtonWidget::COLOR_LABEL_HILITE, Color::White);
     mBackToGameButton->mHiliteFont = FONT_DWARVENTODCRAFT36BRIGHTGREENINSET;
-    
-    mMusicVolumeSlider = new Slider(IMAGE_OPTIONS_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, NewOptionsDialog::NewOptionsDialog_MusicVolume, this);
+
+    mMusicVolumeSlider = new Slider(IMAGE_OPTIONS_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2,
+                                    NewOptionsDialog::NewOptionsDialog_MusicVolume, this);
     double aMusicVolume = theApp->GetMusicVolume();
     aMusicVolume = max(0.0, min(1.0, aMusicVolume));
     mMusicVolumeSlider->SetValue(aMusicVolume);
 
-    mSfxVolumeSlider = new Slider(IMAGE_OPTIONS_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2, NewOptionsDialog::NewOptionsDialog_SoundVolume, this);
+    mSfxVolumeSlider = new Slider(IMAGE_OPTIONS_SLIDERSLOT, IMAGE_OPTIONS_SLIDERKNOB2,
+                                  NewOptionsDialog::NewOptionsDialog_SoundVolume, this);
     mSfxVolumeSlider->SetValue(theApp->GetSfxVolume() / 0.65);
 
     mFullscreenCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_Fullscreen, this, !theApp->mIsWindowed);
-    mHardwareAccelerationCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_HardwareAcceleration, this, theApp->mEnableVsync);
-    mPauseOnLostFocusCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_PauseOnLostFocus, this, theApp->mMuteOnLostFocus);
+    mHardwareAccelerationCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_HardwareAcceleration, this,
+                                                    theApp->mEnableVsync);
+    mPauseOnLostFocusCheckbox = MakeNewCheckbox(NewOptionsDialog::NewOptionsDialog_PauseOnLostFocus, this,
+                                                theApp->mMuteOnLostFocus);
 
     if (mFromGameSelector)
     {
+        mOptions2Button->SetVisible(false);
         mRestartButton->SetVisible(false);
         mBackToGameButton->SetLabel(_S("[DIALOG_BUTTON_OK]"));
         if (mApp->HasFinishedAdventure() && !mApp->IsTrialStageLocked())
@@ -75,9 +84,17 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector) :
             mBackToMainButton->SetVisible(false);
         }
     }
+    else
+    {
+        mMusicVolumeSlider->SetVisible(false);
+        mSfxVolumeSlider->SetVisible(false);
+        mHardwareAccelerationCheckbox->SetVisible(false);
+        mFullscreenCheckbox->SetVisible(false);
+        mPauseOnLostFocusCheckbox->SetVisible(false);
+    }
 
-    if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ICE || 
-        mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || 
+    if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ICE ||
+        mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
         mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
     {
         mRestartButton->SetVisible(false);
@@ -86,10 +103,10 @@ NewOptionsDialog::NewOptionsDialog(LawnApp* theApp, bool theFromGameSelector) :
     {
         mRestartButton->SetVisible(false);
     }
-    if (!mApp->CanShowAlmanac() || 
-        mApp->mGameScene == GameScenes::SCENE_LEVEL_INTRO || 
+    if (!mApp->CanShowAlmanac() ||
+        mApp->mGameScene == GameScenes::SCENE_LEVEL_INTRO ||
         mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN ||
-        mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM || 
+        mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM ||
         mFromGameSelector)
     {
         mAlmanacButton->SetVisible(false);
@@ -122,6 +139,8 @@ NewOptionsDialog::~NewOptionsDialog()
     delete mRestartButton;
     delete mBackToMainButton;
     delete mBackToGameButton;
+    delete mOptions2Button;
+    delete mApOptionsButton;
     /*delete mGameplayButton;
     delete mControllerButton;
     delete mLanguageButton;*/
@@ -149,6 +168,8 @@ void NewOptionsDialog::AddedToManager(Sexy::WidgetManager* theWidgetManager)
     AddWidget(mFullscreenCheckbox);
     AddWidget(mPauseOnLostFocusCheckbox);
     AddWidget(mBackToGameButton);
+    AddWidget(mOptions2Button);
+    AddWidget(mApOptionsButton);
 }
 
 //0x45C930
@@ -167,6 +188,8 @@ void NewOptionsDialog::RemovedFromManager(Sexy::WidgetManager* theWidgetManager)
     RemoveWidget(mFullscreenCheckbox);
     RemoveWidget(mPauseOnLostFocusCheckbox);
     RemoveWidget(mBackToGameButton);
+    RemoveWidget(mOptions2Button);
+    RemoveWidget(mApOptionsButton);
 }
 
 //0x45C9D0
@@ -178,6 +201,8 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
     mHardwareAccelerationCheckbox->Resize(283, 175, 46, 45);
     mFullscreenCheckbox->Resize(284, 206, 46, 45);
     mPauseOnLostFocusCheckbox->Resize(284, 237, 46, 45);
+    mOptions2Button->Resize(107, 237, 209, 45);
+    mApOptionsButton->Resize(107, 237, 209, 45);
     mAlmanacButton->Resize(107, 241, 209, 46);
     mRestartButton->Resize(mAlmanacButton->mX, mAlmanacButton->mY + 43, 209, 46);
     mBackToMainButton->Resize(mRestartButton->mX, mRestartButton->mY + 43, 209, 46);
@@ -201,9 +226,20 @@ void NewOptionsDialog::Resize(int theX, int theY, int theWidth, int theHeight)
         mBackToMainButton->Resize(mAlmanacButton->mX, mLanguageButton->mY + 43, 209, 46);*/
     }
 
-    if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM || mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ICE)
+    if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mApp->mGameMode ==
+        GameMode::GAMEMODE_TREE_OF_WISDOM || mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ICE)
     {
         mAlmanacButton->mY += 43;
+    }
+
+    int y = mBackToMainButton->mY;
+    for (const auto button : {mBackToMainButton, mRestartButton, mAlmanacButton, mApOptionsButton, mOptions2Button})
+    {
+        if (button->mVisible)
+        {
+            button->mY = y;
+            y -= 43;
+        }
     }
 }
 
@@ -224,25 +260,30 @@ void NewOptionsDialog::Draw(Sexy::Graphics* g)
         a3DAccelOffset = 15;
         aFullScreenOffset = 20;
         aPauseWhenLostFocusOffset = 25;
-    }
-    Sexy::Color aTextColor(107, 109, 145);
+        Sexy::Color aTextColor(107, 109, 145);
 
-   /* if (mFromGameSelector)
-    {
-        SexyString version = _S("Version: ") + StringToSexyString(mApp->mProductVersion);
-#ifdef _DEBUG
-        version = version + _S(" DEBUG");
-#endif
-        TodDrawString(g, _S("Plants vs. Zombies"), 210, 130.5f + aMusicOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
-        TodDrawString(g, version, 210, 157.5f + aMusicOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
-    }
-    else*/
-    {
-        TodDrawString(g, TodStringTranslate(_S("[OPTIONS_MUSIC_LABEL]")), 186, 140 + aMusicOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-        TodDrawString(g, TodStringTranslate(_S("[OPTIONS_SOUNDFX]")), 186, 167 + aSfxOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-        TodDrawString(g, TodStringTranslate(_S("[OPTIONS_3D_ACCELERATION]")), 274, 197 + a3DAccelOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-        TodDrawString(g, TodStringTranslate(_S("[OPTIONS_FULL_SCREEN]")), 274, 229 + aFullScreenOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
-        TodDrawString(g, TodStringTranslate(_S("Auto Pause")), 274, 261 + aPauseWhenLostFocusOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+        /* if (mFromGameSelector)
+         {
+             SexyString version = _S("Version: ") + StringToSexyString(mApp->mProductVersion);
+     #ifdef _DEBUG
+             version = version + _S(" DEBUG");
+     #endif
+             TodDrawString(g, _S("Plants vs. Zombies"), 210, 130.5f + aMusicOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
+             TodDrawString(g, version, 210, 157.5f + aMusicOffset, FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_CENTER);
+         }
+         else*/
+        {
+            TodDrawString(g, TodStringTranslate(_S("[OPTIONS_MUSIC_LABEL]")), 186, 140 + aMusicOffset,
+                          FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, TodStringTranslate(_S("[OPTIONS_SOUNDFX]")), 186, 167 + aSfxOffset, FONT_DWARVENTODCRAFT18,
+                          aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, TodStringTranslate(_S("[OPTIONS_3D_ACCELERATION]")), 274, 197 + a3DAccelOffset,
+                          FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, TodStringTranslate(_S("[OPTIONS_FULL_SCREEN]")), 274, 229 + aFullScreenOffset,
+                          FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+            TodDrawString(g, TodStringTranslate(_S("Auto Pause")), 274, 261 + aPauseWhenLostFocusOffset,
+                          FONT_DWARVENTODCRAFT18, aTextColor, DrawStringJustification::DS_ALIGN_RIGHT);
+        }
     }
 }
 
@@ -366,90 +407,107 @@ void NewOptionsDialog::ButtonDepress(int theId)
     switch (theId)
     {
     case NewOptionsDialog::NewOptionsDialog_Almanac:
-    {
-        AlmanacDialog* aDialog = mApp->DoAlmanacDialog(SeedType::SEED_NONE, ZombieType::ZOMBIE_INVALID);
-        aDialog->WaitForResult(true);
-        break;
-    }
+        {
+            AlmanacDialog* aDialog = mApp->DoAlmanacDialog(SeedType::SEED_NONE, ZombieType::ZOMBIE_INVALID);
+            aDialog->WaitForResult(true);
+            break;
+        }
 
     case NewOptionsDialog::NewOptionsDialog_MainMenu:
-    {
-        if (mFromGameSelector)
         {
-            mApp->KillNewOptionsDialog();
-            mApp->KillGameSelector();
-            mApp->ShowAwardScreen(AwardType::AWARD_CREDITS_ZOMBIENOTE, 0, false);
-        }
-        else if (mApp->mBoard && mApp->mBoard->NeedSaveGame())
-        {
-            mApp->DoConfirmBackToMain();
-        }
-        else if (mApp->mBoard && mApp->mBoard->mCutScene && mApp->mBoard->mCutScene->IsSurvivalRepick())
-        {
-            mApp->DoConfirmBackToMain();
-        }
-        else
-        {
-            mApp->mBoardResult = BoardResult::BOARDRESULT_QUIT;
-            mApp->DoBackToMain();
-        }
-        break;
-    }
-
-    case NewOptionsDialog::NewOptionsDialog_Restart:
-    {
-        if (mApp->mBoard)
-        {
-            SexyString aDialogTitle;
-            SexyString aDialogMessage;
-            if (mApp->IsPuzzleMode())
+            if (mFromGameSelector)
             {
-                aDialogTitle = _S("[RESTART_PUZZLE_HEADER]");
-                aDialogMessage = _S("[RESTART_PUZZLE_BODY]");
+                mApp->KillNewOptionsDialog();
+                mApp->KillGameSelector();
+                mApp->ShowAwardScreen(AwardType::AWARD_CREDITS_ZOMBIENOTE, 0, false);
             }
-            else if (mApp->IsChallengeMode())
+            else if (mApp->mBoard && mApp->mBoard->NeedSaveGame())
             {
-                aDialogTitle = _S("[RESTART_CHALLENGE_HEADER]");
-                aDialogMessage = _S("[RESTART_CHALLENGE_BODY]");
+                mApp->DoConfirmBackToMain();
             }
-            else if (mApp->IsSurvivalMode())
+            else if (mApp->mBoard && mApp->mBoard->mCutScene && mApp->mBoard->mCutScene->IsSurvivalRepick())
             {
-                aDialogTitle = _S("[RESTART_SURVIVAL_HEADER]");
-                aDialogMessage = _S("[RESTART_SURVIVAL_BODY]");
+                mApp->DoConfirmBackToMain();
             }
             else
             {
-                aDialogTitle = _S("[RESTART_LEVEL_HEADER]");
-                aDialogMessage = _S("[RESTART_LEVEL_BODY]");
+                mApp->mBoardResult = BoardResult::BOARDRESULT_QUIT;
+                mApp->DoBackToMain();
             }
-
-            LawnDialog* aDialog = (LawnDialog*)mApp->DoDialog(Dialogs::DIALOG_CONFIRM_RESTART, true, aDialogTitle, aDialogMessage, _S(""), Dialog::BUTTONS_YES_NO);
-            aDialog->mLawnYesButton->mLabel = TodStringTranslate(_S("[RESTART_LABEL]"));
-            aDialog->mLawnNoButton->mLabel = TodStringTranslate(_S("[DIALOG_BUTTON_CANCEL]"));
-            
-            if (aDialog->WaitForResult(true) == Dialog::ID_YES)
-            {
-                mApp->mMusic->StopAllMusic();
-                mApp->mSoundSystem->CancelPausedFoley();
-                mApp->KillNewOptionsDialog();
-                mApp->mBoardResult = BoardResult::BOARDRESULT_RESTART;
-                mApp->mSawYeti = mApp->mBoard->mKilledYeti;
-                mApp->PreNewGame(mApp->mGameMode, false, mApp->mBoard->mLevel);
-            }
+            break;
         }
-        break;
-    }
+
+    case NewOptionsDialog::NewOptionsDialog_Restart:
+        {
+            if (mApp->mBoard)
+            {
+                SexyString aDialogTitle;
+                SexyString aDialogMessage;
+                if (mApp->IsPuzzleMode())
+                {
+                    aDialogTitle = _S("[RESTART_PUZZLE_HEADER]");
+                    aDialogMessage = _S("[RESTART_PUZZLE_BODY]");
+                }
+                else if (mApp->IsChallengeMode())
+                {
+                    aDialogTitle = _S("[RESTART_CHALLENGE_HEADER]");
+                    aDialogMessage = _S("[RESTART_CHALLENGE_BODY]");
+                }
+                else if (mApp->IsSurvivalMode())
+                {
+                    aDialogTitle = _S("[RESTART_SURVIVAL_HEADER]");
+                    aDialogMessage = _S("[RESTART_SURVIVAL_BODY]");
+                }
+                else
+                {
+                    aDialogTitle = _S("[RESTART_LEVEL_HEADER]");
+                    aDialogMessage = _S("[RESTART_LEVEL_BODY]");
+                }
+
+                LawnDialog* aDialog = (LawnDialog*)mApp->DoDialog(Dialogs::DIALOG_CONFIRM_RESTART, true, aDialogTitle,
+                                                                  aDialogMessage, _S(""), Dialog::BUTTONS_YES_NO);
+                aDialog->mLawnYesButton->mLabel = TodStringTranslate(_S("[RESTART_LABEL]"));
+                aDialog->mLawnNoButton->mLabel = TodStringTranslate(_S("[DIALOG_BUTTON_CANCEL]"));
+
+                if (aDialog->WaitForResult(true) == Dialog::ID_YES)
+                {
+                    mApp->mMusic->StopAllMusic();
+                    mApp->mSoundSystem->CancelPausedFoley();
+                    mApp->KillNewOptionsDialog();
+                    mApp->mBoardResult = BoardResult::BOARDRESULT_RESTART;
+                    mApp->mSawYeti = mApp->mBoard->mKilledYeti;
+                    mApp->PreNewGame(mApp->mGameMode, false, mApp->mBoard->mLevel);
+                }
+            }
+            break;
+        }
 
     case NewOptionsDialog::NewOptionsDialog_Update:
         mApp->CheckForUpdates();
         break;
 
     case NewOptionsDialog::NewOptionsDialog_Language:
-    {
-        mApp->KillNewOptionsDialog();
-        mApp->KillGameSelector();
-        mApp->ShowLanagugeScreen();
-        break;
+        {
+            mApp->KillNewOptionsDialog();
+            mApp->KillGameSelector();
+            mApp->ShowLanagugeScreen();
+            break;
+        }
+
+    case NewOptionsDialog::NewOptionsDialog_Options2:
+        {
+            mApp->KillDialog(Dialogs::DIALOG_NEWNEWOPTIONS);
+
+            auto newNewOptionsDialog = new NewNewOptionsDialog(mApp);
+            mApp->CenterDialog(newNewOptionsDialog, newNewOptionsDialog->mWidth, newNewOptionsDialog->mHeight);
+            mApp->AddDialog(Dialogs::DIALOG_NEWNEWOPTIONS, newNewOptionsDialog);
+            break;
+        }
+    case NewOptionsDialog::NewOptionsDialog_ApOptions:
+        {
+            mApp->DoArchipelagoOptionsDialog();
+            break;
+        }
     }
-    }
+    
 }

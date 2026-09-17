@@ -14,7 +14,7 @@ public:
     
     bool ringlink_enabled() override
     {
-        return slot_data["ringlink_enabled"];
+        return slot_data["ringlink_enabled"].get<int>();
     }
     
     bool progressive_sun_capacity_items() override
