@@ -677,7 +677,7 @@ void Coin::UpdateCollected()
         aDestX = 35;
         aDestY = 487;
     }
-    else if (mType == CoinType::COIN_AWARD_PRESENT || mType == CoinType::COIN_PRESENT_PLANT || mType == CoinType::COIN_FLAG_SEED_PACKET)
+    else if (mType == CoinType::COIN_AWARD_PRESENT || mType == CoinType::COIN_PRESENT_PLANT)
     {
         mDisappearCounter++;
         if (mDisappearCounter >= 200)
@@ -941,10 +941,26 @@ void Coin::Draw(Graphics* g)
     }
     else if (mType == CoinType::COIN_FINAL_SEED_PACKET || mType == COIN_FLAG_SEED_PACKET || mType == CoinType::COIN_PERMA_FLAG_SEED_PACKET)
     {
+        int aGrayness = 255;
+        if (mIsBeingCollected)
+        {
+            aGrayness = 128;
+        }
+        else
+        {
+            int aDisappearTime = GetDisappearTime();
+            if (mDisappearCounter > aDisappearTime - 300 && mDisappearCounter % 60 < 30)
+            {
+                aGrayness = 192;
+            }
+        }
+
+        g->SetColorizeImages(true);
         SeedType aSeedType = GetFinalSeedPacketType();
         g->SetScale(mScale, mScale, 0.0f, 0.0f);
-        DrawSeedPacket(g, 0.5f * (mWidth - mScale * mWidth) + mPosX, 0.5f * (mHeight - mScale * mHeight) + mPosY, aSeedType, SeedType::SEED_NONE, 0.0f, 255, true, false, mApp);
+        DrawSeedPacket(g, 0.5f * (mWidth - mScale * mWidth) + mPosX, 0.5f * (mHeight - mScale * mHeight) + mPosY, aSeedType, SeedType::SEED_NONE, 0.0f, aGrayness, true, false, mApp);
         g->SetScale(1.0f, 1.0f, 0.0f, 0.0f);
+        g->SetColorizeImages(false);
         return;
     }
     else if (mType == CoinType::COIN_PRESENT_PLANT || mType == CoinType::COIN_AWARD_PRESENT)
@@ -1035,7 +1051,7 @@ void Coin::Draw(Graphics* g)
     {
         aImage = IMAGE_ZOMBIE_NOTE_SMALL;
     }
-    else if (mType == CoinType::COIN_USABLE_SEED_PACKET)
+    else if (mType == CoinType::COIN_USABLE_SEED_PACKET || mType == CoinType::COIN_FLAG_SEED_PACKET)
     {
         int aGrayness = 255;
         if (mIsBeingCollected)
@@ -1627,6 +1643,11 @@ int Coin::GetDisappearTime()
     if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN)
     {
         aTime = 6000;
+    }
+    
+    if (mType == CoinType::COIN_FLAG_SEED_PACKET)
+    {
+        aTime = 2000;
     }
 
     return aTime;
