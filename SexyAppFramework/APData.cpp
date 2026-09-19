@@ -2,6 +2,7 @@
 
 #include <nlohmann/json.hpp>
 
+#include "APWrapper.h"
 #include "APSlotData/SlotData1_10.h"
 
 class SlotDataInvalid : public PVZRAPData::SlotData::SlotDataInner
@@ -130,6 +131,11 @@ public:
         return {};
     }
     
+    bool deathlink_enabled() override
+    {
+        return {};
+    }
+    
     bool energylink_enabled() override
     {
         return {};
@@ -210,9 +216,10 @@ public:
 PVZRAPData::SlotData::SlotData(const SlotData& other)
 {
     this->inner = other.inner;
+    this->wrapper = other.wrapper;
 }
 
-PVZRAPData::SlotData PVZRAPData::SlotData::get_slot_data(const nlohmann::json& slot_data)
+PVZRAPData::SlotData PVZRAPData::SlotData::get_slot_data(APWrapper* wrapper, const nlohmann::json& slot_data)
 {
     auto gen_version = slot_data["gen_version"];
     std::string gen_version_string;
@@ -229,25 +236,25 @@ PVZRAPData::SlotData PVZRAPData::SlotData::get_slot_data(const nlohmann::json& s
 
     if (gen_version_string == "1.7")
     {
-        return SlotData(std::make_shared<SlotData1_7>(slot_data));
+        return SlotData(wrapper, std::make_shared<SlotData1_7>(slot_data));
     }
 
     if (gen_version_string == "1.8")
     {
-        return SlotData(std::make_shared<SlotData1_8>(slot_data));
+        return SlotData(wrapper, std::make_shared<SlotData1_8>(slot_data));
     }
 
     if (gen_version_string == "1.9")
     {
-        return SlotData(std::make_shared<SlotData1_9>(slot_data));
+        return SlotData(wrapper, std::make_shared<SlotData1_9>(slot_data));
     }
     
     if (gen_version_string == "1.10")
     {
-        return SlotData(std::make_shared<SlotData1_10>(slot_data));
+        return SlotData(wrapper, std::make_shared<SlotData1_10>(slot_data));
     }
 
-    return SlotData(std::make_shared<SlotDataInvalid>(gen_version_string));
+    return SlotData(wrapper, std::make_shared<SlotDataInvalid>(gen_version_string));
 }
 
 bool PVZRAPData::SlotData::is_valid() const
@@ -372,11 +379,21 @@ bool PVZRAPData::SlotData::easy_upgrade_plants() const
 
 bool PVZRAPData::SlotData::disable_storm_flashes() const
 {
+    auto slot_data = this->wrapper->ReadDataStorage(this->wrapper->DataStorageSlot(APWrapper::KnownDataStorageKey::DisableStormFlashes));
+    if (slot_data.is_boolean())
+    {
+        return slot_data.get<bool>();
+    }
     return inner->disable_storm_flashes();
 }
 
 bool PVZRAPData::SlotData::imitater_open() const
 {
+    auto slot_data = this->wrapper->ReadDataStorage(this->wrapper->DataStorageSlot(APWrapper::KnownDataStorageKey::OpenImitaterEnabled));
+    if (slot_data.is_boolean())
+    {
+        return slot_data.get<bool>();
+    }
     return inner->imitater_open();
 }
 
@@ -405,28 +422,63 @@ bool PVZRAPData::SlotData::is_eligible_for_harder_zombie_spawns(int level) const
     return inner->is_eligible_for_harder_zombie_spawns(level);
 }
 
+bool PVZRAPData::SlotData::deathlink_enabled() const
+{
+    auto slot_data = this->wrapper->ReadDataStorage(this->wrapper->DataStorageSlot(APWrapper::KnownDataStorageKey::DeathLinkEnabled));
+    if (slot_data.is_boolean())
+    {
+        return slot_data.get<bool>();
+    }
+    return inner->deathlink_enabled();
+}
+
 bool PVZRAPData::SlotData::energylink_enabled() const
 {
+    auto slot_data = this->wrapper->ReadDataStorage(this->wrapper->DataStorageSlot(APWrapper::KnownDataStorageKey::EnergyLinkEnabled));
+    if (slot_data.is_boolean())
+    {
+        return slot_data.get<bool>();
+    }
     return inner->energylink_enabled();
 }
 
 bool PVZRAPData::SlotData::ringlink_enabled() const
 {
+    auto slot_data = this->wrapper->ReadDataStorage(this->wrapper->DataStorageSlot(APWrapper::KnownDataStorageKey::RingLinkEnabled));
+    if (slot_data.is_boolean())
+    {
+        return slot_data.get<bool>();
+    }
     return inner->ringlink_enabled();
 }
 
 bool PVZRAPData::SlotData::lawnlink_enabled() const
 {
+    auto slot_data = this->wrapper->ReadDataStorage(this->wrapper->DataStorageSlot(APWrapper::KnownDataStorageKey::LawnLinkEnabled));
+    if (slot_data.is_boolean())
+    {
+        return slot_data.get<bool>();
+    }
     return inner->lawnlink_enabled();
 }
 
 bool PVZRAPData::SlotData::seedlink_enabled() const
 {
+    auto slot_data = this->wrapper->ReadDataStorage(this->wrapper->DataStorageSlot(APWrapper::KnownDataStorageKey::SeedLinkEnabled));
+    if (slot_data.is_boolean())
+    {
+        return slot_data.get<bool>();
+    }
     return inner->seedlink_enabled();
 }
 
 bool PVZRAPData::SlotData::harder_zombie_spawns() const
 {
+    auto slot_data = this->wrapper->ReadDataStorage(this->wrapper->DataStorageSlot(APWrapper::KnownDataStorageKey::HarderZombieSpawnsEnabled));
+    if (slot_data.is_boolean())
+    {
+        return slot_data.get<bool>();
+    }
     return inner->harder_zombie_spawns();
 }
 
@@ -445,6 +497,7 @@ std::optional<PVZRAPData::SlotData::ProjectileStats> PVZRAPData::SlotData::proje
     return inner->projectile_stats(projectile);
 }
 
-PVZRAPData::SlotData::SlotData(const std::shared_ptr<SlotDataInner>& inner) : inner(inner)
+PVZRAPData::SlotData::SlotData(APWrapper* wrapper, const std::shared_ptr<SlotDataInner>& inner) : inner(inner)
 {
+    this->wrapper = wrapper;
 }

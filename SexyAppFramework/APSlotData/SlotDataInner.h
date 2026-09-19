@@ -47,6 +47,7 @@ public:
     virtual bool is_eligible_for_individual_tile_unlock_items(int level) = 0;
     virtual bool is_eligible_for_harder_zombie_spawns(int level) = 0;
     
+    virtual bool deathlink_enabled() = 0;
     virtual bool energylink_enabled() = 0;
     virtual bool ringlink_enabled() = 0;
     virtual bool lawnlink_enabled() = 0;

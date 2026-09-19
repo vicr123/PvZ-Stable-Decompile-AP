@@ -1,8 +1,11 @@
 #include "ArchipelagoReconfigDialog.h"
 
+#include <nlohmann/json.hpp>
+
 #include "../../LawnApp.h"
 #include "../../SexyAppFramework/Checkbox.h"
 #include "../../Resources.h"
+#include "../../SexyAppFramework/APWrapper.h"
 
 ArchipelagoReconfigDialog::ArchipelagoReconfigDialog(LawnApp* theApp) : LawnDialog(
     theApp, Dialogs::DIALOG_APOPTIONS, true, "Archipelago Reconfiguration",
@@ -14,7 +17,7 @@ ArchipelagoReconfigDialog::ArchipelagoReconfigDialog(LawnApp* theApp) : LawnDial
     
     auto x = 180;
     auto y = 206;
-    mDeathlinkCheckbox = MakeNewCheckbox(APOptions_Deathlink, this, false);
+    mDeathlinkCheckbox = MakeNewCheckbox(APOptions_Deathlink, this, mApp->mSlotData->deathlink_enabled());
     mDeathlinkCheckbox->Resize(x, y, 46, 45);
     y += 45;
     mRinglinkCheckbox = MakeNewCheckbox(APOptions_Ringlink, this, mApp->mSlotData->ringlink_enabled());
@@ -102,8 +105,16 @@ void ArchipelagoReconfigDialog::Draw(Sexy::Graphics* g)
 void ArchipelagoReconfigDialog::ButtonDepress(int theId)
 {
     LawnDialog::ButtonDepress(theId);
-    if (theId == 21)
+    if (theId == 1000)
     {
+        mApp->mAP->WriteDataStorage(mApp->mAP->DataStorageSlot(APWrapper::KnownDataStorageKey::DeathLinkEnabled), false).replace(this->mDeathlinkCheckbox->IsChecked());
+        mApp->mAP->WriteDataStorage(mApp->mAP->DataStorageSlot(APWrapper::KnownDataStorageKey::RingLinkEnabled), false).replace(this->mRinglinkCheckbox->IsChecked());
+        mApp->mAP->WriteDataStorage(mApp->mAP->DataStorageSlot(APWrapper::KnownDataStorageKey::EnergyLinkEnabled), false).replace(this->mEnergylinkCheckbox->IsChecked());
+        mApp->mAP->WriteDataStorage(mApp->mAP->DataStorageSlot(APWrapper::KnownDataStorageKey::SeedLinkEnabled), false).replace(this->mSeedlinkCheckbox->IsChecked());
+        mApp->mAP->WriteDataStorage(mApp->mAP->DataStorageSlot(APWrapper::KnownDataStorageKey::LawnLinkEnabled), false).replace(this->mLawnlinkCheckbox->IsChecked());
+        mApp->mAP->WriteDataStorage(mApp->mAP->DataStorageSlot(APWrapper::KnownDataStorageKey::HarderZombieSpawnsEnabled), false).replace(this->mHarderZombieSpawnsCheckbox->IsChecked());
+        mApp->mAP->WriteDataStorage(mApp->mAP->DataStorageSlot(APWrapper::KnownDataStorageKey::DisableStormFlashes), false).replace(this->mDisableStormFlashesCheckbox->IsChecked());
+        mApp->mAP->WriteDataStorage(mApp->mAP->DataStorageSlot(APWrapper::KnownDataStorageKey::OpenImitaterEnabled), false).replace(this->mOpenImitaterCheckbox->IsChecked());
         mApp->KillDialog(DIALOG_APOPTIONS);
     }
 }

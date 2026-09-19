@@ -100,7 +100,16 @@ public:
     {
         EnergyLink,
         ClientStatus,
-        Hints
+        Hints,
+        
+        DeathLinkEnabled,
+        RingLinkEnabled,
+        EnergyLinkEnabled,
+        SeedLinkEnabled,
+        LawnLinkEnabled,
+        HarderZombieSpawnsEnabled,
+        DisableStormFlashes,
+        OpenImitaterEnabled
     };
     
     enum class LawnLinkAction

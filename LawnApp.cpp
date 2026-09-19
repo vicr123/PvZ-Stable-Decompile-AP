@@ -5471,11 +5471,11 @@ void LawnApp::SetupArchipelago()
 	this->mAP->AddConnectionCompleteListener([this]
 	{
 		this->KillDialog(Dialogs::DIALOG_ARCHIPELAGO_CONNECTING);
-		mAP->EnableDeathLink(this->mAP->SlotData()["deathlink_enabled"] == 1);
-		mAP->EnableRingLink(this->mAP->SlotData()["ringlink_enabled"] == 1);
-		mAP->EnableSeedLink(this->mAP->SlotData()["seedlink_enabled"] == 1);
-		mAP->EnableLawnLink(this->mAP->SlotData()["lawnlink_enabled"] == 1);
-		this->mSlotData = std::make_shared<PVZRAPData::SlotData>(PVZRAPData::SlotData::get_slot_data(mAP->SlotData()));
+		this->mSlotData = std::make_shared<PVZRAPData::SlotData>(PVZRAPData::SlotData::get_slot_data(mAP, mAP->SlotData()));
+		if (this->mSlotData->is_valid())
+		{
+			this->SetupArchipelagoTags();
+		}
 	});
 	this->mAP->AddSlotRefusedListener([this](const std::string& reason)
 	{
@@ -5628,7 +5628,19 @@ void LawnApp::SetupArchipelago()
 			
 			resume();
 		}
+		else
+		{
+			this->SetupArchipelagoTags();
+		}
 	});
+}
+
+void LawnApp::SetupArchipelagoTags() const
+{
+	mAP->EnableDeathLink(this->mSlotData->deathlink_enabled());
+	mAP->EnableRingLink(this->mSlotData->ringlink_enabled());
+	mAP->EnableSeedLink(this->mSlotData->seedlink_enabled());
+	mAP->EnableLawnLink(this->mSlotData->lawnlink_enabled());
 }
 
 void LawnApp::ProcessAPItem(const APItem& item)

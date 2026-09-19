@@ -128,8 +128,8 @@ void ArchipelagoStatusDialog::Draw(Graphics* g)
 	{
 		Sexy::Color aTextColor(255, 255, 255);
 		TodDrawString(g, mApp->mAP->ServerName(), mContentInsets.mLeft + 16, mHostEditWidget->Top() + 18, FONT_PICO129, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
-		TodDrawString(g, mApp->mAP->SlotName(), mContentInsets.mLeft + 16, mHostEditWidget->Top() + 18, FONT_PICO129, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
-		TodDrawString(g, mApp->mAP->Password(), mContentInsets.mLeft + 16, mHostEditWidget->Top() + 18, FONT_PICO129, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
+		TodDrawString(g, mApp->mAP->SlotName(), mContentInsets.mLeft + 16, mSlotEditWidget->Top() + 18, FONT_PICO129, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
+		TodDrawString(g, mApp->mAP->Password(), mContentInsets.mLeft + 16, mPasswordEditWidget->Top() + 18, FONT_PICO129, aTextColor, DrawStringJustification::DS_ALIGN_LEFT);
 	}
 }
 

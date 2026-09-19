@@ -306,7 +306,7 @@ void APWrapper::Connect(const std::string& server_name, const std::string& slot_
     });
     d->mAP->set_slot_connected_handler([this](const nlohmann::json& slot_data)
     {
-        auto checked_data = PVZRAPData::SlotData::get_slot_data(slot_data);
+        auto checked_data = PVZRAPData::SlotData::get_slot_data(this, slot_data);
         if (!checked_data.is_valid())
         {
             // Call the slot refused listener
@@ -330,7 +330,12 @@ void APWrapper::Connect(const std::string& server_name, const std::string& slot_
             DataStorageSlotPrefixed("profileGuids"),
             DataStorageSlot(KnownDataStorageKey::ClientStatus),
             DataStorageSlot(KnownDataStorageKey::EnergyLink),
-            DataStorageSlot(KnownDataStorageKey::Hints)
+            DataStorageSlot(KnownDataStorageKey::Hints),
+            DataStorageSlot(KnownDataStorageKey::DeathLinkEnabled),
+            DataStorageSlot(KnownDataStorageKey::RingLinkEnabled),
+            DataStorageSlot(KnownDataStorageKey::EnergyLinkEnabled),
+            DataStorageSlot(KnownDataStorageKey::SeedLinkEnabled),
+            DataStorageSlot(KnownDataStorageKey::LawnLinkEnabled),
         };
         d->mAP->SetNotify(data_storage_requested_keys);
         
@@ -338,7 +343,18 @@ void APWrapper::Connect(const std::string& server_name, const std::string& slot_
         this->WriteDataStorage(DataStorageSlotPrefixed("profileGuids"), nlohmann::json::array()).de_fault(nlohmann::json::array());
         this->WriteDataStorage(DataStorageSlot(KnownDataStorageKey::EnergyLink), 0).de_fault(0);
         
-        d->mAP->Get({DataStorageSlot(KnownDataStorageKey::ClientStatus), DataStorageSlot(KnownDataStorageKey::Hints)});
+        d->mAP->Get({
+            DataStorageSlot(KnownDataStorageKey::ClientStatus),
+            DataStorageSlot(KnownDataStorageKey::Hints),
+            DataStorageSlot(KnownDataStorageKey::DeathLinkEnabled),
+            DataStorageSlot(KnownDataStorageKey::RingLinkEnabled),
+            DataStorageSlot(KnownDataStorageKey::EnergyLinkEnabled),
+            DataStorageSlot(KnownDataStorageKey::SeedLinkEnabled),
+            DataStorageSlot(KnownDataStorageKey::LawnLinkEnabled),
+            DataStorageSlot(KnownDataStorageKey::HarderZombieSpawnsEnabled),
+            DataStorageSlot(KnownDataStorageKey::DisableStormFlashes),
+            DataStorageSlot(KnownDataStorageKey::OpenImitaterEnabled)
+        });
         
         for (const auto& connection_complete_listener : this->d->connection_complete_listener)
         {
@@ -642,6 +658,22 @@ std::string APWrapper::DataStorageSlot(KnownDataStorageKey key) const
         return std::string("_read_client_status_") + std::to_string(d->mAP->get_team_number()) + "_" + std::to_string(d->mAP->get_player_number());
     case KnownDataStorageKey::Hints:
         return std::string("_read_hints_") + std::to_string(d->mAP->get_team_number()) + "_" + std::to_string(d->mAP->get_player_number());
+    case KnownDataStorageKey::DeathLinkEnabled:
+        return DataStorageSlotPrefixed("deathLinkEnabled");
+    case KnownDataStorageKey::RingLinkEnabled:
+        return DataStorageSlotPrefixed("ringLinkEnabled");
+    case KnownDataStorageKey::EnergyLinkEnabled:
+        return DataStorageSlotPrefixed("energyLinkEnabled");
+    case KnownDataStorageKey::SeedLinkEnabled:
+        return DataStorageSlotPrefixed("seedLinkEnabled");
+    case KnownDataStorageKey::LawnLinkEnabled:
+        return DataStorageSlotPrefixed("lawnLinkEnabled");
+    case KnownDataStorageKey::HarderZombieSpawnsEnabled:
+        return DataStorageSlotPrefixed("harderZombieSpawnsEnabled");
+    case KnownDataStorageKey::DisableStormFlashes:
+        return DataStorageSlotPrefixed("disableStormFlashes");
+    case KnownDataStorageKey::OpenImitaterEnabled:
+        return DataStorageSlotPrefixed("imitaterOpen");
     }
     
     return "";
@@ -864,7 +896,10 @@ void APWrapper::EnableDeathLink(bool enable) const
     }
     else
     {
-        d->tags.emplace_back("DeathLink");
+        if (std::ranges::find(d->tags, "DeathLink") == d->tags.end())
+        {
+            d->tags.emplace_back("DeathLink");
+        }
     }
     
     this->UpdateConnectionInformation();
@@ -916,7 +951,10 @@ void APWrapper::EnableRingLink(bool enable) const
     }
     else
     {
-        d->tags.emplace_back("RingLink");
+        if (std::ranges::find(d->tags, "RingLink") == d->tags.end())
+        {
+            d->tags.emplace_back("RingLink");
+        }
     }
     
     this->UpdateConnectionInformation();
@@ -951,7 +989,10 @@ void APWrapper::EnableSeedLink(bool enable) const
     }
     else
     {
-        d->tags.emplace_back("SeedLink");
+        if (std::ranges::find(d->tags, "SeedLink") == d->tags.end())
+        {
+            d->tags.emplace_back("SeedLink");
+        }
     }
     
     this->UpdateConnectionInformation();
@@ -987,7 +1028,10 @@ void APWrapper::EnableLawnLink(bool enable) const
     }
     else
     {
-        d->tags.emplace_back("LawnLink");
+        if (std::ranges::find(d->tags, "LawnLink") == d->tags.end())
+        {
+            d->tags.emplace_back("LawnLink");
+        }
     }
     
     this->UpdateConnectionInformation();

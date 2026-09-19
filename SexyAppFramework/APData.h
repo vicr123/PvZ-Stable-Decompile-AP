@@ -8,6 +8,8 @@
 
 #include "../ConstEnums.h"
 
+class APWrapper;
+
 namespace PVZRAPData
 {
     namespace Locations
@@ -330,7 +332,7 @@ namespace PVZRAPData
             int taco_received;
         };
         
-        static SlotData get_slot_data(const nlohmann::json& json);
+        static SlotData get_slot_data(APWrapper* wrapper, const nlohmann::json& json);
         
         bool is_valid() const;
         std::string version() const;
@@ -373,6 +375,7 @@ namespace PVZRAPData
         bool is_eligible_for_individual_tile_unlock_items(int level) const;
         bool is_eligible_for_harder_zombie_spawns(int level) const;
         
+        bool deathlink_enabled() const;
         bool energylink_enabled() const;
         bool ringlink_enabled() const;
         bool lawnlink_enabled() const;
@@ -385,8 +388,9 @@ namespace PVZRAPData
         std::optional<ProjectileStats> projectile_stats(ProjectileType projectile) const;
         
     private:
-        explicit SlotData(const std::shared_ptr<SlotDataInner>& inner);
+        explicit SlotData(APWrapper* wrapper, const std::shared_ptr<SlotDataInner>& inner);
         std::shared_ptr<SlotDataInner> inner;
+        APWrapper* wrapper;
     };
 }
 

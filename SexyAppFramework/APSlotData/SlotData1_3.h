@@ -165,6 +165,11 @@ public:
         return slot_data["imitater_open"].get<bool>();
     }
     
+    bool deathlink_enabled() override
+    {
+        return slot_data["deathlink_enabled"].get<int>() == 1;
+    }
+    
     bool energylink_enabled() override
     {
         // Not supported in 1.3
