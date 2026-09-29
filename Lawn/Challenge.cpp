@@ -4272,6 +4272,14 @@ void Challenge::ScaryPotterPlacePot(ScaryPotType theScaryPotType, ZombieType the
 	ScaryPotType aPotType = theScaryPotType;
 	while (theCount > 0)
 	{
+		int aTotalWeight = 0;
+		for (int i = 0; i < theGridArrayCount; i++)
+		{
+			aTotalWeight += theGridArray[i].mWeight;
+		}
+		if (aTotalWeight == 0) {
+			return;
+		}
 		TodWeightedGridArray* aGrid = TodPickFromWeightedGridArray(theGridArray, theGridArrayCount);
 
 		GridItem* aScaryPot = mBoard->mGridItems.DataArrayAlloc();
