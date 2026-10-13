@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - archipelago
+      - force-mid-wave-flag
   pull_request:
   release:
     types:
