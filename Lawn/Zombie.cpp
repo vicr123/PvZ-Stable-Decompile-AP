@@ -8820,7 +8820,7 @@ void Zombie::DropLoot()
 
                 if (location != -1)
                 {
-                    if (!mApp->mAP->IsLocationChecked(location) && mApp->mAP->IsLocationPresent(location))
+                    if (mApp->mAP->IsLocationPresent(location))
                     {
                         mBoard->AddCoin(aCenterX + check * 10, aCenterY + check * 10, CoinType::COIN_FLAG_SEED_PACKET, CoinMotion::COIN_MOTION_COIN, location);
                         check++;
@@ -9026,7 +9026,7 @@ void Zombie::DieNoLoot()
 
                     if (location != -1)
                     {
-                        if (!mApp->mAP->IsLocationChecked(location) && mApp->mAP->IsLocationPresent(location))
+                        if (mApp->mAP->IsLocationPresent(location))
                         {
                             mBoard->AddCoin(aCenterX + check * 10, aCenterY + check * 10, CoinType::COIN_FLAG_SEED_PACKET, CoinMotion::COIN_MOTION_COIN, location);
                             check++;
