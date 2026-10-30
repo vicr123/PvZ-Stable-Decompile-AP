@@ -139,6 +139,7 @@ public:
     
     nlohmann::json SlotData();
     int64_t MySlot() const;
+    std::vector<int64_t> PlayerSlots() const;
     bool IsGoalReached() const;
     bool CanReleaseItems() const;
     void ReleaseItems() const;

@@ -25,6 +25,7 @@
 #include "../../SexyAppFramework/WidgetManager.h"
 #include "AchievementsScreen.h"
 #include "../../SexyAppFramework/APData.h"
+#include "../../SexyAppFramework/APDialogueClient.h"
 #include "../../SexyAppFramework/APWrapper.h"
 
 constexpr uint64_t EnergyLinkExchangeWithdraw = 100000000;
@@ -951,7 +952,7 @@ void StoreScreen::UpdateMouse()
                 case STORE_ITEM_AP:
                     {
                         auto item = mApp->mAP->ItemAtLocation(PVZRAPData::Locations::Twiddydinkie(aItemPos + (mPage - 1) * 8));
-
+                        
                         const std::string* string_bank;
                         std::string item_class;
                         if (item.flags & APItem::ITEM_FLAG_PROGRESSION)
@@ -974,9 +975,24 @@ void StoreScreen::UpdateMouse()
                             string_bank = standard_bank;
                             item_class = "Filler";
                         }
+                        
+                        std::string crazyDaveDialogue;
+                        auto playerName = mApp->mAP->PlayerDisplayName(item.player);
+                        auto gameName = mApp->mAP->PlayerGameName(item.player);
+                        auto itemName = mApp->mAP->ItemName(item);
+                        auto customDialogue = mApp->mAPDialogueClient->GetCrazyDaveDialogue(gameName, itemName, playerName);
+                        if (customDialogue.has_value())
+                        {
+                            crazyDaveDialogue = customDialogue.value();
+                        }
+                        else
+                        {
+                            crazyDaveDialogue = string_bank[Rand(4)];
+                        }
 
-                        message = mApp->mAP->ItemName(item) + " for " + mApp->mAP->PlayerDisplayName(item.player) +
-                            " (" + item_class + ")\n\n" + string_bank[Rand(4)] + "{NO_CLICK}";
+
+                        message = itemName + " for " + playerName +
+                            " (" + item_class + ")\n\n" + crazyDaveDialogue + "{NO_CLICK}";
                         break;
                     }
                 }

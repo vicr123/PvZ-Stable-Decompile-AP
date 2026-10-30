@@ -73,6 +73,7 @@
 #include "Lawn/Widget/HintClientDialog.h"
 #include "Lawn/Widget/NewHintDialog.h"
 #include "SexyAppFramework/APData.h"
+#include "SexyAppFramework/APDialogueClient.h"
 #include "SexyAppFramework/APWrapper.h"
 
 bool gIsPartnerBuild = false;
@@ -469,6 +470,16 @@ bool LawnApp::UpdateAppStep(bool* updated)
 		return false;
 	
 	mAP->Poll();
+	
+	{
+		std::unique_lock guard(this->mDeferredTasksMutex, std::try_to_lock);
+		if (guard.owns_lock())
+		{
+			for (auto& task : this->mDeferredTasks)
+				task();
+			this->mDeferredTasks.clear();
+		}
+	}
 
 	if (mUpdateAppState == UPDATESTATE_PROCESS_DONE)
 		mUpdateAppState = UPDATESTATE_MESSAGES;
@@ -5532,6 +5543,12 @@ void LawnApp::SetupArchipelago()
 		if (this->mSlotData->is_valid())
 		{
 			this->SetupArchipelagoTags();
+		}
+		
+		for (auto slot : this->mAP->PlayerSlots())
+		{
+			auto game = this->mAP->PlayerGameName(slot);
+			this->mAPDialogueClient->DownloadGameMeta(game);
 		}
 	});
 	this->mAP->AddSlotRefusedListener([this](const std::string& reason)

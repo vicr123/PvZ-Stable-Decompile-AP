@@ -708,6 +708,19 @@ int64_t APWrapper::MySlot() const
     return d->mAP->get_player_number();
 }
 
+std::vector<int64_t> APWrapper::PlayerSlots() const
+{
+    std::vector<int64_t> slots;
+    
+    auto players = d->mAP->get_players();
+    for (auto player : players)
+    {
+        slots.push_back(player.slot);
+    }
+    
+    return slots;
+}
+
 bool APWrapper::IsGoalReached() const
 {
     if (!d->mAP) return false;

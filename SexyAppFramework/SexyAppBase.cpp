@@ -47,6 +47,7 @@
 #include "../GameConstants.h"
 #include <windowsx.h>
 
+#include "APDialogueClient.h"
 #include "../LawnApp.h"
 #include "APWrapper.h"
 
@@ -175,6 +176,7 @@ SexyAppBase::SexyAppBase()
 	ImageLib::InitJPEG2000();
 	
 	mAP = new APWrapper();
+	mAPDialogueClient = new APDialogueClient(this);
 
 	mMutex = NULL;
 	mNotifyGameMessage = 0;
@@ -5979,6 +5981,16 @@ bool SexyAppBase::UpdateAppStep(bool* updated)
 		return false;
 	
 	mAP->Poll();
+	
+	{
+		std::unique_lock guard(this->mDeferredTasksMutex, std::try_to_lock);
+		if (guard.owns_lock())
+		{
+			for (auto& task : this->mDeferredTasks)
+				task();
+			this->mDeferredTasks.clear();
+		}
+	}
 
 	if (mUpdateAppState == UPDATESTATE_PROCESS_DONE)
 		mUpdateAppState = UPDATESTATE_MESSAGES;

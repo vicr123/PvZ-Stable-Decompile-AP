@@ -1,6 +1,9 @@
 #ifndef __SEXYAPPBASE_H__
 #define __SEXYAPPBASE_H__
 
+#include <functional>
+#include <mutex>
+
 #include "Common.h"
 #include "Rect.h"
 #include "Color.h"
@@ -12,6 +15,7 @@
 #include "Ratio.h"
 #include <ImageLib.h>
 
+class APDialogueClient;
 class APWrapper;
 
 namespace ImageLib
@@ -339,6 +343,10 @@ public:
 	int						mResolutionMode;
 	
 	APWrapper*				mAP;
+	APDialogueClient*		mAPDialogueClient;
+	
+	std::mutex				mDeferredTasksMutex;
+	std::vector<std::function<void()>>   mDeferredTasks;
 
 	bool					mEnableVsync;
 

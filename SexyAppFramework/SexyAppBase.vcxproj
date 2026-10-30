@@ -236,7 +236,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x86.lib;tinyfiledialogs32.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x86.lib;tinyfiledialogs32.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;wininet.lib;urlmon.lib;</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
@@ -278,7 +278,7 @@ EXIT /B 0</Command>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x64.lib;tinyfiledialogs64.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x64.lib;tinyfiledialogs64.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;wininet.lib;urlmon.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
       <AdditionalLibraryDirectories>$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);$(UniversalCRT_LibraryPath_x64);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -325,7 +325,7 @@ EXIT /B 0</Command>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x86.lib;tinyfiledialogs32.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x86.lib;tinyfiledialogs32.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;wininet.lib;urlmon.lib;</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
@@ -369,7 +369,7 @@ EXIT /B 0</Command>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x64.lib;tinyfiledialogs64.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x64.lib;tinyfiledialogs64.lib;libcrypto_static.lib;libssl_static.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;wininet.lib;urlmon.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
       <AdditionalLibraryDirectories>$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);$(UniversalCRT_LibraryPath_x64);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -419,7 +419,7 @@ EXIT /B 0</Command>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x86.lib;tinyfiledialogs32.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x86.lib;tinyfiledialogs32.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;wininet.lib;urlmon.lib;</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
@@ -466,7 +466,7 @@ EXIT /B 0</Command>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x64.lib;tinyfiledialogs64.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x64.lib;tinyfiledialogs64.lib;libcrypto_static.lib;libssl_static.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;wininet.lib;urlmon.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);$(UniversalCRT_LibraryPath_x64);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -514,7 +514,7 @@ EXIT /B 0</Command>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x86.lib;tinyfiledialogs32.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x86.lib;tinyfiledialogs32.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;wininet.lib;urlmon.lib;</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
@@ -561,7 +561,7 @@ EXIT /B 0</Command>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x86.lib;tinyfiledialogs32.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x86.lib;tinyfiledialogs32.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;wininet.lib;urlmon.lib;</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
@@ -608,7 +608,7 @@ EXIT /B 0</Command>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x64.lib;tinyfiledialogs64.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x64.lib;tinyfiledialogs64.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;wininet.lib;urlmon.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);$(UniversalCRT_LibraryPath_x64);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -656,7 +656,7 @@ EXIT /B 0</Command>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x64.lib;tinyfiledialogs64.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Winmm.lib;Ws2_32.lib;shlwapi.lib;SDL3.lib;SDL3_ttf.lib;zlib.lib;bass.lib;portaudio_x64.lib;tinyfiledialogs64.lib;libcrypto_static.lib;libssl_static.lib;crypt32.lib;wininet.lib;urlmon.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);$(UniversalCRT_LibraryPath_x64);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
@@ -843,6 +843,7 @@ EXIT /B 0</Command>
     <ClCompile Include="..\Sexy.TodLib\TodStringFile.cpp" />
     <ClCompile Include="..\Sexy.TodLib\Trail.cpp" />
     <ClCompile Include="APData.cpp" />
+    <ClCompile Include="APDialogueClient.cpp" />
     <ClCompile Include="APWrapper.cpp" />
     <ClCompile Include="BassLoader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -1609,6 +1610,7 @@ EXIT /B 0</Command>
     <ClInclude Include="..\Sexy.TodLib\TodStringFile.h" />
     <ClInclude Include="..\Sexy.TodLib\Trail.h" />
     <ClInclude Include="APData.h" />
+    <ClInclude Include="APDialogueClient.h" />
     <ClInclude Include="APSlotData\SlotData1_10.h" />
     <ClInclude Include="APSlotData\SlotData1_3.h" />
     <ClInclude Include="APSlotData\SlotData1_4.h" />
