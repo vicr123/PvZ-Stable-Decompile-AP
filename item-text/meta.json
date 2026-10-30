@@ -1,0 +1,10 @@
+{
+    "Candy Box 2": {
+        "strings": ["/item-text/candy-box-2.json"],
+        "matureGame": false
+    },
+    "Sonic Adventure DX": {
+        "strings": ["/item-text/sonic-adventure-dx.json"],
+        "matureGame": false
+    }
+}
