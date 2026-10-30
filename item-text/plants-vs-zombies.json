@@ -1,0 +1,935 @@
+{
+    "dialogue": {
+        "Additional Starting Sun": {
+            "crazyDave": "This CRAAAAZY upgrade lets {{player}} start each level with more sun!"
+        },
+        "Alternate Brains Sound": {
+            "crazyDave": ""
+        },
+        "Backwards Repeater (Vasebreaker)": {
+            "crazyDave": "This plant is like a peashooter, but it shoots backwards."
+        },
+        "Bacon": {
+            "crazyDave": ""
+        },
+        "Balloon Zombie (I, Zombie)": {
+            "crazyDave": "This is a cardboard cutout of the Balloon Zombie."
+        },
+        "Blover": {
+            "crazyDave": "This plant will blow away all the fog, and also any balloon zombies!"
+        },
+        "Bonus Levels": {
+            "crazyDave": ""
+        },
+        "Bonus Levels Unlock: Air Raid": {
+            "crazyDave": ""
+        },
+        "Bonus Levels Unlock: Art Challenge Sunflower": {
+            "crazyDave": ""
+        },
+        "Bonus Levels Unlock: Art Challenge Wall-nut": {
+            "crazyDave": ""
+        },
+        "Bonus Levels Unlock: Big Time": {
+            "crazyDave": ""
+        },
+        "Bonus Levels Unlock: Can You Dig It?": {
+            "crazyDave": ""
+        },
+        "Bonus Levels Unlock: Dark Stormy Night": {
+            "crazyDave": ""
+        },
+        "Bonus Levels Unlock: Grave Danger": {
+            "crazyDave": ""
+        },
+        "Bonus Levels Unlock: High Gravity": {
+            "crazyDave": ""
+        },
+        "Bonus Levels Unlock: Sunny Day": {
+            "crazyDave": ""
+        },
+        "Bonus Levels Unlock: Unsodded": {
+            "crazyDave": ""
+        },
+        "Buckethead Zombie (I, Zombie)": {
+            "crazyDave": ""
+        },
+        "Bug Spray": {
+            "crazyDave": ""
+        },
+        "Bungee Zombie (I, Zombie)": {
+            "crazyDave": ""
+        },
+        "Butter Ability": {
+            "crazyDave": ""
+        },
+        "Cabbage-pult": {
+            "crazyDave": "This plant lobs cabbages at the zombies. Good for when a peashooter can't reach. Like the roof, for example."
+        },
+        "Cactus": {
+            "crazyDave": "This plant shoots spikes, which can shoot down Balloon Zombies."
+        },
+        "Cattail": {
+            "crazyDave": "This plant is an upgrade of a lilypad that shoots spikes that can target any zombie on the board!"
+        },
+        "Cherry Bomb": {
+            "crazyDave": "This plant explodes once you plant it, delivering an A-O-GOOD explosion to any zombies nearby!"
+        },
+        "China Access": {
+            "crazyDave": "Some say that no matter where you are on the world, if you dig all the way down, you'll end up in China."
+        },
+        "China Unlock: The Great Wall": {
+            "crazyDave": ""
+        },
+        "Chocolate": {
+            "crazyDave": ""
+        },
+        "Chomper": {
+            "crazyDave": "This plant will eat a zombie once it steps on the tile in front, but it takes some time to recharge."
+        },
+        "Cloudy Day": {
+            "crazyDave": ""
+        },
+        "Cloudy Day Unlock: Level 1": {
+            "crazyDave": ""
+        },
+        "Cloudy Day Unlock: Level 10": {
+            "crazyDave": ""
+        },
+        "Cloudy Day Unlock: Level 11": {
+            "crazyDave": ""
+        },
+        "Cloudy Day Unlock: Level 12": {
+            "crazyDave": ""
+        },
+        "Cloudy Day Unlock: Level 2": {
+            "crazyDave": ""
+        },
+        "Cloudy Day Unlock: Level 3": {
+            "crazyDave": ""
+        },
+        "Cloudy Day Unlock: Level 4": {
+            "crazyDave": ""
+        },
+        "Cloudy Day Unlock: Level 5": {
+            "crazyDave": ""
+        },
+        "Cloudy Day Unlock: Level 6": {
+            "crazyDave": ""
+        },
+        "Cloudy Day Unlock: Level 7": {
+            "crazyDave": ""
+        },
+        "Cloudy Day Unlock: Level 8": {
+            "crazyDave": ""
+        },
+        "Cloudy Day Unlock: Level 9": {
+            "crazyDave": ""
+        },
+        "Cob Cannon": {
+            "crazyDave": "This plant shoots out explosive corn, dealing a massive blast to the zombies! They won't be expecting it!"
+        },
+        "Coffee Bean": {
+            "crazyDave": "This plant wakes up nocturnal plants, so they can get to work during the day!"
+        },
+        "Conehead Zombie (I, Zombie)": {
+            "crazyDave": "This is a cardboard cutout of the Conehead Zombie."
+        },
+        "Crater Trap": {
+            "crazyDave": ""
+        },
+        "Crazy Dave's Car Keys": {
+            "crazyDave": "I found my other car key in the bottom of the boot! You know what that means? {{player}}'s Twiddydinkies could be open!"
+        },
+        "Daisies Mode": {
+            "crazyDave": ""
+        },
+        "Dancing Zombie (I, Zombie)": {
+            "crazyDave": "This is a cardboard cutout of the Dancing Zombie."
+        },
+        "Dancing Zombies Mode": {
+            "crazyDave": ""
+        },
+        "Day Access": {
+            "crazyDave": "Isn't it nice when you can get free sun from the sky?"
+        },
+        "Day Unlock: Level 1-1": {
+            "crazyDave": ""
+        },
+        "Day Unlock: Level 1-10": {
+            "crazyDave": ""
+        },
+        "Day Unlock: Level 1-2": {
+            "crazyDave": ""
+        },
+        "Day Unlock: Level 1-3": {
+            "crazyDave": ""
+        },
+        "Day Unlock: Level 1-4": {
+            "crazyDave": ""
+        },
+        "Day Unlock: Level 1-5": {
+            "crazyDave": ""
+        },
+        "Day Unlock: Level 1-6": {
+            "crazyDave": ""
+        },
+        "Day Unlock: Level 1-7": {
+            "crazyDave": ""
+        },
+        "Day Unlock: Level 1-8": {
+            "crazyDave": ""
+        },
+        "Day Unlock: Level 1-9": {
+            "crazyDave": ""
+        },
+        "Diamond": {
+            "crazyDave": "This diamond is worth $1000 exactly. How can you say no to that?"
+        },
+        "Digger Zombie (I, Zombie)": {
+            "crazyDave": "This is a cardboard cutout of the Digger Zombie."
+        },
+        "Doom-shroom": {
+            "crazyDave": "This plant destroys all the zombies on your property, but it leaves behind a crater."
+        },
+        "Explode-o-nut (Wall-nut Bowling)": {
+            "crazyDave": "Go and bowl me a winner!"
+        },
+        "Extra Seed Slot": {
+            "crazyDave": "This extra seed slot will let {{player}} choose an extra plant per level!"
+        },
+        "Fertilizer": {
+            "crazyDave": ""
+        },
+        "Flower Pot": {
+            "crazyDave": "This lets you plant on hard ground! Like your roof, for example!"
+        },
+        "Fog Access": {
+            "crazyDave": "I miss being \"Fog Man\""
+        },
+        "Fog Unlock: Level 4-1": {
+            "crazyDave": ""
+        },
+        "Fog Unlock: Level 4-10": {
+            "crazyDave": ""
+        },
+        "Fog Unlock: Level 4-2": {
+            "crazyDave": ""
+        },
+        "Fog Unlock: Level 4-3": {
+            "crazyDave": ""
+        },
+        "Fog Unlock: Level 4-4": {
+            "crazyDave": ""
+        },
+        "Fog Unlock: Level 4-5": {
+            "crazyDave": ""
+        },
+        "Fog Unlock: Level 4-6": {
+            "crazyDave": ""
+        },
+        "Fog Unlock: Level 4-7": {
+            "crazyDave": ""
+        },
+        "Fog Unlock: Level 4-8": {
+            "crazyDave": ""
+        },
+        "Fog Unlock: Level 4-9": {
+            "crazyDave": ""
+        },
+        "Football Zombie (I, Zombie)": {
+            "crazyDave": "This is a cardboard cutout of Football Zombie."
+        },
+        "Fume-shroom": {
+            "crazyDave": "This plant can shoot fumes through a screen door!"
+        },
+        "Future Zombies Mode": {
+            "crazyDave": ""
+        },
+        "Gardening Glove": {
+            "crazyDave": ""
+        },
+        "Gargantuar (I, Zombie)": {
+            "crazyDave": "This is a cardboard cutout of Gargantuar."
+        },
+        "Garlic": {
+            "crazyDave": "When zombies eat this, they will think twice and then change lanes!"
+        },
+        "Gatling Pea": {
+            "crazyDave": "This plant shoots peas CRAAAAAAAZY fast! I mean it! 4 peas at a time!"
+        },
+        "Giant Wall-nut (Wall-nut Bowling)": {
+            "crazyDave": "Go and bowl me a winner! Squash some of those zombies while you're at it!"
+        },
+        "Gloom-shroom": {
+            "crazyDave": ""
+        },
+        "Gold Coin": {
+            "crazyDave": "This coin is worth $50. Is it worth that to {{player}} though?"
+        },
+        "Gold Magnet": {
+            "crazyDave": ""
+        },
+        "Gold Watering Can": {
+            "crazyDave": ""
+        },
+        "Grave Buster": {
+            "crazyDave": ""
+        },
+        "Hypno-shroom": {
+            "crazyDave": ""
+        },
+        "Ice-shroom": {
+            "crazyDave": ""
+        },
+        "Imitater": {
+            "crazyDave": ""
+        },
+        "Imp (I, Zombie)": {
+            "crazyDave": ""
+        },
+        "Instant Zombie Freeze": {
+            "crazyDave": ""
+        },
+        "Instant Zombie Hypnosis": {
+            "crazyDave": ""
+        },
+        "Invisighoul Trap": {
+            "crazyDave": ""
+        },
+        "Jalapeno": {
+            "crazyDave": ""
+        },
+        "Kernel-pult": {
+            "crazyDave": ""
+        },
+        "Ladder Trap": {
+            "crazyDave": ""
+        },
+        "Ladder Zombie (I, Zombie)": {
+            "crazyDave": ""
+        },
+        "Lawn Flip Trap": {
+            "crazyDave": ""
+        },
+        "Lawn Mowers": {
+            "crazyDave": ""
+        },
+        "Lawn Randomiser Trap": {
+            "crazyDave": ""
+        },
+        "Lily Pad": {
+            "crazyDave": ""
+        },
+        "Magnet-shroom": {
+            "crazyDave": ""
+        },
+        "Marigold": {
+            "crazyDave": ""
+        },
+        "Melon-pult": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Beghouled": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Beghouled Twist": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Big Trouble Little Zombie": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Bobsled Bonanza": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Column Like You See 'Em": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Dr. Zomboss's Revenge": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Invisi-ghoul": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: It's Raining Seeds": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Last Stand": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Pogo Party": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Portal Combat": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Seeing Stars": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Slot Machine": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Wall-nut Bowling": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Wall-nut Bowling 2": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Whack a Zombie": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: ZomBotany": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: ZomBotany 2": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Zombie Nimble Zombie Quick": {
+            "crazyDave": ""
+        },
+        "Mini-game Unlock: Zombiquarium": {
+            "crazyDave": ""
+        },
+        "Mini-games": {
+            "crazyDave": ""
+        },
+        "Mower Deploy Trap": {
+            "crazyDave": ""
+        },
+        "Mower Reward Upgrade": {
+            "crazyDave": ""
+        },
+        "Music Video": {
+            "crazyDave": ""
+        },
+        "Mustache Mode": {
+            "crazyDave": ""
+        },
+        "Night Access": {
+            "crazyDave": ""
+        },
+        "Night Roof Unlock: Dr. Zomboss": {
+            "crazyDave": ""
+        },
+        "Night Unlock: Level 2-1": {
+            "crazyDave": ""
+        },
+        "Night Unlock: Level 2-10": {
+            "crazyDave": ""
+        },
+        "Night Unlock: Level 2-2": {
+            "crazyDave": ""
+        },
+        "Night Unlock: Level 2-3": {
+            "crazyDave": ""
+        },
+        "Night Unlock: Level 2-4": {
+            "crazyDave": ""
+        },
+        "Night Unlock: Level 2-5": {
+            "crazyDave": ""
+        },
+        "Night Unlock: Level 2-6": {
+            "crazyDave": ""
+        },
+        "Night Unlock: Level 2-7": {
+            "crazyDave": ""
+        },
+        "Night Unlock: Level 2-8": {
+            "crazyDave": ""
+        },
+        "Night Unlock: Level 2-9": {
+            "crazyDave": ""
+        },
+        "Paranoia Trap": {
+            "crazyDave": ""
+        },
+        "Peashooter": {
+            "crazyDave": ""
+        },
+        "Phonograph": {
+            "crazyDave": ""
+        },
+        "Pinata Mode": {
+            "crazyDave": ""
+        },
+        "Plantern": {
+            "crazyDave": ""
+        },
+        "Pole Vaulting Zombie (I, Zombie)": {
+            "crazyDave": ""
+        },
+        "Pool Access": {
+            "crazyDave": ""
+        },
+        "Pool Cleaners": {
+            "crazyDave": ""
+        },
+        "Pool Unlock: Level 3-1": {
+            "crazyDave": ""
+        },
+        "Pool Unlock: Level 3-10": {
+            "crazyDave": ""
+        },
+        "Pool Unlock: Level 3-2": {
+            "crazyDave": ""
+        },
+        "Pool Unlock: Level 3-3": {
+            "crazyDave": ""
+        },
+        "Pool Unlock: Level 3-4": {
+            "crazyDave": ""
+        },
+        "Pool Unlock: Level 3-5": {
+            "crazyDave": ""
+        },
+        "Pool Unlock: Level 3-6": {
+            "crazyDave": ""
+        },
+        "Pool Unlock: Level 3-7": {
+            "crazyDave": ""
+        },
+        "Pool Unlock: Level 3-8": {
+            "crazyDave": ""
+        },
+        "Pool Unlock: Level 3-9": {
+            "crazyDave": ""
+        },
+        "Potato Mine": {
+            "crazyDave": ""
+        },
+        "Progressive Loot Rate": {
+            "crazyDave": ""
+        },
+        "Progressive Shovel": {
+            "crazyDave": ""
+        },
+        "Progressive Sun Capacity": {
+            "crazyDave": ""
+        },
+        "Progressive Twiddydinkies": {
+            "crazyDave": ""
+        },
+        "Puff-shroom": {
+            "crazyDave": ""
+        },
+        "Pumpkin": {
+            "crazyDave": ""
+        },
+        "Puzzle Mode": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: Ace of Vase": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: All your brainz r belong to us": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: Another Chain Reaction": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: Can You Dig It?": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: Chain Reaction": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: Dead Zeppelin": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: Hokey Pokey": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: I, Zombie": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: I, Zombie Too": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: M is for Metal": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: Me Smash!": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: Scary Potter": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: Third Vase": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: Three Hit Wonder": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: To The Left": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: Totally Nuts": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: Vasebreaker": {
+            "crazyDave": ""
+        },
+        "Puzzle Unlock: ZomBoogie": {
+            "crazyDave": ""
+        },
+        "RV Trap": {
+            "crazyDave": ""
+        },
+        "Rake": {
+            "crazyDave": ""
+        },
+        "Random Seed Packet": {
+            "crazyDave": ""
+        },
+        "Repeater": {
+            "crazyDave": ""
+        },
+        "Roof Access": {
+            "crazyDave": ""
+        },
+        "Roof Cleaners": {
+            "crazyDave": ""
+        },
+        "Roof Unlock: Level 5-1": {
+            "crazyDave": ""
+        },
+        "Roof Unlock: Level 5-2": {
+            "crazyDave": ""
+        },
+        "Roof Unlock: Level 5-3": {
+            "crazyDave": ""
+        },
+        "Roof Unlock: Level 5-4": {
+            "crazyDave": ""
+        },
+        "Roof Unlock: Level 5-5": {
+            "crazyDave": ""
+        },
+        "Roof Unlock: Level 5-6": {
+            "crazyDave": ""
+        },
+        "Roof Unlock: Level 5-7": {
+            "crazyDave": ""
+        },
+        "Roof Unlock: Level 5-8": {
+            "crazyDave": ""
+        },
+        "Roof Unlock: Level 5-9": {
+            "crazyDave": ""
+        },
+        "Scaredy-shroom": {
+            "crazyDave": ""
+        },
+        "Screen Door Zombie (I, Zombie)": {
+            "crazyDave": ""
+        },
+        "Sea-shroom": {
+            "crazyDave": ""
+        },
+        "Seed Bank Randomiser Trap": {
+            "crazyDave": ""
+        },
+        "Seed Packet Cooldown Trap": {
+            "crazyDave": ""
+        },
+        "Shovel": {
+            "crazyDave": ""
+        },
+        "Silver Coin": {
+            "crazyDave": ""
+        },
+        "Snow Pea": {
+            "crazyDave": ""
+        },
+        "Spikerock": {
+            "crazyDave": ""
+        },
+        "Spikeweed": {
+            "crazyDave": ""
+        },
+        "Split Pea": {
+            "crazyDave": ""
+        },
+        "Squash": {
+            "crazyDave": ""
+        },
+        "Starfruit": {
+            "crazyDave": ""
+        },
+        "Stinky": {
+            "crazyDave": ""
+        },
+        "Suburban Almanac": {
+            "crazyDave": ""
+        },
+        "Sun Burst": {
+            "crazyDave": ""
+        },
+        "Sun-shroom": {
+            "crazyDave": ""
+        },
+        "Sunflower": {
+            "crazyDave": ""
+        },
+        "Survival Mode": {
+            "crazyDave": ""
+        },
+        "Survival Unlock: Day": {
+            "crazyDave": ""
+        },
+        "Survival Unlock: Day (Hard)": {
+            "crazyDave": ""
+        },
+        "Survival Unlock: Fog": {
+            "crazyDave": ""
+        },
+        "Survival Unlock: Fog (Hard)": {
+            "crazyDave": ""
+        },
+        "Survival Unlock: Night": {
+            "crazyDave": ""
+        },
+        "Survival Unlock: Night (Hard)": {
+            "crazyDave": ""
+        },
+        "Survival Unlock: Pool": {
+            "crazyDave": ""
+        },
+        "Survival Unlock: Pool (Hard)": {
+            "crazyDave": ""
+        },
+        "Survival Unlock: Roof": {
+            "crazyDave": ""
+        },
+        "Survival Unlock: Roof (Hard)": {
+            "crazyDave": ""
+        },
+        "Taco": {
+            "crazyDave": ""
+        },
+        "Tall-nut": {
+            "crazyDave": ""
+        },
+        "Tangle Kelp": {
+            "crazyDave": ""
+        },
+        "Threepeater": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #1, Column #1": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #1, Column #2": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #1, Column #3": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #1, Column #4": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #1, Column #5": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #1, Column #6": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #1, Column #7": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #1, Column #8": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #1, Column #9": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #2, Column #1": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #2, Column #2": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #2, Column #3": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #2, Column #4": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #2, Column #5": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #2, Column #6": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #2, Column #7": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #2, Column #8": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #2, Column #9": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #3, Column #1": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #3, Column #2": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #3, Column #3": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #3, Column #4": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #3, Column #5": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #3, Column #6": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #3, Column #7": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #3, Column #8": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #3, Column #9": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #4, Column #1": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #4, Column #2": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #4, Column #3": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #4, Column #4": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #4, Column #5": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #4, Column #6": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #4, Column #7": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #4, Column #8": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #4, Column #9": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #5, Column #1": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #5, Column #2": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #5, Column #3": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #5, Column #4": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #5, Column #5": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #5, Column #6": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #5, Column #7": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #5, Column #8": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #5, Column #9": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #6, Column #1": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #6, Column #2": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #6, Column #3": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #6, Column #4": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #6, Column #5": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #6, Column #6": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #6, Column #7": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #6, Column #8": {
+            "crazyDave": ""
+        },
+        "Tile Unlock: Row #6, Column #9": {
+            "crazyDave": ""
+        },
+        "Torchwood": {
+            "crazyDave": ""
+        },
+        "Tree Food": {
+            "crazyDave": ""
+        },
+        "Tricked Out Mode": {
+            "crazyDave": ""
+        },
+        "Twiddydinkies Restock": {
+            "crazyDave": ""
+        },
+        "Twin Sunflower": {
+            "crazyDave": ""
+        },
+        "Umbrella Leaf": {
+            "crazyDave": ""
+        },
+        "Wall-nut": {
+            "crazyDave": ""
+        },
+        "Wall-nut First Aid": {
+            "crazyDave": ""
+        },
+        "Wheelbarrow": {
+            "crazyDave": ""
+        },
+        "Winter Melon": {
+            "crazyDave": ""
+        },
+        "Zen Garden": {
+            "crazyDave": ""
+        },
+        "Zen Garden Sprout": {
+            "crazyDave": ""
+        },
+        "Zombie (I, Zombie)": {
+            "crazyDave": ""
+        },
+        "Zombie Ambush Trap": {
+            "crazyDave": ""
+        },
+        "Zombie Caffeine Trap": {
+            "crazyDave": ""
+        },
+        "Zombie Growth Serum Trap": {
+            "crazyDave": ""
+        },
+        "Zombie Shuffle Trap": {
+            "crazyDave": ""
+        }
+    },
+    "gameName": "Plants vs. Zombies"
+}

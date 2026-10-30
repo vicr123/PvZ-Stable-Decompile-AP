@@ -1,10 +1,6 @@
 {
-    "Candy Box 2": {
-        "strings": ["/item-text/candy-box-2.json"],
+    "Plants vs. Zombies": {
+        "strings": ["/item-text/plants-vs-zombies.json"],
         "matureGame": false
     },
-    "Sonic Adventure DX": {
-        "strings": ["/item-text/sonic-adventure-dx.json"],
-        "matureGame": false
-    }
 }
