@@ -339,6 +339,7 @@ public:
 	HWND					mPreviewHWnd;
 
 	bool					mIsParticleEditor;
+	bool					mIsDialogueEditor;
 	bool					mIsTouch;
 	int						mResolutionMode;
 	
@@ -595,6 +596,7 @@ public:
 
 	bool					IsPreviewSaver();
 	bool					IsParticleEditor();
+	bool					IsDialogueEditor();
 };
 
 extern SexyAppBase* gSexyAppBase;

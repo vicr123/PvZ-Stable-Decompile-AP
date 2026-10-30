@@ -6534,6 +6534,10 @@ void SexyAppBase::HandleCmdLineParam(const std::string& theParamName, const std:
 	{
 		mIsParticleEditor = true;
 	}
+	else if (theParamName == "-dialogueeditor")
+	{
+		mIsDialogueEditor = true;
+	}
 	else if (theParamName == "-changedir")
 	{
 		mChangeDirTo = theParamValue;
@@ -7726,4 +7730,9 @@ bool SexyAppBase::IsPreviewSaver()
 bool SexyAppBase::IsParticleEditor()
 {
 	return mIsParticleEditor;
+}
+
+bool SexyAppBase::IsDialogueEditor()
+{
+	return mIsDialogueEditor;
 }

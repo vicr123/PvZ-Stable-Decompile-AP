@@ -27,6 +27,7 @@
 #include "../../SexyAppFramework/APData.h"
 #include "../../SexyAppFramework/APDialogueClient.h"
 #include "../../SexyAppFramework/APWrapper.h"
+#include "../Admonition.h"
 
 constexpr uint64_t EnergyLinkExchangeWithdraw = 100000000;
 constexpr uint64_t EnergyLinkExchangeDeposit = EnergyLinkExchangeWithdraw * 3 / 4;
@@ -250,6 +251,8 @@ StoreScreen::StoreScreen(LawnApp* theApp) : Dialog(nullptr, nullptr, DIALOG_STOR
 
     mOverlayWidget = new StoreScreenOverlay(this);
     mOverlayWidget->Resize(0, 0, BOARD_WIDTH * 2, BOARD_HEIGHT);
+    
+    mAdmonition = new Admonition();
 
     mSlideCounter = 0;
     mStartX = 0;
@@ -859,6 +862,11 @@ void StoreScreen::Draw(Graphics* g)
     gCrazyDave.mTransX -= 42.0f - mCrazyDaveOffset;
     gCrazyDave.mTransY += 68.0f;
     mApp->DrawCrazyDave(&gCrazyDave);
+    
+    if (!mAdmonition->IsDead())
+    {
+        mAdmonition->Draw(g);
+    }
 }
 
 //0x48BA30
@@ -895,6 +903,7 @@ void StoreScreen::UpdateMouse()
 {
     auto oldMouseOverItem = mMouseOverItem;
     mMouseOverItem = -1;
+    mAdmonition->Die();
     if (mStoreTime < 120 || mBubbleClickToContinue || mHatchTimer > 0 || mWaitForDialog || mCrazyDaveLastTalkIndex != -
         1) return;
     int aMouseX = mApp->mWidgetManager->mLastMouseX - mX, aMouseY = mApp->mWidgetManager->mLastMouseY - mY;
@@ -906,7 +915,8 @@ void StoreScreen::UpdateMouse()
         {
             int aItemX, aItemY;
             GetStorePosition(aItemPos, aItemX, aItemY);
-            if (Rect(aItemX, aItemY, 50, 87).Contains(aMouseX, aMouseY))
+            auto itemRect = Rect(aItemX, aItemY, 50, 87);
+            if (itemRect.Contains(aMouseX, aMouseY))
             {
                 mMouseOverItem = aItemPos;
                 int aMessageIndex = -1;
@@ -991,8 +1001,11 @@ void StoreScreen::UpdateMouse()
                         }
 
 
-                        message = itemName + " for " + playerName +
-                            " (" + item_class + ")\n\n" + crazyDaveDialogue + "{NO_CLICK}";
+                        message = crazyDaveDialogue + "{NO_CLICK}";
+                        mAdmonition->SetText(itemName + " for " + playerName + " (" + item_class + ")");
+                        mAdmonition->SetArea(itemRect);
+                        mAdmonition->timer = 1;
+                        
                         break;
                     }
                 }
