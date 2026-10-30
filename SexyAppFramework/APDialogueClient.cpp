@@ -136,7 +136,7 @@ void replace(std::string& string, std::string from, std::string to)
 }
 
 std::optional<std::string> APDialogueClient::GetCrazyDaveDialogue(std::string gameName, std::string itemName,
-                                                                  std::string playerName)
+                                                                  std::string playerName, std::string playerYourName, std::string playerYouName)
 {
     if (!d->gameDialogue.contains(gameName))
     {
@@ -150,7 +150,13 @@ std::optional<std::string> APDialogueClient::GetCrazyDaveDialogue(std::string ga
     }
 
     auto sourceDialogue = dialogue.dialogue[itemName].crazyDave;
+    if (sourceDialogue.empty())
+    {
+        return std::nullopt;
+    }
     replace(sourceDialogue, "{{player}}", playerName);
+    replace(sourceDialogue, "{{player_you}}", playerYouName);
+    replace(sourceDialogue, "{{player_your}}", playerYourName);
     replace(sourceDialogue, "{{item}}", itemName);
     replace(sourceDialogue, "{{game}}", gameName);
     return sourceDialogue;

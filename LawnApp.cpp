@@ -999,6 +999,11 @@ LawnApp::~LawnApp()
 		mWidgetManager->RemoveWidget(mParticleScreen);
 		delete mParticleScreen;
 	}
+	if (mDialogueEditor)
+	{
+		mWidgetManager->RemoveWidget(mDialogueEditor);
+		delete mDialogueEditor;
+	}
 	if (mAPTextClient)
 	{
 		mWidgetManager->RemoveWidget(mAPTextClient);

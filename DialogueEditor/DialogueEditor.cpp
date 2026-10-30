@@ -35,24 +35,30 @@ struct DialogueEditorPrivate
     DialogueFile mDialogueFile;
     std::vector<string> availableDialogue;
     std::string selected_item;
-    
+
     std::string apHostPort;
     std::string apSlot;
     std::string apPassword;
     std::string apError;
     APClient* mAP = nullptr;
     bool deleteAP = false;
-    
+
     std::string crazyDaveText;
 
     bool showBadFilePopup = false;
     bool showArchipelagoPopup = false;
     bool showGuide = true;
     
+    bool previewCurrentPlayer = false;
+
+    bool focusTextField = false;
+
     BackgroundState playerPlaceholder;
+    BackgroundState playerYouPlaceholder;
+    BackgroundState playerYourPlaceholder;
     BackgroundState itemPlaceholder;
     BackgroundState gamePlaceholder;
-    
+
     void populateAvailableDialogue()
     {
         availableDialogue.clear();
@@ -88,7 +94,7 @@ void ImguiEditText(std::string* source, const char* label)
 {
     static char text_buffer[128];
     strncpy(text_buffer, source->c_str(), 128);
-            
+
     if (ImGui::InputText(label, text_buffer, 128))
     {
         *source = text_buffer;
@@ -131,15 +137,15 @@ void DialogueEditor::ImGuiDraw()
     if (!d->availableDialogue.empty())
     {
         ImGui::Begin("Available Items", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-        
+
         ImGui::Text(d->mDialogueFile.gameName.c_str());
-        
+
         ImGui::PushItemWidth(600);
 
         int selected_item_index = std::distance(d->availableDialogue.begin(),
                                                 std::ranges::find(d->availableDialogue, d->selected_item));
         if (selected_item_index >= d->availableDialogue.size()) selected_item_index = -1;
-        
+
         std::vector<std::string> listItemText;
         for (auto itemName : d->availableDialogue)
         {
@@ -150,7 +156,7 @@ void DialogueEditor::ImGuiDraw()
             }
             listItemText.push_back(status + itemName);
         }
-        
+
         ImGui::ListBox("Available Items##List", &selected_item_index, [](void* data, int idx, const char** out_text)
         {
             auto vec = static_cast<std::vector<std::string>*>(data);
@@ -161,24 +167,39 @@ void DialogueEditor::ImGuiDraw()
         {
             d->selected_item = d->availableDialogue[selected_item_index];
         }
-        
+
         if (d->mDialogueFile.dialogue.contains(d->selected_item))
         {
             auto item = &d->mDialogueFile.dialogue[d->selected_item];
             static char text_buffer[128];
             strncpy(text_buffer, item->crazyDave.c_str(), 128);
-            
+
+            if (d->focusTextField)
+            {
+                ImGui::SetKeyboardFocusHere();
+                d->focusTextField = false;
+            }
             if (ImGui::InputText("Crazy Dave Text", text_buffer, 128))
             {
                 item->crazyDave = text_buffer;
                 d->saveJson();
             }
-            
+
             ImGui::Text("Remaining placeholders:");
             if (item->crazyDave.find("{{player}}") == std::string::npos)
             {
                 ImGui::SameLine();
                 ImGuiWithBackground(d->playerPlaceholder, "{{player}}", IM_COL32(100, 100, 100, 255));
+            }
+            if (item->crazyDave.find("{{player_you}}") == std::string::npos)
+            {
+                ImGui::SameLine();
+                ImGuiWithBackground(d->playerYouPlaceholder, "{{player_you}}", IM_COL32(100, 100, 100, 255));
+            }
+            if (item->crazyDave.find("{{player_your}}") == std::string::npos)
+            {
+                ImGui::SameLine();
+                ImGuiWithBackground(d->playerYourPlaceholder, "{{player_your}}", IM_COL32(100, 100, 100, 255));
             }
             if (item->crazyDave.find("{{item}}") == std::string::npos)
             {
@@ -191,7 +212,7 @@ void DialogueEditor::ImGuiDraw()
                 ImGuiWithBackground(d->gamePlaceholder, "{{game}}", IM_COL32(100, 100, 100, 255));
             }
         }
-        
+
         ImGui::PopItemWidth();
         ImGui::End();
     }
@@ -211,14 +232,15 @@ void DialogueEditor::ImGuiDraw()
         }
         ImGui::EndPopup();
     }
-    
+
     if (d->showArchipelagoPopup)
     {
         ImGui::OpenPopup("Archipelago");
     }
-    
+
     auto _false = false;
-    if (ImGui::BeginPopupModal("Archipelago", d->showArchipelagoPopup ? nullptr : &_false, ImGuiWindowFlags_AlwaysAutoResize))
+    if (ImGui::BeginPopupModal("Archipelago", d->showArchipelagoPopup ? nullptr : &_false,
+                               ImGuiWindowFlags_AlwaysAutoResize))
     {
         if (d->mAP)
         {
@@ -230,8 +252,10 @@ void DialogueEditor::ImGuiDraw()
         }
         else
         {
-            ImGui::TextWrapped("Please create a multiworld with the game that you want to write dialogue for, and then enter the connection details for that slot below.");
-            ImGui::TextWrapped("The game options are not important - all items that the game can possibly send will be imported for editing.");
+            ImGui::TextWrapped(
+                "Please create a multiworld with the game that you want to write dialogue for, and then enter the connection details for that slot below.");
+            ImGui::TextWrapped(
+                "The game options are not important - all items that the game can possibly send will be imported for editing.");
             ImguiEditText(&d->apHostPort, "Archipelago Host & Port");
             ImguiEditText(&d->apSlot, "Archipelago Slot");
             ImguiEditText(&d->apPassword, "Archipelago Password");
@@ -245,7 +269,8 @@ void DialogueEditor::ImGuiDraw()
                 ImGui::CloseCurrentPopup();
             }
             ImGui::SameLine();
-            if (ImGui::Button("Download Game Information and Save")) {
+            if (ImGui::Button("Download Game Information and Save"))
+            {
                 d->apError.clear();
                 d->mAP = new APClient(GetAPUuid(), "", d->apHostPort);
                 d->mAP->set_socket_connected_handler([this]
@@ -271,7 +296,7 @@ void DialogueEditor::ImGuiDraw()
                 d->mAP->set_data_package_changed_handler([this](const nlohmann::json& json)
                 {
                     auto gameName = d->mAP->get_player_game(d->mAP->get_player_number());
-                    
+
                     const char* filterPatterns[] = {"*.json"};
                     const char* file_path = tinyfd_saveFileDialog(
                         "Save Dialogue File",
@@ -285,10 +310,10 @@ void DialogueEditor::ImGuiDraw()
                     {
                         d->mDialogueFile = DialogueFile();
                         d->mDialogueFile.gameName = gameName;
-                        
+
                         auto gameDataPackage = json["games"][gameName];
                         auto itemNameToId = gameDataPackage["item_name_to_id"];
-                        
+
                         for (auto& [key, value] : itemNameToId.items())
                         {
                             d->mDialogueFile.dialogue.insert_or_assign(key, Dialogue());
@@ -296,21 +321,22 @@ void DialogueEditor::ImGuiDraw()
                         d->current_file = file_path;
                         d->saveJson();
                         d->populateAvailableDialogue();
-                        
+
                         d->showArchipelagoPopup = false;
                         ImGui::CloseCurrentPopup();
                     }
-                    
+
                     d->deleteAP = true;
                 });
             }
         }
         ImGui::EndPopup();
     }
-    
+
     DialogueEditorComponents::DialogueEditorGuide(&d->showGuide);
-    
-    if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_Enter) || ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_DownArrow))
+
+    if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_Enter) || ImGui::IsKeyChordPressed(
+        ImGuiMod_Alt | ImGuiKey_DownArrow))
     {
         int selected_item_index = std::distance(d->availableDialogue.begin(),
                                                 std::ranges::find(d->availableDialogue, d->selected_item));
@@ -319,6 +345,7 @@ void DialogueEditor::ImGuiDraw()
         if (selected_item_index < d->availableDialogue.size())
         {
             d->selected_item = d->availableDialogue[selected_item_index];
+            d->focusTextField = true;
         }
     }
     else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_UpArrow))
@@ -329,6 +356,7 @@ void DialogueEditor::ImGuiDraw()
         if (selected_item_index < d->availableDialogue.size())
         {
             d->selected_item = d->availableDialogue[selected_item_index];
+            d->focusTextField = true;
         }
     }
     else if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_O))
@@ -343,6 +371,8 @@ void DialogueEditor::ImGuiDraw()
     {
         SendMessage(d->mApp->mHWnd, WM_CLOSE, NULL, NULL);
     }
+    
+    d->previewCurrentPlayer = ImGui::IsKeyDown(ImGuiKey_LeftAlt) || ImGui::IsKeyDown(ImGuiKey_RightAlt);
 
     ImGui::Render();
 }
@@ -371,7 +401,7 @@ void DialogueEditor::MenuBar()
             }
             ImGui::EndMenu();
         }
-        
+
         if (ImGui::BeginMenu("Help"))
         {
             if (ImGui::MenuItem("Show Guide", nullptr, d->showGuide))
@@ -394,7 +424,7 @@ void DialogueEditor::Draw(Sexy::Graphics* g)
 void DialogueEditor::Update()
 {
     Widget::Update();
-    
+
     if (d->deleteAP)
     {
         delete d->mAP;
@@ -405,7 +435,7 @@ void DialogueEditor::Update()
     {
         d->mAP->poll();
     }
-    
+
     d->storeScreen->Update();
 
     if (d->mApp->mCrazyDaveState != CrazyDaveState::CRAZY_DAVE_ENTERING && d->mApp->mCrazyDaveState !=
@@ -415,10 +445,20 @@ void DialogueEditor::Update()
         if (d->mDialogueFile.dialogue.contains(d->selected_item))
         {
             auto item = d->mDialogueFile.dialogue[d->selected_item];
-            crazyDaveText = item.crazyDave + "{NO_CLICK}";
-            crazyDaveText = TodReplaceString(crazyDaveText, "{{player}}", "Player1");
-            crazyDaveText = TodReplaceString(crazyDaveText, "{{item}}", d->selected_item);
-            crazyDaveText = TodReplaceString(crazyDaveText, "{{game}}", d->mDialogueFile.gameName);
+            if (item.crazyDave.empty())
+            {
+                crazyDaveText =
+                    "To some, this is worthless. To others, it's worth the arbitrary price I decided upon.{NO_CLICK}";
+            }
+            else
+            {
+                crazyDaveText = item.crazyDave + "{NO_CLICK}";
+                crazyDaveText = TodReplaceString(crazyDaveText, "{{player}}", "Player1");
+                crazyDaveText = TodReplaceString(crazyDaveText, "{{player_you}}", d->previewCurrentPlayer ? "you" : "Player1");
+                crazyDaveText = TodReplaceString(crazyDaveText, "{{player_your}}", d->previewCurrentPlayer ? "your" : "Player1");
+                crazyDaveText = TodReplaceString(crazyDaveText, "{{item}}", d->selected_item);
+                crazyDaveText = TodReplaceString(crazyDaveText, "{{game}}", d->mDialogueFile.gameName);
+            }
         }
         else
         {

@@ -15,7 +15,8 @@ public:
     ~APDialogueClient();
     
     void DownloadGameMeta(std::string gameName);
-    std::optional<std::string> GetCrazyDaveDialogue(std::string gameName, std::string itemName, std::string playerName);
+    std::optional<std::string> GetCrazyDaveDialogue(std::string gameName, std::string itemName, std::string playerName, std::string playerYourName, std::string
+                                                    playerYouName);
     
 private:
     APDialogueClientPrivate* d;

@@ -991,7 +991,9 @@ void StoreScreen::UpdateMouse()
                         auto playerName = mApp->mAP->PlayerDisplayName(item.player);
                         auto gameName = mApp->mAP->PlayerGameName(item.player);
                         auto itemName = mApp->mAP->ItemName(item);
-                        auto customDialogue = mApp->mAPDialogueClient->GetCrazyDaveDialogue(gameName, itemName, playerName);
+                        auto playerYouName = item.player == mApp->mAP->MySlot() ? "you" : playerName;
+                        auto playerYourName = item.player == mApp->mAP->MySlot() ? "your" : playerName;
+                        auto customDialogue = mApp->mAPDialogueClient->GetCrazyDaveDialogue(gameName, itemName, playerName, playerYourName, playerYouName);
                         if (customDialogue.has_value())
                         {
                             crazyDaveDialogue = customDialogue.value();
