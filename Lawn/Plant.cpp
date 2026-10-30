@@ -28,6 +28,7 @@
 #include "ToolTipWidget.h"
 #include "../Sexy.TodLib/FilterEffect.h"
 #include "../SexyAppFramework/APData.h"
+#include "../SexyAppFramework/APDialogueClient.h"
 #include "../SexyAppFramework/APWrapper.h"
 
 PlantDefinition gPlantDefs[SeedType::NUM_SEED_TYPES + 1] = {  //0x69F2B0
@@ -6915,7 +6916,7 @@ bool Plant::IsFlying(SeedType theSeedtype)
 //0x467EC0
 bool Plant::IsUpgrade(LawnApp* app, SeedType theSeedtype)
 {
-	auto easy_upgrade_plants = app->mSlotData->easy_upgrade_plants();
+	auto easy_upgrade_plants = app->mSlotData && app->mSlotData->easy_upgrade_plants();
     if (easy_upgrade_plants)
     {
         return false;

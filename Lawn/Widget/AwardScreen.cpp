@@ -3,6 +3,9 @@
 #include "GameButton.h"
 #include "StoreScreen.h"
 #include "AwardScreen.h"
+
+#include <format>
+
 #include "../ZenGarden.h"
 #include "../SeedPacket.h"
 #include "../../LawnApp.h"
@@ -16,6 +19,7 @@
 #include "../../Sexy.TodLib/TodStringFile.h"
 #include "AchievementsScreen.h"
 #include "../../SexyAppFramework/APData.h"
+#include "../../SexyAppFramework/APDialogueClient.h"
 #include "../../SexyAppFramework/APWrapper.h"
 #include "../../SexyAppFramework/WidgetManager.h"
 
@@ -233,7 +237,12 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool theShowin
 		mApp->PlayFoley(FOLEY_PAPER);
 	}
 	else
-		mApp->mMusic->MakeSureMusicIsPlaying(MUSIC_TUNE_ZEN_GARDEN);
+	{
+		if (!mApp->IsDialogueEditor())
+		{
+			mApp->mMusic->MakeSureMusicIsPlaying(MUSIC_TUNE_ZEN_GARDEN);
+		}
+	}
 }
 
 //0x406420 & 0x406440
@@ -264,10 +273,34 @@ void AwardScreen::DrawBottom(Graphics* g, const SexyString& theTitle, const Sexy
 //0x4066A0
 void AwardScreen::DrawAwardSeed(Graphics* g)
 {
-	SeedType aSeedType = mApp->GetAwardSeedForLevel(mLevel - 1);
-	SexyString aAward = Plant::GetNameString(mApp, aSeedType, mLevel - 1, SEED_NONE);
-	SexyString aMessage = Plant::GetToolTip(mApp, aSeedType, mLevel - 1);
-	DrawBottom(g, _S("You sent an item!"), aAward, aMessage);
+	SeedType aSeedType;
+	
+	if (mInert)
+	{
+		DrawBottom(g, _S("You sent an item!"), std::format("{}'s {}", mFakePlayerName, mFakeItemName), mFakeText);
+		aSeedType = SeedType::SEED_AP_OFFWORLD_ITEM;
+	}
+	else
+	{
+		aSeedType  = mApp->GetAwardSeedForLevel(mLevel - 1);
+		SexyString aMessage = Plant::GetToolTip(mApp, aSeedType, mLevel - 1);
+		
+		auto item = mApp->mAP->ItemAtLocation(PVZRAPData::Locations::LevelClear(mLevel - 1));
+        
+		auto playerName = mApp->mAP->PlayerDisplayName(item.player);
+		auto gameName = mApp->mAP->PlayerGameName(item.player);
+		auto itemName = mApp->mAP->ItemName(item);
+		auto playerYouName = item.player == mApp->mAP->MySlot() ? "you" : playerName;
+		auto playerYourName = item.player == mApp->mAP->MySlot() ? "your" : playerName;
+		auto playerYourNameCap = item.player == mApp->mAP->MySlot() ? "Your" : playerName + "'s";
+		auto customDialogue = mApp->mAPDialogueClient->GetDialogue(APDialogueClient::DialogueType::AwardScreen, gameName, itemName, playerName, playerYourName, playerYouName);
+		if (customDialogue.has_value())
+		{
+			aMessage = customDialogue.value();
+		}
+	
+		DrawBottom(g, _S("You sent an item!"), std::format("{} {}", playerYourNameCap, itemName), aMessage);
+	}
 
 	g->SetScale(2, 2, 350, 129);
 	DrawSeedPacket(g, 350, 129, aSeedType, SEED_NONE, 0, 255, true, false, mApp);

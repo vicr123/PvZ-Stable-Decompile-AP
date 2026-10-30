@@ -3,6 +3,7 @@
 
 #include "../../ConstEnums.h"
 #include "../../SexyAppFramework/Widget.h"
+#include "../../SexyAppFramework/APWrapper.h"
 using namespace Sexy;
 
 class LawnApp;
@@ -40,6 +41,10 @@ public:
 	bool								mShowingAchievements;	//+GOTY @Patoke: 0xD8
 	std::vector<AchievementScreenItem>	mAchievementItems;		//+GOTY @Patoke: 0xC0
 	int									mLevel;
+	bool								mInert;
+	std::string							mFakePlayerName;
+	std::string							mFakeItemName;
+	std::string							mFakeText;
 
 public:
 	// @Patoke: added argument

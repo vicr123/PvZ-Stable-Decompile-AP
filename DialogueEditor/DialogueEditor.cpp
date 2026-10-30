@@ -17,6 +17,7 @@
 #include "DialogueEditorGuide.h"
 #include "imgui_internal.h"
 #include "../LawnApp.h"
+#include "../Lawn/Widget/AwardScreen.h"
 #include "../Lawn/Widget/StoreScreen.h"
 #include "../SexyAppFramework/APDialogueClient.h"
 #include "../SexyAppFramework/APDialogueClientInternalTypes.h"
@@ -32,6 +33,7 @@ struct DialogueEditorPrivate
 {
     LawnApp* mApp;
     StoreScreen* storeScreen;
+    AwardScreen* awardScreen;
     std::string current_file;
 
     DialogueFile mDialogueFile;
@@ -123,6 +125,10 @@ DialogueEditor::DialogueEditor(LawnApp* theApp)
 
     d->storeScreen = new StoreScreen(theApp);
     d->storeScreen->mInert = true;
+    
+    d->awardScreen = new AwardScreen(theApp, AWARD_FORLEVEL);
+    d->awardScreen->mInert = true;
+    d->awardScreen->mFadeInCounter = 0;
 }
 
 DialogueEditor::~DialogueEditor()
@@ -474,6 +480,7 @@ void DialogueEditor::Draw(Sexy::Graphics* g)
         d->storeScreen->Draw(g);
         break;
     case APDialogueClient::DialogueType::AwardScreen:
+        d->awardScreen->Draw(g);
         break;
     }
 }
@@ -516,6 +523,21 @@ void DialogueEditor::Update()
                 crazyDaveText = TodReplaceString(crazyDaveText, "{{item}}", d->selected_item);
                 crazyDaveText = TodReplaceString(crazyDaveText, "{{game}}", d->mDialogueFile.gameName);
             }
+            
+            if (item.awardScreen.empty())
+            {
+                d->awardScreen->mFakeText = "An item from a world far far away";
+            }
+            else
+            {
+                std::string awardText = item.awardScreen;
+                awardText = TodReplaceString(awardText, "{{player}}", "Player1's");
+                awardText = TodReplaceString(awardText, "{{player_you}}", d->previewCurrentPlayer ? "you" : "Player1's");
+                awardText = TodReplaceString(awardText, "{{player_your}}", d->previewCurrentPlayer ? "your" : "Player1's");
+                awardText = TodReplaceString(awardText, "{{item}}", d->selected_item);
+                awardText = TodReplaceString(awardText, "{{game}}", d->mDialogueFile.gameName);
+                d->awardScreen->mFakeText = awardText;
+            }
         }
         else
         {
@@ -525,6 +547,8 @@ void DialogueEditor::Update()
         {
             d->storeScreen->SetBubbleText(crazyDaveText, 1, false);
         }
+        d->awardScreen->mFakeItemName = d->selected_item;
+        d->awardScreen->mFakePlayerName = d->previewCurrentPlayer ? "Your" : "Player1";
     }
 
     this->MarkDirty();
