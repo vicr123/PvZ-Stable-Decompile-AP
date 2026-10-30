@@ -118,6 +118,7 @@ StoreScreen::StoreScreen(LawnApp* theApp) : Dialog(nullptr, nullptr, DIALOG_STOR
     mHatchOpen = true;
     mEasyBuyingCheat = false;
     mWaitForDialog = false;
+    mInert = false;
     mCoins.DataArrayInitialize(1024U, "coins");
     TodLoadResources("DelayLoad_Store");
     Resize(0, 0, BOARD_WIDTH * 2, BOARD_HEIGHT);
@@ -714,7 +715,7 @@ void StoreScreen::Draw(Graphics* g)
     gNextButton.mTransY = mNextButton->mY + mApp->mDDInterface->mWideScreenOffsetY;
     mNextButton->Render(&gNextButton);
 
-    if (mApp->mSlotData->energylink_enabled())
+    if (mApp->mSlotData && mApp->mSlotData->energylink_enabled())
     {
         Graphics gEnergyButton(*g);
         gEnergyButton.mTransX = mEnergyButton->mX + mApp->mDDInterface->mWideScreenOffsetX;
@@ -1225,7 +1226,7 @@ void StoreScreen::Update()
             SetBubbleText(mStartDialog, 0, true);
             mStartDialog = -1;
         }
-        else if (!mBubbleClickToContinue)
+        else if (!mBubbleClickToContinue && !mInert)
         {
             if (mBubbleCountDown > 0)
             {

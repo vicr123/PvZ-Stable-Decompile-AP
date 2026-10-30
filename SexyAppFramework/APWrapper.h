@@ -220,4 +220,6 @@ protected:
     void UpdateConnectionInformation() const;
 };
 
+std::string GetAPUuid();
+
 #endif

@@ -1614,7 +1614,7 @@ bool SexyAppBase::RegistryWriteData(const SexyString& theValueName, const uchar*
 
 void SexyAppBase::WriteToRegistry()
 {	
-	if (IsScreenSaver() || IsPreviewSaver() || IsParticleEditor())	return;
+	if (IsScreenSaver() || IsPreviewSaver() || IsParticleEditor() || IsDialogueEditor())	return;
 	RegistryWriteInteger(_S("MusicVolume"), (int) (mMusicVolume * 100));
 	RegistryWriteInteger(_S("SfxVolume"), (int) (mSfxVolume * 100));
 	RegistryWriteInteger(_S("Muted"), (mMuteCount - mAutoMuteCount > 0) ? 1 : 0);
@@ -4969,6 +4969,12 @@ void SexyAppBase::MakeWindow()
 	else if (IsParticleEditor()) 
 	{
 		mTitle = _S("Particle Editor");
+		mIsWindowed = true;
+		mFullScreenWindow = false;
+	}
+	else if (IsDialogueEditor())
+	{
+		mTitle = _S("Dialogue Editor");
 		mIsWindowed = true;
 		mFullScreenWindow = false;
 	}

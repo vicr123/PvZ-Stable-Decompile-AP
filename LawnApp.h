@@ -25,6 +25,7 @@
 #define FRAMES_PER_BUFFER 256
 #define SHOUT_THRESHOLD 0.2f 
 
+class DialogueEditor;
 struct APItem;
 class MessageWidget;
 class ArchipelagoTextClient;
@@ -107,6 +108,7 @@ public:
 	ChallengeScreen*				mChallengeScreen;								//+0x780
 	LanguageWidget*					mLanguageScreen;
 	ParticleScreen*					mParticleScreen;
+	DialogueEditor*					mDialogueEditor;
 	TodFoley*						mSoundSystem;									//+0x784
 	ButtonList						mControlButtonList;								//+0x788
 	ImageList						mCreatedImageList;								//+0x794
@@ -406,6 +408,7 @@ public:
 	static int						AudioCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer, const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags, void* userData);
 	
 	void							ShowParticleEditor();
+	void                            ShowDialogueEditor();
 	bool							TryToInitializePA();
 
 	void							DoConfirmRIPMode();

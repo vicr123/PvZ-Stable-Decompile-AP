@@ -203,14 +203,14 @@ void Music::MusicTitleScreenInit()
 {
 	LoadSong(MusicFile::MUSIC_FILE_MAIN_MUSIC, "sounds\\mainmusic.mo3");
 
-	if (!mApp->IsScreenSaver() && !mApp->IsPreviewSaver() && !mApp->IsParticleEditor())
+	if (!mApp->IsScreenSaver() && !mApp->IsPreviewSaver() && !mApp->IsParticleEditor() && !mApp->IsDialogueEditor())
 		MakeSureMusicIsPlaying(MusicTune::MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME);
 }
 
 //0x45A980
 void Music::MusicInit()
 {
-	if (mApp->IsParticleEditor()) return;
+	if (mApp->IsParticleEditor() || mApp->IsDialogueEditor()) return;
 
 #ifdef _DEBUG
 	int aNumLoadingTasks = mApp->mCompletedLoadingThreadTasks + GetNumLoadingTasks();

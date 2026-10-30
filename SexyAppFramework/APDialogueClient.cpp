@@ -9,30 +9,17 @@
 #include <wininet.h>
 #include <wrl/client.h>
 #include "SexyAppBase.h"
+#include "APDialogueClientInternalTypes.h"
 
 const std::string DIALOGUE_BASE_URL = "http://pvz-ap.vicr123.com/";
 
-struct GameMeta
-{
-    std::vector<std::string> strings;
-    bool matureGame;
-};
-
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GameMeta, strings, matureGame)
-
-struct Dialogue
-{
-    std::string crazyDave;
-};
-
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Dialogue, crazyDave)
 
 struct APDialogueClientPrivate
 {
     Sexy::SexyAppBase* app;
 
     std::map<std::string, GameMeta> gameMeta;
-    std::map<std::string, std::map<std::string, Dialogue>> gameDialogue;
+    std::map<std::string, DialogueFile> gameDialogue;
     std::vector<std::string> requestedGames;
 };
 
@@ -113,14 +100,21 @@ void APDialogueClient::DownloadGameMeta(std::string gameName)
             downloadJson(d->app, DIALOGUE_BASE_URL + stringLocation,
                          [this, stringLocation, gameName](std::optional<nlohmann::json> result)
                          {
-                             if (result.has_value())
+                             try
                              {
-                                 this->d->gameDialogue.insert_or_assign(
-                                     gameName, result.value().get<std::map<std::string, Dialogue>>());
+                                 if (result.has_value())
+                                 {
+                                     this->d->gameDialogue.insert_or_assign(
+                                         gameName, result.value().get<DialogueFile>());
+                                 }
+                                 else
+                                 {
+                                     std::cout << "APDialogueClient: Failed to download " << stringLocation << "\n";
+                                 }
                              }
-                             else
+                             catch (nlohmann::json::parse_error& e)
                              {
-                                 std::cout << "APDialogueClient: Failed to download " << stringLocation << "\n";
+                                std::cout << "APDialogueClient: Failed to parse " << stringLocation << "\n";
                              }
                          });
         }
@@ -150,12 +144,12 @@ std::optional<std::string> APDialogueClient::GetCrazyDaveDialogue(std::string ga
     }
 
     auto dialogue = d->gameDialogue[gameName];
-    if (!dialogue.contains(itemName))
+    if (!dialogue.dialogue.contains(itemName))
     {
         return std::nullopt;
     }
 
-    auto sourceDialogue = dialogue[itemName].crazyDave;
+    auto sourceDialogue = dialogue.dialogue[itemName].crazyDave;
     replace(sourceDialogue, "{{player}}", playerName);
     replace(sourceDialogue, "{{item}}", itemName);
     replace(sourceDialogue, "{{game}}", gameName);

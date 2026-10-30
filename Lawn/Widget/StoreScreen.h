@@ -15,6 +15,7 @@ using namespace Sexy;
 class Coin;
 class LawnApp;
 class NewLawnButton;
+class Admonition;
 
 class StoreScreen : public Dialog
 {
@@ -84,6 +85,7 @@ public:
     bool                        mTrialLockedWhenStoreOpened;    //+0x22F
     int                         mCrazyDaveLastTalkIndex;
 	Admonition*					mAdmonition;
+	bool						mInert;
     
     ListenerHandle*             mItemHandler;
     int mSlideCounter = 0;

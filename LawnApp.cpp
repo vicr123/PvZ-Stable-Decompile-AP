@@ -65,6 +65,7 @@
 #include <windowsx.h>
 #include <nlohmann/json.hpp>
 
+#include "DialogueEditor/DialogueEditor.h"
 #include "Lawn/MessageWidget.h"
 #include "Lawn/Widget/ArchipelagoConnectingDialog.h"
 #include "Lawn/Widget/ArchipelagoReconfigDialog.h"
@@ -378,6 +379,12 @@ void LawnApp::MakeWindow()
 		mIsWindowed = true;
 		mFullScreenWindow = false;
 	}
+	else if (IsDialogueEditor())
+	{
+		mTitle = _S("Dialogue Editor");
+		mIsWindowed = true;
+		mFullScreenWindow = false;
+	}
 
 	gBoardBounds = Rect{ 0, 0, mWidth, mHeight };
 
@@ -422,6 +429,7 @@ bool LawnApp::DrawDirtyStuff()
 {
 	if (mIsPlayingVideo) return true;
 	if (IsParticleEditor() && mParticleScreen) mParticleScreen->ImGuiDraw();
+	if (IsDialogueEditor() && mDialogueEditor) mDialogueEditor->ImGuiDraw();
 	SDL_SetRenderDrawColor(mSDLRenderer, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
 	SDL_RenderClear(mSDLRenderer);
 	return SexyAppBase::DrawDirtyStuff();
@@ -804,6 +812,7 @@ LawnApp::LawnApp()
 	mCreditScreen = nullptr;
 	mLanguageScreen = nullptr;
 	mParticleScreen = nullptr;
+	mDialogueEditor = nullptr;
 	mTitleScreen = nullptr;
 	mSoundSystem = nullptr;
 	mKonamiCheck = nullptr;
@@ -3048,6 +3057,11 @@ void LawnApp::LoadingCompleted()
 		KillBoard();
 		ShowParticleEditor();
 	}
+	else if (IsDialogueEditor())
+	{
+		KillBoard();
+		ShowDialogueEditor();
+	}
 	else
 	{
 		ShowGameSelector();
@@ -5165,6 +5179,21 @@ void LawnApp::ShowParticleEditor()
 	mWidgetManager->AddWidget(mParticleScreen);
 	mWidgetManager->BringToBack(mParticleScreen);
 	mWidgetManager->SetFocus(mParticleScreen);
+}
+
+void LawnApp::ShowDialogueEditor()
+{
+	if (mGameSelector)
+	{
+		mWidgetManager->RemoveWidget(mGameSelector);
+		SafeDeleteWidget(mGameSelector);
+	}
+
+	mDialogueEditor = new DialogueEditor(this);
+	mDialogueEditor->Resize(0, 0, mWidth, mHeight);
+	mWidgetManager->AddWidget(mDialogueEditor);
+	mWidgetManager->BringToBack(mDialogueEditor);
+	mWidgetManager->SetFocus(mDialogueEditor);
 }
 
 bool LawnApp::TryToInitializePA()
