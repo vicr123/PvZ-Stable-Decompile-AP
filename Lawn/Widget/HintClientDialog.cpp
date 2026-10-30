@@ -1,5 +1,7 @@
 #include "HintClientDialog.h"
 
+#include <format>
+
 #include "AlmanacDialog.h"
 #include "GameButton.h"
 #include "../Board.h"
@@ -13,8 +15,8 @@
 const auto x_sender = 20;
 const auto x_receiver = 100;
 const auto x_item = 220;
-const auto x_location = 350;
-const auto x_status = 620;
+const auto x_location = 330;
+const auto x_status = 580;
 
 struct HintClientDialogPrivate
 {
@@ -81,6 +83,19 @@ HintClientDialog::HintClientDialog(LawnApp* theApp) : LawnDialog(theApp, DIALOG_
     mNewHintButton->mParentWidget = this;
     mNewHintButton->mTextOffsetX = 8;
     mNewHintButton->mTextOffsetY = 1;
+    
+    mCopyButton = new GameButton(HintClientDialog::ALMANAC_BUTTON_COPY);
+    mCopyButton->SetLabel(_S("COPY"));
+    mCopyButton->mButtonImage = Sexy::IMAGE_SEEDCHOOSER_BUTTON2;
+    mCopyButton->mOverImage = Sexy::IMAGE_SEEDCHOOSER_BUTTON2_GLOW;
+    mCopyButton->mDownImage = nullptr;
+    mCopyButton->SetFont(Sexy::FONT_BRIANNETOD12);
+    mCopyButton->mColors[0] = Color(42, 42, 90);
+    mCopyButton->mColors[1] = Color(42, 42, 90);
+    mCopyButton->Resize(BOARD_WIDTH - 30 - IMAGE_SEEDCHOOSER_BUTTON2->GetWidth(), 561, IMAGE_SEEDCHOOSER_BUTTON2->GetWidth(), IMAGE_SEEDCHOOSER_BUTTON2_GLOW->GetHeight());
+    mCopyButton->mParentWidget = this;
+    mCopyButton->mTextOffsetY = 1;
+    mCopyButton->mBtnNoDraw = true;
 
     mScrollbar = new ScrollbarWidget(mApp, ScrollbarMode::VERTICAL);
     mScrollbar->mScrollRange = 100;
@@ -112,6 +127,7 @@ HintClientDialog::~HintClientDialog()
     
     if (mCloseButton) delete mCloseButton;
 	if (mNewHintButton)	delete mNewHintButton;
+    if (mCopyButton) delete mCopyButton;
 	if (mScrollbar)		delete mScrollbar;
     delete mToolTip;
     delete mAPDataStorageValueChangedListener;
@@ -122,13 +138,14 @@ void HintClientDialog::Update()
 {
     mCloseButton->Update();
 	mNewHintButton->Update();
+    mCopyButton->Update();
     mScrollbar->Update();
     
     auto cursor = CURSOR_POINTER;
 
     if (mApp->mWidgetManager->mOverWidget)
     {
-        if (mCloseButton->IsMouseOver() || mNewHintButton->IsMouseOver())
+        if (mCloseButton->IsMouseOver() || mNewHintButton->IsMouseOver() || mCopyButton->IsMouseOver())
         {
             cursor = CURSOR_HAND;
         }
@@ -178,6 +195,7 @@ void HintClientDialog::Draw(Graphics* g)
 
 
     mCloseButton->Draw(g);
+    mCopyButton->Draw(g);
     mNewHintButton->Draw(g);
     
     auto titles = Color(40, 50, 90);
@@ -269,7 +287,7 @@ void HintClientDialog::MouseDown(int x, int y, int theClickCount)
         mWidgetManager->SetFocus(this);
     }
     
-    if (mCloseButton->IsMouseOver() || mNewHintButton->IsMouseOver())
+    if (mCloseButton->IsMouseOver() || mNewHintButton->IsMouseOver() || mCopyButton->IsMouseOver())
         mApp->PlaySample(Sexy::SOUND_TAP);
     
     if(mScrollbar->isThumbOver())
@@ -284,6 +302,8 @@ void HintClientDialog::MouseMove(int x, int y)
     
     d->hoveredHint = -1;
     mToolTip->mVisible = false;
+    
+    mCopyButton->mBtnNoDraw = true;
     
     // Hit test the table
     if (Rect(20, 115, BOARD_WIDTH - 40, BOARD_HEIGHT - 150).Contains(x, y))
@@ -300,9 +320,16 @@ void HintClientDialog::MouseMove(int x, int y)
         if (index != -1)
         {
             d->hoveredHint = index;
+            
+            mCopyButton->mY = firstY + index * itemHeight;
+            mCopyButton->mBtnNoDraw = false;
         }
         
-        if (x > x_status)
+        if (x > mCopyButton->mX)
+        {
+            d->hoveredSection = -1;
+        }
+        else if (x > x_status)
         {
             d->hoveredSection = 4;
         }
@@ -346,7 +373,7 @@ void HintClientDialog::MouseMove(int x, int y)
                 mToolTip->SetLabel(mApp->mAP->PlayerDisplayName(hint.receiving_player));
                 mToolTip->mVisible = FONT_PICO129->StringWidth(mToolTip->mLabel) > x_item - x_receiver;
             }
-            else
+            else if (d->hoveredSection == 0)
             {
                 mToolTip->SetLabel(mApp->mAP->PlayerDisplayName(hint.finding_player));
                 mToolTip->mVisible = FONT_PICO129->StringWidth(mToolTip->mLabel) > x_receiver - x_sender;
@@ -364,29 +391,44 @@ void HintClientDialog::MouseUp(int x, int y, int theClickCount)
     {
         mApp->DoRequestNewHintDialog();
     }
-    if (d->hoveredHint != -1 && d->hoveredSection == 4)
+    if (d->hoveredHint != -1)
     {
-        auto hint = &d->hints[d->hoveredHint];
-        if (hint->receiving_player == mApp->mAP->MySlot() && !hint->found)
+        if (mCopyButton->IsMouseOver() && !mCopyButton->mBtnNoDraw)
         {
-            if (hint->status == 30) // Priority
+            auto hint = d->hints[d->hoveredHint];
+            
+            auto sender = mApp->mAP->PlayerDisplayName(hint.finding_player);
+            auto receiver = mApp->mAP->PlayerDisplayName(hint.receiving_player);
+            auto item = mApp->mAP->ItemName(hint.item, hint.receiving_player);
+            auto location = mApp->mAP->LocationName(hint.location, mApp->mAP->PlayerGameName(hint.finding_player));
+            
+            auto copy_string = std::format("[Hint]: {}'s {} is at {} in {}'s World.", receiver, item, location, sender);
+            mWidgetManager->mApp->CopyToClipboard(SexyStringToString(copy_string));
+        }
+        else if (d->hoveredSection == 4)
+        {
+            auto hint = &d->hints[d->hoveredHint];
+            if (hint->receiving_player == mApp->mAP->MySlot() && !hint->found)
             {
-                mApp->mAP->SetNoPriorityHint(*hint);
-                hint->status = 10;
-		        mApp->PlaySample(Sexy::SOUND_TAP);
+                if (hint->status == 30) // Priority
+                {
+                    mApp->mAP->SetNoPriorityHint(*hint);
+                    hint->status = 10;
+                    mApp->PlaySample(Sexy::SOUND_TAP);
                 
-            }
-            else if (hint->status == 10) // No Priority
-            {
-                mApp->mAP->SetAvoidHint(*hint);
-                hint->status = 20;
-		        mApp->PlaySample(Sexy::SOUND_TAP);
-            }
-            else
-            {
-                mApp->mAP->SetPriorityHint(*hint);
-                hint->status = 30;
-		        mApp->PlaySample(Sexy::SOUND_TAP);
+                }
+                else if (hint->status == 10) // No Priority
+                {
+                    mApp->mAP->SetAvoidHint(*hint);
+                    hint->status = 20;
+                    mApp->PlaySample(Sexy::SOUND_TAP);
+                }
+                else
+                {
+                    mApp->mAP->SetPriorityHint(*hint);
+                    hint->status = 30;
+                    mApp->PlaySample(Sexy::SOUND_TAP);
+                }
             }
         }
     }
@@ -410,7 +452,7 @@ void HintClientDialog::UpdateHints()
         return b.found;
     });
     
-    auto total_hint_height = d->hints.size() * 20;
+    auto total_hint_height = static_cast<long long>(d->hints.size()) * 20;
     auto viewport_height = BOARD_HEIGHT - 150;
     auto required_scroll = total_hint_height - viewport_height;
     if (required_scroll < 0) required_scroll = 0;

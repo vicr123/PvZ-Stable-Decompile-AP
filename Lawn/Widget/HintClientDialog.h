@@ -15,7 +15,8 @@ private:
         ALMANAC_BUTTON_CLOSE = 0,
         ALMANAC_BUTTON_PLANT = 1,
         ALMANAC_BUTTON_ZOMBIE = 2,
-        ALMANAC_BUTTON_INDEX = 3
+        ALMANAC_BUTTON_INDEX = 3,
+        ALMANAC_BUTTON_COPY = 4
     };
     
     HintClientDialogPrivate* d;
@@ -24,6 +25,7 @@ public:
     LawnApp*					mApp;
     GameButton*					mCloseButton;
 	GameButton*					mNewHintButton;
+    GameButton*                 mCopyButton;
 	ScrollbarWidget*			mScrollbar;
 	float						mScrollAmount;
     ListenerHandle* mAPDataStorageValueChangedListener;
