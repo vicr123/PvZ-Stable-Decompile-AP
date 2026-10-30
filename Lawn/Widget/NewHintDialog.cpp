@@ -129,7 +129,7 @@ void NewHintDialog::EditWidgetText(int theId, const SexyString& theString)
 //0x45D9F0
 bool NewHintDialog::AllowChar(int, SexyChar theChar)
 {
-	return isalnum(theChar) || theChar == _S(' ');
+	return true;
 }
 
 void NewHintDialog::ButtonDepress(int theId)
