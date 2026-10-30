@@ -112,7 +112,7 @@ void APDialogueClient::DownloadGameMeta(std::string gameName)
                                      std::cout << "APDialogueClient: Failed to download " << stringLocation << "\n";
                                  }
                              }
-                             catch (nlohmann::json::parse_error& e)
+                             catch (...)
                              {
                                 std::cout << "APDialogueClient: Failed to parse " << stringLocation << "\n";
                              }

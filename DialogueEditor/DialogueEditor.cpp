@@ -20,6 +20,11 @@
 #include "../SexyAppFramework/APDialogueClientInternalTypes.h"
 #include "../SexyAppFramework/APWrapper.h"
 
+struct BackgroundState
+{
+    ImVec2 min;
+    ImVec2 max;
+};
 
 struct DialogueEditorPrivate
 {
@@ -37,10 +42,16 @@ struct DialogueEditorPrivate
     std::string apError;
     APClient* mAP = nullptr;
     bool deleteAP = false;
+    
+    std::string crazyDaveText;
 
     bool showBadFilePopup = false;
     bool showArchipelagoPopup = false;
     bool showGuide = true;
+    
+    BackgroundState playerPlaceholder;
+    BackgroundState itemPlaceholder;
+    BackgroundState gamePlaceholder;
     
     void populateAvailableDialogue()
     {
@@ -59,7 +70,7 @@ struct DialogueEditorPrivate
             populateAvailableDialogue();
             return true;
         }
-        catch (nlohmann::json::parse_error& ex)
+        catch (...)
         {
             return false;
         }
@@ -82,6 +93,15 @@ void ImguiEditText(std::string* source, const char* label)
     {
         *source = text_buffer;
     }
+}
+
+void ImGuiWithBackground(BackgroundState& state, const char* text, ImU32 col)
+{
+    ImGui::GetWindowDrawList()->AddRectFilled(state.min, state.max, col, 0);
+
+    ImGui::TextWrapped(text);
+    state.min = ImGui::GetItemRectMin();
+    state.max = ImGui::GetItemRectMax();
 }
 
 DialogueEditor::DialogueEditor(LawnApp* theApp)
@@ -153,6 +173,23 @@ void DialogueEditor::ImGuiDraw()
                 item->crazyDave = text_buffer;
                 d->saveJson();
             }
+            
+            ImGui::Text("Remaining placeholders:");
+            if (item->crazyDave.find("{{player}}") == std::string::npos)
+            {
+                ImGui::SameLine();
+                ImGuiWithBackground(d->playerPlaceholder, "{{player}}", IM_COL32(100, 100, 100, 255));
+            }
+            if (item->crazyDave.find("{{item}}") == std::string::npos)
+            {
+                ImGui::SameLine();
+                ImGuiWithBackground(d->itemPlaceholder, "{{item}}", IM_COL32(100, 100, 100, 255));
+            }
+            if (item->crazyDave.find("{{game}}") == std::string::npos)
+            {
+                ImGui::SameLine();
+                ImGuiWithBackground(d->gamePlaceholder, "{{game}}", IM_COL32(100, 100, 100, 255));
+            }
         }
         
         ImGui::PopItemWidth();
@@ -180,7 +217,8 @@ void DialogueEditor::ImGuiDraw()
         ImGui::OpenPopup("Archipelago");
     }
     
-    if (ImGui::BeginPopupModal("Archipelago", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    auto _false = false;
+    if (ImGui::BeginPopupModal("Archipelago", d->showArchipelagoPopup ? nullptr : &_false, ImGuiWindowFlags_AlwaysAutoResize))
     {
         if (d->mAP)
         {
@@ -297,6 +335,14 @@ void DialogueEditor::ImGuiDraw()
     {
         TriggerOpenAction();
     }
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_N))
+    {
+        d->showArchipelagoPopup = true;
+    }
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_Q))
+    {
+        SendMessage(d->mApp->mHWnd, WM_CLOSE, NULL, NULL);
+    }
 
     ImGui::Render();
 }
@@ -307,7 +353,7 @@ void DialogueEditor::MenuBar()
     {
         if (ImGui::BeginMenu("File"))
         {
-            if (ImGui::MenuItem("Create File from Archipelago"))
+            if (ImGui::MenuItem("Create File from Archipelago", "Ctrl+N"))
             {
                 d->showArchipelagoPopup = true;
             }
@@ -319,7 +365,7 @@ void DialogueEditor::MenuBar()
             // {
             // }
             ImGui::Separator();
-            if (ImGui::MenuItem("Exit"))
+            if (ImGui::MenuItem("Exit", "Ctrl+Q"))
             {
                 SendMessage(d->mApp->mHWnd, WM_CLOSE, NULL, NULL);
             }
@@ -365,14 +411,22 @@ void DialogueEditor::Update()
     if (d->mApp->mCrazyDaveState != CrazyDaveState::CRAZY_DAVE_ENTERING && d->mApp->mCrazyDaveState !=
         CrazyDaveState::CRAZY_DAVE_OFF)
     {
+        std::string crazyDaveText;
         if (d->mDialogueFile.dialogue.contains(d->selected_item))
         {
             auto item = d->mDialogueFile.dialogue[d->selected_item];
-            d->storeScreen->SetBubbleText(item.crazyDave + "{NO_CLICK}", 1, false);
+            crazyDaveText = item.crazyDave + "{NO_CLICK}";
+            crazyDaveText = TodReplaceString(crazyDaveText, "{{player}}", "Player1");
+            crazyDaveText = TodReplaceString(crazyDaveText, "{{item}}", d->selected_item);
+            crazyDaveText = TodReplaceString(crazyDaveText, "{{game}}", d->mDialogueFile.gameName);
         }
         else
         {
-            d->storeScreen->SetBubbleText("Welcome to the Dialogue Editor!{NO_CLICK}", 1, false);
+            crazyDaveText = "Welcome to the Dialogue Editor!{NO_CLICK}";
+        }
+        if (crazyDaveText != d->crazyDaveText)
+        {
+            d->storeScreen->SetBubbleText(crazyDaveText, 1, false);
         }
     }
 

@@ -1028,7 +1028,7 @@ void StoreScreen::UpdateMouse()
         }
     }
 
-    if (mApp->mWidgetManager->mOverWidget)
+    if (mApp->mWidgetManager->mOverWidget && !mInert)
         mApp->SetCursor(
             mBackButton->mIsOver || mPrevButton->mIsOver || mNextButton->mIsOver || mEnergyButton->mIsOver ||
             mEnergyBackButton->mIsOver ||
@@ -1107,7 +1107,10 @@ void StoreScreen::Update()
 
     // For some reason we stop polling in the shop so poll here
     mApp->mAP->Poll();
-    mApp->mMusic->MakeSureMusicIsPlaying(MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME);
+    if (!mInert)
+    {
+        mApp->mMusic->MakeSureMusicIsPlaying(MUSIC_TUNE_TITLE_CRAZY_DAVE_MAIN_THEME);
+    }
     mApp->UpdateCrazyDave();
 
     // 更新 DataArray<Coin> 中的所有 Coin

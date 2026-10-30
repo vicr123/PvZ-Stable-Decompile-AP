@@ -67,6 +67,11 @@ namespace DialogueEditorComponents
                 ImGui::TextWrapped("Once you're ready to submit your dialogue, ping @vicr123 in the #plants-vs-zombies-goty text channel in the Archipelago Discord server, making sure to upload the saved file.");
                 ImGui::TextWrapped("Once your dialogue is submitted, you may be contacted for follow-up questions if required.");
                 ImGui::TextWrapped("Thank you for your contributions!");
+                
+                if (ImGui::Button("Close"))
+                {
+                    *isOpen = false;
+                }
             }
             ImGui::End();
         }
