@@ -682,6 +682,7 @@ EXIT /B 0</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\DialogueEditor\DialogueEditor.cpp" />
+    <ClCompile Include="..\DialogueEditor\DialogueEditorGuide.cpp" />
     <ClCompile Include="..\include\imgui\backends\imgui_impl_sdl3.cpp" />
     <ClCompile Include="..\include\imgui\backends\imgui_impl_sdlrenderer3.cpp" />
     <ClCompile Include="..\include\imgui\imgui.cpp" />
@@ -1521,6 +1522,7 @@ EXIT /B 0</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DialogueEditor\DialogueEditor.h" />
+    <ClInclude Include="..\DialogueEditor\DialogueEditorGuide.h" />
     <ClInclude Include="..\Editor\ParticleScreen.h" />
     <ClInclude Include="..\include\ImageLib\ImageLib.h" />
     <ClInclude Include="..\include\ImageLib\jpeg\jpeglib.h" />

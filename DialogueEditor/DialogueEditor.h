@@ -14,6 +14,8 @@ public:
     void MenuBar();
     void Draw(Sexy::Graphics* g) override;
     void Update() override;
+    
+    void TriggerOpenAction();
 
 private:
     DialogueEditorPrivate* d;

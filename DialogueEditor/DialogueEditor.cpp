@@ -14,6 +14,7 @@
 #include <backends/imgui_impl_sdlrenderer3.h>
 #include <nlohmann/json.hpp>
 
+#include "DialogueEditorGuide.h"
 #include "../LawnApp.h"
 #include "../Lawn/Widget/StoreScreen.h"
 #include "../SexyAppFramework/APDialogueClientInternalTypes.h"
@@ -39,6 +40,7 @@ struct DialogueEditorPrivate
 
     bool showBadFilePopup = false;
     bool showArchipelagoPopup = false;
+    bool showGuide = true;
     
     void populateAvailableDialogue()
     {
@@ -117,12 +119,24 @@ void DialogueEditor::ImGuiDraw()
         int selected_item_index = std::distance(d->availableDialogue.begin(),
                                                 std::ranges::find(d->availableDialogue, d->selected_item));
         if (selected_item_index >= d->availableDialogue.size()) selected_item_index = -1;
+        
+        std::vector<std::string> listItemText;
+        for (auto itemName : d->availableDialogue)
+        {
+            std::string status = "[X] ";
+            if (d->mDialogueFile.dialogue[itemName].crazyDave.empty())
+            {
+                status = "[ ] ";
+            }
+            listItemText.push_back(status + itemName);
+        }
+        
         ImGui::ListBox("Available Items##List", &selected_item_index, [](void* data, int idx, const char** out_text)
         {
             auto vec = static_cast<std::vector<std::string>*>(data);
             *out_text = vec->at(idx).c_str();
             return true;
-        }, &d->availableDialogue, d->availableDialogue.size(), 10);
+        }, &listItemText, d->availableDialogue.size(), 10);
         if (selected_item_index >= 0)
         {
             d->selected_item = d->availableDialogue[selected_item_index];
@@ -255,6 +269,34 @@ void DialogueEditor::ImGuiDraw()
         }
         ImGui::EndPopup();
     }
+    
+    DialogueEditorComponents::DialogueEditorGuide(&d->showGuide);
+    
+    if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_Enter) || ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_DownArrow))
+    {
+        int selected_item_index = std::distance(d->availableDialogue.begin(),
+                                                std::ranges::find(d->availableDialogue, d->selected_item));
+        if (selected_item_index >= d->availableDialogue.size()) selected_item_index = -1;
+        selected_item_index++;
+        if (selected_item_index < d->availableDialogue.size())
+        {
+            d->selected_item = d->availableDialogue[selected_item_index];
+        }
+    }
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_UpArrow))
+    {
+        int selected_item_index = std::distance(d->availableDialogue.begin(),
+                                                std::ranges::find(d->availableDialogue, d->selected_item));
+        selected_item_index--;
+        if (selected_item_index < d->availableDialogue.size())
+        {
+            d->selected_item = d->availableDialogue[selected_item_index];
+        }
+    }
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_O))
+    {
+        TriggerOpenAction();
+    }
 
     ImGui::Render();
 }
@@ -269,39 +311,9 @@ void DialogueEditor::MenuBar()
             {
                 d->showArchipelagoPopup = true;
             }
-            if (ImGui::MenuItem("Open Local File"))
+            if (ImGui::MenuItem("Open Local File", "Ctrl+O"))
             {
-                const char* filterPatterns[] = {"*.json"};
-
-                const char* file_path = tinyfd_openFileDialog(
-                    "Open Dialogue File",
-                    NULL,
-                    1,
-                    filterPatterns,
-                    "JSON file",
-                    0
-                );
-
-                if (file_path)
-                {
-                    std::ifstream f(file_path);
-                    auto json = nlohmann::json::parse(f, nullptr, false);
-                    if (json.is_discarded())
-                    {
-                        d->showBadFilePopup = true;
-                    }
-                    else
-                    {
-                        if (d->loadJson(json))
-                        {
-                            d->current_file = file_path;
-                        }
-                        else
-                        {
-                            d->showBadFilePopup = true;
-                        }
-                    }
-                }
+                TriggerOpenAction();
             }
             // if (ImGui::MenuItem("Open Network File"))
             // {
@@ -310,6 +322,15 @@ void DialogueEditor::MenuBar()
             if (ImGui::MenuItem("Exit"))
             {
                 SendMessage(d->mApp->mHWnd, WM_CLOSE, NULL, NULL);
+            }
+            ImGui::EndMenu();
+        }
+        
+        if (ImGui::BeginMenu("Help"))
+        {
+            if (ImGui::MenuItem("Show Guide", nullptr, d->showGuide))
+            {
+                d->showGuide = !d->showGuide;
             }
             ImGui::EndMenu();
         }
@@ -356,4 +377,39 @@ void DialogueEditor::Update()
     }
 
     this->MarkDirty();
+}
+
+void DialogueEditor::TriggerOpenAction()
+{
+    const char* filterPatterns[] = {"*.json"};
+
+    const char* file_path = tinyfd_openFileDialog(
+        "Open Dialogue File",
+        NULL,
+        1,
+        filterPatterns,
+        "JSON file",
+        0
+    );
+
+    if (file_path)
+    {
+        std::ifstream f(file_path);
+        auto json = nlohmann::json::parse(f, nullptr, false);
+        if (json.is_discarded())
+        {
+            d->showBadFilePopup = true;
+        }
+        else
+        {
+            if (d->loadJson(json))
+            {
+                d->current_file = file_path;
+            }
+            else
+            {
+                d->showBadFilePopup = true;
+            }
+        }
+    }
 }
