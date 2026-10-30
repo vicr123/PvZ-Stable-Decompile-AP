@@ -135,8 +135,8 @@ void replace(std::string& string, std::string from, std::string to)
     }
 }
 
-std::optional<std::string> APDialogueClient::GetCrazyDaveDialogue(std::string gameName, std::string itemName,
-                                                                  std::string playerName, std::string playerYourName, std::string playerYouName)
+std::optional<std::string> APDialogueClient::GetDialogue(DialogueType type, std::string gameName,
+                                                         std::string itemName, std::string playerName, std::string playerYourName, std::string playerYouName)
 {
     if (!d->gameDialogue.contains(gameName))
     {
@@ -148,8 +148,18 @@ std::optional<std::string> APDialogueClient::GetCrazyDaveDialogue(std::string ga
     {
         return std::nullopt;
     }
-
-    auto sourceDialogue = dialogue.dialogue[itemName].crazyDave;
+    
+    auto itemDialogue = dialogue.dialogue[itemName];
+    std::string sourceDialogue;
+    switch (type)
+    {
+    case DialogueType::CrazyDave:
+        sourceDialogue = itemDialogue.crazyDave;
+        break;
+    case DialogueType::AwardScreen:
+        sourceDialogue = itemDialogue.awardScreen;
+        break;
+    }
     if (sourceDialogue.empty())
     {
         return std::nullopt;

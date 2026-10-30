@@ -15,6 +15,11 @@ public:
     void Draw(Sexy::Graphics* g) override;
     void Update() override;
     
+    void GoUp();
+    void GoDown();
+    void GoLeft();
+    void GoRight();
+    
     void TriggerOpenAction();
 
 private:

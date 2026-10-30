@@ -15,8 +15,10 @@
 #include <nlohmann/json.hpp>
 
 #include "DialogueEditorGuide.h"
+#include "imgui_internal.h"
 #include "../LawnApp.h"
 #include "../Lawn/Widget/StoreScreen.h"
+#include "../SexyAppFramework/APDialogueClient.h"
 #include "../SexyAppFramework/APDialogueClientInternalTypes.h"
 #include "../SexyAppFramework/APWrapper.h"
 
@@ -58,6 +60,8 @@ struct DialogueEditorPrivate
     BackgroundState playerYourPlaceholder;
     BackgroundState itemPlaceholder;
     BackgroundState gamePlaceholder;
+    
+    APDialogueClient::DialogueType dialogueType = APDialogueClient::DialogueType::CrazyDave;
 
     void populateAvailableDialogue()
     {
@@ -149,11 +153,24 @@ void DialogueEditor::ImGuiDraw()
         std::vector<std::string> listItemText;
         for (auto itemName : d->availableDialogue)
         {
-            std::string status = "[X] ";
+            std::string status = "[";
             if (d->mDialogueFile.dialogue[itemName].crazyDave.empty())
             {
-                status = "[ ] ";
+                status += " ";
             }
+            else
+            {
+                status += "X";
+            }
+            if (d->mDialogueFile.dialogue[itemName].awardScreen.empty())
+            {
+                status += " ";
+            }
+            else
+            {
+                status += "X";
+            }
+            status += "] ";
             listItemText.push_back(status + itemName);
         }
 
@@ -170,46 +187,73 @@ void DialogueEditor::ImGuiDraw()
 
         if (d->mDialogueFile.dialogue.contains(d->selected_item))
         {
+            ImGui::PushItemWidth(150);
+            const char* dialogueTypes[] = { "Crazy Dave", "Award Screen" };
+            int dialogueType = static_cast<int>(d->dialogueType);
+            if (ImGui::Combo("##DialogueType", &dialogueType, dialogueTypes, 2))
+            {
+                d->dialogueType = static_cast<APDialogueClient::DialogueType>(dialogueType);
+                d->focusTextField = true;
+            }
+            ImGui::PopItemWidth();
+            
             auto item = &d->mDialogueFile.dialogue[d->selected_item];
-            static char text_buffer[128];
-            strncpy(text_buffer, item->crazyDave.c_str(), 128);
+            std::string* text_source = nullptr;
+            switch (d->dialogueType)
+            {
+            case APDialogueClient::DialogueType::CrazyDave:
+                text_source = &item->crazyDave;
+                break;
+            case APDialogueClient::DialogueType::AwardScreen:
+                text_source = &item->awardScreen;
+                break;
+            }
+            
+            if (text_source)
+            {
+                static char text_buffer[128];
+                strncpy(text_buffer, text_source->c_str(), 128);
 
-            if (d->focusTextField)
-            {
-                ImGui::SetKeyboardFocusHere();
-                d->focusTextField = false;
-            }
-            if (ImGui::InputText("Crazy Dave Text", text_buffer, 128))
-            {
-                item->crazyDave = text_buffer;
-                d->saveJson();
-            }
+                ImGui::PushItemWidth(450);
+                if (d->focusTextField)
+                {
+                    ImGui::SetKeyboardFocusHere();
+                    d->focusTextField = false;
+                }
+                ImGui::SameLine();
+                if (ImGui::InputText("Text", text_buffer, 128))
+                {
+                    *text_source = text_buffer;
+                    d->saveJson();
+                }
+                ImGui::PopItemWidth();
 
-            ImGui::Text("Remaining placeholders:");
-            if (item->crazyDave.find("{{player}}") == std::string::npos)
-            {
-                ImGui::SameLine();
-                ImGuiWithBackground(d->playerPlaceholder, "{{player}}", IM_COL32(100, 100, 100, 255));
-            }
-            if (item->crazyDave.find("{{player_you}}") == std::string::npos)
-            {
-                ImGui::SameLine();
-                ImGuiWithBackground(d->playerYouPlaceholder, "{{player_you}}", IM_COL32(100, 100, 100, 255));
-            }
-            if (item->crazyDave.find("{{player_your}}") == std::string::npos)
-            {
-                ImGui::SameLine();
-                ImGuiWithBackground(d->playerYourPlaceholder, "{{player_your}}", IM_COL32(100, 100, 100, 255));
-            }
-            if (item->crazyDave.find("{{item}}") == std::string::npos)
-            {
-                ImGui::SameLine();
-                ImGuiWithBackground(d->itemPlaceholder, "{{item}}", IM_COL32(100, 100, 100, 255));
-            }
-            if (item->crazyDave.find("{{game}}") == std::string::npos)
-            {
-                ImGui::SameLine();
-                ImGuiWithBackground(d->gamePlaceholder, "{{game}}", IM_COL32(100, 100, 100, 255));
+                ImGui::Text("Remaining placeholders:");
+                if (text_source->find("{{player}}") == std::string::npos)
+                {
+                    ImGui::SameLine();
+                    ImGuiWithBackground(d->playerPlaceholder, "{{player}}", IM_COL32(100, 100, 100, 255));
+                }
+                if (text_source->find("{{player_you}}") == std::string::npos)
+                {
+                    ImGui::SameLine();
+                    ImGuiWithBackground(d->playerYouPlaceholder, "{{player_you}}", IM_COL32(100, 100, 100, 255));
+                }
+                if (text_source->find("{{player_your}}") == std::string::npos)
+                {
+                    ImGui::SameLine();
+                    ImGuiWithBackground(d->playerYourPlaceholder, "{{player_your}}", IM_COL32(100, 100, 100, 255));
+                }
+                if (text_source->find("{{item}}") == std::string::npos)
+                {
+                    ImGui::SameLine();
+                    ImGuiWithBackground(d->itemPlaceholder, "{{item}}", IM_COL32(100, 100, 100, 255));
+                }
+                if (text_source->find("{{game}}") == std::string::npos)
+                {
+                    ImGui::SameLine();
+                    ImGuiWithBackground(d->gamePlaceholder, "{{game}}", IM_COL32(100, 100, 100, 255));
+                }
             }
         }
 
@@ -334,40 +378,45 @@ void DialogueEditor::ImGuiDraw()
     }
 
     DialogueEditorComponents::DialogueEditorGuide(&d->showGuide);
-
-    if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_Enter) || ImGui::IsKeyChordPressed(
-        ImGuiMod_Alt | ImGuiKey_DownArrow))
+    
+    
+    if (ImGui::Shortcut(ImGuiMod_Alt | ImGuiKey_DownArrow, ImGuiInputFlags_RouteGlobal))
     {
-        int selected_item_index = std::distance(d->availableDialogue.begin(),
-                                                std::ranges::find(d->availableDialogue, d->selected_item));
-        if (selected_item_index >= d->availableDialogue.size()) selected_item_index = -1;
-        selected_item_index++;
-        if (selected_item_index < d->availableDialogue.size())
+        GoDown();
+    }
+    else if (ImGui::Shortcut(ImGuiMod_Alt | ImGuiKey_UpArrow, ImGuiInputFlags_RouteGlobal))
+    {
+        GoUp();
+    }
+    else if (ImGui::Shortcut(ImGuiMod_Alt | ImGuiKey_LeftArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused | ImGuiInputFlags_RouteOverActive))
+    {
+        GoLeft();
+    }
+    else if (ImGui::Shortcut(ImGuiMod_Alt | ImGuiKey_RightArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused | ImGuiInputFlags_RouteOverActive))
+    {
+        GoRight();
+    }
+    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_Enter, ImGuiInputFlags_RouteGlobal))
+    {
+        if (d->dialogueType == APDialogueClient::DialogueType::AwardScreen)
         {
-            d->selected_item = d->availableDialogue[selected_item_index];
-            d->focusTextField = true;
+            d->dialogueType = APDialogueClient::DialogueType::CrazyDave;
+            GoDown();
+        }
+        else
+        {
+            GoRight();
         }
     }
-    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_UpArrow))
-    {
-        int selected_item_index = std::distance(d->availableDialogue.begin(),
-                                                std::ranges::find(d->availableDialogue, d->selected_item));
-        selected_item_index--;
-        if (selected_item_index < d->availableDialogue.size())
-        {
-            d->selected_item = d->availableDialogue[selected_item_index];
-            d->focusTextField = true;
-        }
-    }
-    else if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_O))
+    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_O, ImGuiInputFlags_RouteGlobal))
     {
         TriggerOpenAction();
     }
-    else if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_N))
+    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_N, ImGuiInputFlags_RouteGlobal))
     {
         d->showArchipelagoPopup = true;
     }
-    else if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_Q))
+    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_Q, ImGuiInputFlags_RouteGlobal))
     {
         SendMessage(d->mApp->mHWnd, WM_CLOSE, NULL, NULL);
     }
@@ -418,7 +467,15 @@ void DialogueEditor::MenuBar()
 void DialogueEditor::Draw(Sexy::Graphics* g)
 {
     Widget::Draw(g);
-    d->storeScreen->Draw(g);
+
+    switch (d->dialogueType)
+    {
+    case APDialogueClient::DialogueType::CrazyDave:
+        d->storeScreen->Draw(g);
+        break;
+    case APDialogueClient::DialogueType::AwardScreen:
+        break;
+    }
 }
 
 void DialogueEditor::Update()
@@ -471,6 +528,61 @@ void DialogueEditor::Update()
     }
 
     this->MarkDirty();
+}
+
+void DialogueEditor::GoUp()
+{
+    ImGui::ClearActiveID();
+    int selected_item_index = std::distance(d->availableDialogue.begin(),
+                                            std::ranges::find(d->availableDialogue, d->selected_item));
+    selected_item_index--;
+    if (selected_item_index < d->availableDialogue.size())
+    {
+        d->selected_item = d->availableDialogue[selected_item_index];
+        d->focusTextField = true;
+    }
+}
+
+void DialogueEditor::GoDown()
+{
+    ImGui::ClearActiveID();
+    int selected_item_index = std::distance(d->availableDialogue.begin(),
+                                            std::ranges::find(d->availableDialogue, d->selected_item));
+    if (selected_item_index >= d->availableDialogue.size()) selected_item_index = -1;
+    selected_item_index++;
+    if (selected_item_index < d->availableDialogue.size())
+    {
+        d->selected_item = d->availableDialogue[selected_item_index];
+        d->focusTextField = true;
+    }
+}
+
+void DialogueEditor::GoLeft()
+{
+    ImGui::ClearActiveID();
+    switch (d->dialogueType)
+    {
+    case APDialogueClient::DialogueType::CrazyDave:
+        break;
+    case APDialogueClient::DialogueType::AwardScreen:
+        d->dialogueType = APDialogueClient::DialogueType::CrazyDave;
+        break;
+    }
+    d->focusTextField = true;
+}
+
+void DialogueEditor::GoRight()
+{
+    ImGui::ClearActiveID();
+    switch (d->dialogueType)
+    {
+    case APDialogueClient::DialogueType::CrazyDave:
+        d->dialogueType = APDialogueClient::DialogueType::AwardScreen;
+        break;
+    case APDialogueClient::DialogueType::AwardScreen:
+        break;
+    }
+    d->focusTextField = true;
 }
 
 void DialogueEditor::TriggerOpenAction()

@@ -11,8 +11,9 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GameMeta, strings, matureGame)
 struct Dialogue
 {
     std::string crazyDave;
+    std::string awardScreen;
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Dialogue, crazyDave, awardScreen)
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Dialogue, crazyDave)
 
 struct DialogueFile
 {
