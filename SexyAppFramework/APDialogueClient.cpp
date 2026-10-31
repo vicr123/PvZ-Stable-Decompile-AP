@@ -11,7 +11,7 @@
 #include "SexyAppBase.h"
 #include "APDialogueClientInternalTypes.h"
 
-const std::string DIALOGUE_BASE_URL = "http://pvz-ap.vicr123.com/";
+const std::string DIALOGUE_BASE_URL = "https://pvz-ap.vicr123.com";
 
 
 struct APDialogueClientPrivate
