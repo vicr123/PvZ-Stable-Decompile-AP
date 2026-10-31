@@ -10,7 +10,7 @@
         },
         "Backwards Repeater (Vasebreaker)": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This plant is like a peashooter, only it shoots backwards."
         },
         "Bacon": {
             "awardScreen": "",
@@ -26,55 +26,55 @@
         },
         "Bonus Levels": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Bonus? I love a good bonus!"
         },
         "Bonus Levels Unlock: Air Raid": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Bonus? I love a good bonus!"
         },
         "Bonus Levels Unlock: Art Challenge Sunflower": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Bonus? I love a good bonus!"
         },
         "Bonus Levels Unlock: Art Challenge Wall-nut": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Bonus? I love a good bonus!"
         },
         "Bonus Levels Unlock: Big Time": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Bonus? I love a good bonus!"
         },
         "Bonus Levels Unlock: Can You Dig It?": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Bonus? I love a good bonus!"
         },
         "Bonus Levels Unlock: Dark Stormy Night": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Bonus? I love a good bonus!"
         },
         "Bonus Levels Unlock: Grave Danger": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Bonus? I love a good bonus!"
         },
         "Bonus Levels Unlock: High Gravity": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Bonus? I love a good bonus!"
         },
         "Bonus Levels Unlock: Sunny Day": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Bonus? I love a good bonus!"
         },
         "Bonus Levels Unlock: Unsodded": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Bonus? I love a good bonus!"
         },
         "Buckethead Zombie (I, Zombie)": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Bonus? I love a good bonus!"
         },
         "Bug Spray": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Zen Garden plants require Bug Spray from time to time! It keeps them happy for an entire day!"
         },
         "Bungee Zombie (I, Zombie)": {
             "awardScreen": "",
@@ -105,8 +105,8 @@
             "crazyDave": "Some say that no matter where you are on the world, if you dig all the way down, you'll end up in China."
         },
         "China Unlock: The Great Wall": {
-            "awardScreen": "",
-            "crazyDave": ""
+            "awardScreen": "Allows access to the secret China level",
+            "crazyDave": "Some say that no matter where you are on the world, if you dig all the way down, you'll end up in China."
         },
         "Chocolate": {
             "awardScreen": "",
@@ -206,46 +206,46 @@
         },
         "Day Unlock: Level 1-1": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Isn't it nice when you can get free sun from the sky?"
         },
         "Day Unlock: Level 1-10": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Isn't it nice when you can get free sun from the sky?"
         },
         "Day Unlock: Level 1-2": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Isn't it nice when you can get free sun from the sky?"
         },
         "Day Unlock: Level 1-3": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Isn't it nice when you can get free sun from the sky?"
         },
         "Day Unlock: Level 1-4": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Isn't it nice when you can get free sun from the sky?"
         },
         "Day Unlock: Level 1-5": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Isn't it nice when you can get free sun from the sky?"
         },
         "Day Unlock: Level 1-6": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Isn't it nice when you can get free sun from the sky?"
         },
         "Day Unlock: Level 1-7": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Isn't it nice when you can get free sun from the sky?"
         },
         "Day Unlock: Level 1-8": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Isn't it nice when you can get free sun from the sky?"
         },
         "Day Unlock: Level 1-9": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Isn't it nice when you can get free sun from the sky?"
         },
         "Diamond": {
-            "awardScreen": "",
+            "awardScreen": "Worth $1000",
             "crazyDave": "This diamond is worth $1000 exactly. How can you say no to that?"
         },
         "Digger Zombie (I, Zombie)": {
@@ -257,7 +257,7 @@
             "crazyDave": "This plant destroys all the zombies on your property, but it leaves behind a crater."
         },
         "Explode-o-nut (Wall-nut Bowling)": {
-            "awardScreen": "",
+            "awardScreen": "Explodes on contact",
             "crazyDave": "Go and bowl me a winner!"
         },
         "Extra Seed Slot": {
@@ -265,8 +265,8 @@
             "crazyDave": "This extra seed slot will let {{player}} choose an extra plant per level!"
         },
         "Fertilizer": {
-            "awardScreen": "",
-            "crazyDave": ""
+            "awardScreen": "Zen Garden plants need fertilizer to grow!",
+            "crazyDave": "Zen Garden plants need fertilizer to grow!"
         },
         "Flower Pot": {
             "awardScreen": "Lets {{player_you}} plant on the roof",
@@ -278,43 +278,43 @@
         },
         "Fog Unlock: Level 4-1": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "I miss being \"Fog Man\""
         },
         "Fog Unlock: Level 4-10": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "I miss being \"Fog Man\""
         },
         "Fog Unlock: Level 4-2": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "I miss being \"Fog Man\""
         },
         "Fog Unlock: Level 4-3": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "I miss being \"Fog Man\""
         },
         "Fog Unlock: Level 4-4": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "I miss being \"Fog Man\""
         },
         "Fog Unlock: Level 4-5": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "I miss being \"Fog Man\""
         },
         "Fog Unlock: Level 4-6": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "I miss being \"Fog Man\""
         },
         "Fog Unlock: Level 4-7": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "I miss being \"Fog Man\""
         },
         "Fog Unlock: Level 4-8": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "I miss being \"Fog Man\""
         },
         "Fog Unlock: Level 4-9": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "I miss being \"Fog Man\""
         },
         "Football Zombie (I, Zombie)": {
             "awardScreen": "",
@@ -330,7 +330,7 @@
         },
         "Gardening Glove": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This lets {{player_you}} move Zen Garden plants around!"
         },
         "Gargantuar (I, Zombie)": {
             "awardScreen": "",
@@ -353,12 +353,12 @@
             "crazyDave": ""
         },
         "Gold Coin": {
-            "awardScreen": "",
-            "crazyDave": "This coin is worth $50. Is it worth that to {{player}} though?"
+            "awardScreen": "Worth $50",
+            "crazyDave": "This coin is worth $50. Is it worth that much to {{player_you}} though?"
         },
         "Gold Magnet": {
             "awardScreen": "Collects coins and diamonds for you",
-            "crazyDave": ""
+            "crazyDave": "These collect coins and diamonds for {{player_you}}!"
         },
         "Gold Watering Can": {
             "awardScreen": "",
@@ -378,7 +378,7 @@
         },
         "Imitater": {
             "awardScreen": "Lets you have two of the same plant",
-            "crazyDave": ""
+            "crazyDave": "This Imitater lets {{player_you}} have two of the same plant during a level"
         },
         "Imp (I, Zombie)": {
             "awardScreen": "",
@@ -386,7 +386,7 @@
         },
         "Instant Zombie Freeze": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "How about this? I'll freeze all the zombies on {{player_your}} lawn!"
         },
         "Instant Zombie Hypnosis": {
             "awardScreen": "",
@@ -442,87 +442,87 @@
         },
         "Mini-game Unlock: Beghouled": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Beghouled Twist": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Big Trouble Little Zombie": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Bobsled Bonanza": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Column Like You See 'Em": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Dr. Zomboss's Revenge": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Invisi-ghoul": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: It's Raining Seeds": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Last Stand": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Pogo Party": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Portal Combat": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Seeing Stars": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Slot Machine": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Wall-nut Bowling": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Wall-nut Bowling 2": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Whack a Zombie": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: ZomBotany": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: ZomBotany 2": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Zombie Nimble Zombie Quick": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-game Unlock: Zombiquarium": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mini-games": {
-            "awardScreen": "",
-            "crazyDave": ""
+            "awardScreen": "Now {{player_you}} can play the minigames!",
+            "crazyDave": "Ever get tired of just defending your lawn from zombies?"
         },
         "Mower Deploy Trap": {
             "awardScreen": "",
@@ -617,8 +617,8 @@
             "crazyDave": ""
         },
         "Pool Cleaners": {
-            "awardScreen": "",
-            "crazyDave": ""
+            "awardScreen": "These will clean out zombies from {{player_your}} pool if they manage to get to the end",
+            "crazyDave": "These Pool Cleaners add an extra line of defense on levels with a pool!"
         },
         "Pool Unlock: Level 3-1": {
             "awardScreen": "",
@@ -690,87 +690,87 @@
         },
         "Puzzle Mode": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: Ace of Vase": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: All your brainz r belong to us": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: Another Chain Reaction": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: Can You Dig It?": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: Chain Reaction": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: Dead Zeppelin": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: Hokey Pokey": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: I, Zombie": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: I, Zombie Too": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: M is for Metal": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: Me Smash!": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: Scary Potter": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: Third Vase": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: Three Hit Wonder": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: To The Left": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: Totally Nuts": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: Vasebreaker": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "Puzzle Unlock: ZomBoogie": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "Some of these levels are really difficult."
         },
         "RV Trap": {
             "awardScreen": "",
             "crazyDave": ""
         },
         "Rake": {
-            "awardScreen": "",
-            "crazyDave": ""
+            "awardScreen": "This will defeat the first zombie that steps on it!",
+            "crazyDave": "This Garden Rake takes out the first zombie that steps on it!"
         },
         "Random Seed Packet": {
             "awardScreen": "",
@@ -782,47 +782,47 @@
         },
         "Roof Access": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "One step closer to Zomboss!"
         },
         "Roof Cleaners": {
-            "awardScreen": "",
-            "crazyDave": ""
+            "awardScreen": "These will clean out zombies from {{player_your}} roof if they manage to get to the end",
+            "crazyDave": "These add an extra line of defense for those difficult roof levels!"
         },
         "Roof Unlock: Level 5-1": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "One step closer to Zomboss!"
         },
         "Roof Unlock: Level 5-2": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "One step closer to Zomboss!"
         },
         "Roof Unlock: Level 5-3": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "One step closer to Zomboss!"
         },
         "Roof Unlock: Level 5-4": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "One step closer to Zomboss!"
         },
         "Roof Unlock: Level 5-5": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "One step closer to Zomboss!"
         },
         "Roof Unlock: Level 5-6": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "One step closer to Zomboss!"
         },
         "Roof Unlock: Level 5-7": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "One step closer to Zomboss!"
         },
         "Roof Unlock: Level 5-8": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "One step closer to Zomboss!"
         },
         "Roof Unlock: Level 5-9": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "One step closer to Zomboss!"
         },
         "Scaredy-shroom": {
             "awardScreen": "Long-ranged shooter that hides when enemies get near it",
@@ -830,7 +830,7 @@
         },
         "Screen Door Zombie (I, Zombie)": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This is a cardboard cutout of Screen Door Zombie"
         },
         "Sea-shroom": {
             "awardScreen": "Aquatic plant that shoots short-ranged spores",
@@ -845,12 +845,12 @@
             "crazyDave": ""
         },
         "Shovel": {
-            "awardScreen": "",
-            "crazyDave": ""
+            "awardScreen": "Lets {{player_you}} dig up plants from the lawn!",
+            "crazyDave": "This lets {{player_you}} dig up plants from the lawn!"
         },
         "Silver Coin": {
-            "awardScreen": "",
-            "crazyDave": ""
+            "awardScreen": "Worth $10",
+            "crazyDave": "This coin is worth $10. Is it worth that much to {{player_you}} though?"
         },
         "Snow Pea": {
             "awardScreen": "Shoots frozen peas that damage and slow the enemy",
@@ -877,12 +877,12 @@
             "crazyDave": ""
         },
         "Stinky": {
-            "awardScreen": "",
-            "crazyDave": ""
+            "awardScreen": "Automatically picks up coins in Zen Garden!",
+            "crazyDave": "Stinky the Snail will help {{player_you}} pick up coins in Zen Garden!"
         },
         "Suburban Almanac": {
-            "awardScreen": "",
-            "crazyDave": ""
+            "awardScreen": "Lets {{player_you}} see information about all the plants and zombies!",
+            "crazyDave": "This childhood book is how I know so much about the zombies!"
         },
         "Sun Burst": {
             "awardScreen": "",
@@ -958,219 +958,219 @@
         },
         "Tile Unlock: Row #1, Column #1": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #1, Column #2": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #1, Column #3": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #1, Column #4": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #1, Column #5": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #1, Column #6": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #1, Column #7": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #1, Column #8": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #1, Column #9": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #2, Column #1": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #2, Column #2": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #2, Column #3": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #2, Column #4": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #2, Column #5": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #2, Column #6": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #2, Column #7": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #2, Column #8": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #2, Column #9": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #3, Column #1": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #3, Column #2": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #3, Column #3": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #3, Column #4": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #3, Column #5": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #3, Column #6": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #3, Column #7": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #3, Column #8": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #3, Column #9": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #4, Column #1": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #4, Column #2": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #4, Column #3": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #4, Column #4": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #4, Column #5": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #4, Column #6": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #4, Column #7": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #4, Column #8": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #4, Column #9": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #5, Column #1": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #5, Column #2": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #5, Column #3": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #5, Column #4": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #5, Column #5": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #5, Column #6": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #5, Column #7": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #5, Column #8": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #5, Column #9": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #6, Column #1": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #6, Column #2": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #6, Column #3": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #6, Column #4": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #6, Column #5": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #6, Column #6": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #6, Column #7": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #6, Column #8": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Tile Unlock: Row #6, Column #9": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can be used to patch a hole in {{player_your}} lawn."
         },
         "Torchwood": {
             "awardScreen": "Peas that pass through it turn into fireballs",
@@ -1178,7 +1178,7 @@
         },
         "Tree Food": {
             "awardScreen": "",
-            "crazyDave": ""
+            "crazyDave": "This can feed {{player_your}} Tree of Wisdom!"
         },
         "Tricked Out Mode": {
             "awardScreen": "",
@@ -1213,12 +1213,12 @@
             "crazyDave": ""
         },
         "Zen Garden": {
-            "awardScreen": "",
-            "crazyDave": ""
+            "awardScreen": "Now {{player_you}} can access the Zen Garden!",
+            "crazyDave": "If {{player_you}} can take care of these plants, the rewards will be endless!"
         },
         "Zen Garden Sprout": {
-            "awardScreen": "",
-            "crazyDave": ""
+            "awardScreen": "A new plant to grow in {{player_your}} Zen Garden!",
+            "crazyDave": "This is a plant for {{player_your}} Zen Garden!"
         },
         "Zombie (I, Zombie)": {
             "awardScreen": "",
