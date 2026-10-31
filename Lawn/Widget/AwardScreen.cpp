@@ -31,6 +31,7 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool theShowin
 	mClip = false;
 	mFadeInCounter = 180;
 	mAwardType = theAwardType;
+	mInert = false;
 	TodLoadResources("DelayLoad_AwardScreen");
 	// @Patoke: implemented and Inliothixi
 	mShowingAchievements = false;
