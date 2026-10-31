@@ -39,7 +39,7 @@ struct DialogueEditorPrivate
     DialogueFile mDialogueFile;
     std::vector<string> availableDialogue;
     std::string selected_item;
-    
+
     std::string oldSelection;
     APDialogueClient::DialogueType oldDialogType;
 
@@ -53,9 +53,10 @@ struct DialogueEditorPrivate
     std::string crazyDaveText;
 
     bool showBadFilePopup = false;
+    bool showDownloadPopup = false;
     bool showArchipelagoPopup = false;
     bool showGuide = true;
-    
+
     bool previewCurrentPlayer = false;
 
     bool focusTextField = false;
@@ -63,8 +64,11 @@ struct DialogueEditorPrivate
     BackgroundState playerPlaceholder;
     BackgroundState itemPlaceholder;
     BackgroundState gamePlaceholder;
-    
+
     APDialogueClient::DialogueType dialogueType = APDialogueClient::DialogueType::CrazyDave;
+
+    std::string selectedDownloadGame;
+    std::optional<std::stop_source> downloadStopSource;
 
     void populateAvailableDialogue()
     {
@@ -126,7 +130,7 @@ DialogueEditor::DialogueEditor(LawnApp* theApp)
 
     d->storeScreen = new StoreScreen(theApp);
     d->storeScreen->mInert = true;
-    
+
     d->awardScreen = new AwardScreen(theApp, AWARD_FORLEVEL);
     d->awardScreen->mInert = true;
     d->awardScreen->mFadeInCounter = 0;
@@ -174,14 +178,14 @@ void DialogueEditor::ImGuiDraw()
                     status += "X";
                 }
                 status += "] ";
-                
+
                 auto text = status + itemName;
                 bool selected = d->selected_item == itemName;
                 if (ImGui::Selectable(text.c_str(), &selected))
                 {
                     d->selected_item = itemName;
                 }
-                
+
                 if (selected)
                 {
                     ImGui::SetItemDefaultFocus();
@@ -191,10 +195,10 @@ void DialogueEditor::ImGuiDraw()
                     }
                 }
             }
-            
+
             ImGui::EndListBox();
         }
-        
+
         ImGui::PopItemWidth();
         ImGui::End();
     }
@@ -203,11 +207,11 @@ void DialogueEditor::ImGuiDraw()
     {
         ImGui::Begin("Text Editor", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
         ImGui::PushItemWidth(600);
-        
+
         ImGui::Text(d->selected_item.c_str());
-        
+
         ImGui::PushItemWidth(150);
-        const char* dialogueTypes[] = { "Crazy Dave", "Award Screen" };
+        const char* dialogueTypes[] = {"Crazy Dave", "Award Screen"};
         int dialogueType = static_cast<int>(d->dialogueType);
         if (ImGui::Combo("##DialogueType", &dialogueType, dialogueTypes, 2))
         {
@@ -215,7 +219,7 @@ void DialogueEditor::ImGuiDraw()
             d->focusTextField = true;
         }
         ImGui::PopItemWidth();
-        
+
         auto item = &d->mDialogueFile.dialogue[d->selected_item];
         std::string* text_source = nullptr;
         switch (d->dialogueType)
@@ -227,7 +231,7 @@ void DialogueEditor::ImGuiDraw()
             text_source = &item->awardScreen;
             break;
         }
-        
+
         if (text_source)
         {
             static char text_buffer[128];
@@ -248,7 +252,7 @@ void DialogueEditor::ImGuiDraw()
                 }
                 d->saveJson();
             }
-            
+
             // Retain these so we don't overwrite a different string if they were changed
             d->oldSelection = d->selected_item;
             d->oldDialogType = d->dialogueType;
@@ -298,7 +302,8 @@ void DialogueEditor::ImGuiDraw()
     }
 
     auto _false = false;
-    if (ImGui::BeginPopupModal("Archipelago", d->showArchipelagoPopup ? nullptr : &_false, ImGuiWindowFlags_AlwaysAutoResize))
+    if (ImGui::BeginPopupModal("Archipelago", d->showArchipelagoPopup ? nullptr : &_false,
+                               ImGuiWindowFlags_AlwaysAutoResize))
     {
         if (d->mAP)
         {
@@ -391,25 +396,121 @@ void DialogueEditor::ImGuiDraw()
         ImGui::EndPopup();
     }
 
+    if (d->showDownloadPopup)
+    {
+        ImGui::OpenPopup("Download Existing Dialogue File");
+    }
+    _false = false;
+
+    if (ImGui::BeginPopupModal("Download Existing Dialogue File", d->showDownloadPopup ? nullptr : &_false,
+                               ImGuiWindowFlags_None))
+    {
+        if (d->downloadStopSource.has_value())
+        {
+            ImGui::Text("One moment please...");
+            if (ImGui::Button("Cancel"))
+            {
+                d->downloadStopSource.value().request_stop();
+                d->downloadStopSource.reset();
+            }
+        }
+        else
+        {
+            ImGui::TextWrapped("Which game's dialogue do you want to download?");
+
+            ImGui::PushItemWidth(-1);
+
+            if (ImGui::BeginListBox("##List", ImVec2(-1, ImGui::GetContentRegionAvail().y - 25)))
+            {
+                for (auto game : d->mApp->mAPDialogueClient->AvailableGames())
+                {
+                    bool selected = d->selectedDownloadGame == game;
+                    if (ImGui::Selectable(game.c_str(), &selected))
+                    {
+                        d->selectedDownloadGame = game;
+                    }
+
+                    if (selected)
+                    {
+                        ImGui::SetItemDefaultFocus();
+                    }
+                }
+
+                ImGui::EndListBox();
+            }
+            
+            if (ImGui::Button("Cancel"))
+            {
+                d->showDownloadPopup = false;
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::SameLine();
+            ImGui::BeginDisabled(d->selectedDownloadGame.empty());
+            if (ImGui::Button("Download Game Information and Save"))
+            {
+                d->downloadStopSource = std::stop_source();
+                d->mApp->mAPDialogueClient->DownloadDialogueFileCallback(d->selectedDownloadGame, [this](std::optional<DialogueFile> dialogueFile)
+                {
+                    d->downloadStopSource.reset();
+                    if (dialogueFile.has_value())
+                    {
+                        const char* filterPatterns[] = {"*.json"};
+                        const char* file_path = tinyfd_saveFileDialog(
+                            "Save Dialogue File",
+                            (d->selectedDownloadGame + ".json").c_str(),
+                            1,
+                            filterPatterns,
+                            "JSON file"
+                        );
+
+                        if (file_path)
+                        {
+                            d->mDialogueFile = dialogueFile.value();
+                            d->current_file = file_path;
+                            d->saveJson();
+                            d->populateAvailableDialogue();
+
+                            d->showDownloadPopup = false;
+                            ImGui::CloseCurrentPopup();
+                        }
+                    }
+                    else
+                    {
+                        // TODO: problem
+                    }
+                }, d->downloadStopSource.value().get_token());
+            }
+            ImGui::EndDisabled();
+        }
+        ImGui::EndPopup();
+    }
+
     DialogueEditorComponents::DialogueEditorGuide(&d->showGuide);
-    
-    if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_DownArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_Repeat))
+
+    if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_DownArrow,
+                                 ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_Repeat))
     {
         GoDown();
     }
-    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_UpArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_Repeat))
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_UpArrow,
+                                      ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_Repeat))
     {
         GoUp();
     }
-    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_LeftArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused | ImGuiInputFlags_RouteOverActive | ImGuiInputFlags_Repeat))
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_LeftArrow,
+                                      ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused |
+                                      ImGuiInputFlags_RouteOverActive | ImGuiInputFlags_Repeat))
     {
         GoLeft();
     }
-    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_RightArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused | ImGuiInputFlags_RouteOverActive | ImGuiInputFlags_Repeat))
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_RightArrow,
+                                      ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused |
+                                      ImGuiInputFlags_RouteOverActive | ImGuiInputFlags_Repeat))
     {
         GoRight();
     }
-    else if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_Enter, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_Repeat))
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_Enter,
+                                      ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_Repeat))
     {
         GoNext();
     }
@@ -425,8 +526,9 @@ void DialogueEditor::ImGuiDraw()
     {
         SendMessage(d->mApp->mHWnd, WM_CLOSE, NULL, NULL);
     }
-    
-    d->previewCurrentPlayer = (ImGui::IsKeyDown(ImGuiKey_LeftAlt) || ImGui::IsKeyDown(ImGuiKey_RightAlt)) && (ImGui::IsKeyDown(ImGuiKey_LeftShift) || ImGui::IsKeyDown(ImGuiKey_RightShift));
+
+    d->previewCurrentPlayer = (ImGui::IsKeyDown(ImGuiKey_LeftAlt) || ImGui::IsKeyDown(ImGuiKey_RightAlt)) && (
+        ImGui::IsKeyDown(ImGuiKey_LeftShift) || ImGui::IsKeyDown(ImGuiKey_RightShift));
 
     ImGui::Render();
 }
@@ -445,9 +547,10 @@ void DialogueEditor::MenuBar()
             {
                 TriggerOpenAction();
             }
-            // if (ImGui::MenuItem("Open Network File"))
-            // {
-            // }
+            if (ImGui::MenuItem("Download an existing dialogue file"))
+            {
+                d->showDownloadPopup = true;
+            }
             ImGui::Separator();
             if (ImGui::MenuItem("Exit", "Ctrl+Q"))
             {
@@ -455,20 +558,21 @@ void DialogueEditor::MenuBar()
             }
             ImGui::EndMenu();
         }
-        
+
         if (ImGui::BeginMenu("View"))
         {
             if (ImGui::MenuItem("Crazy Dave", nullptr, d->dialogueType == APDialogueClient::DialogueType::CrazyDave))
             {
                 d->dialogueType = APDialogueClient::DialogueType::CrazyDave;
             }
-            if (ImGui::MenuItem("Award Screen", nullptr, d->dialogueType == APDialogueClient::DialogueType::AwardScreen))
+            if (ImGui::MenuItem("Award Screen", nullptr,
+                                d->dialogueType == APDialogueClient::DialogueType::AwardScreen))
             {
                 d->dialogueType = APDialogueClient::DialogueType::AwardScreen;
             }
             ImGui::EndMenu();
         }
-        
+
         if (ImGui::BeginMenu("Go"))
         {
             if (ImGui::MenuItem("Next String", "Ctrl+Enter", false, !d->current_file.empty()))
@@ -546,7 +650,7 @@ void DialogueEditor::Update()
     {
         d->awardScreen->mFakeItemName = d->selected_item;
         d->awardScreen->mFakePlayerName = d->previewCurrentPlayer ? "Your" : "Player1's";
-        
+
         std::string crazyDaveText;
         if (d->mDialogueFile.dialogue.contains(d->selected_item))
         {
@@ -560,12 +664,14 @@ void DialogueEditor::Update()
             {
                 crazyDaveText = item.crazyDave + "{NO_CLICK}";
                 crazyDaveText = TodReplaceString(crazyDaveText, "{{player}}", "Player1");
-                crazyDaveText = TodReplaceString(crazyDaveText, "{{player_you}}", d->previewCurrentPlayer ? "you" : "Player1");
-                crazyDaveText = TodReplaceString(crazyDaveText, "{{player_your}}", d->previewCurrentPlayer ? "your" : "Player1's");
+                crazyDaveText = TodReplaceString(crazyDaveText, "{{player_you}}",
+                                                 d->previewCurrentPlayer ? "you" : "Player1");
+                crazyDaveText = TodReplaceString(crazyDaveText, "{{player_your}}",
+                                                 d->previewCurrentPlayer ? "your" : "Player1's");
                 crazyDaveText = TodReplaceString(crazyDaveText, "{{item}}", d->selected_item);
                 crazyDaveText = TodReplaceString(crazyDaveText, "{{game}}", d->mDialogueFile.gameName);
             }
-            
+
             if (item.awardScreen.empty())
             {
                 d->awardScreen->mFakeText = "An item from a world far far away";
@@ -575,7 +681,8 @@ void DialogueEditor::Update()
                 std::string awardText = item.awardScreen;
                 awardText = TodReplaceString(awardText, "{{player}}", "Player1's");
                 awardText = TodReplaceString(awardText, "{{player_you}}", d->previewCurrentPlayer ? "you" : "Player1");
-                awardText = TodReplaceString(awardText, "{{player_your}}", d->previewCurrentPlayer ? "your" : "Player1's");
+                awardText = TodReplaceString(awardText, "{{player_your}}",
+                                             d->previewCurrentPlayer ? "your" : "Player1's");
                 awardText = TodReplaceString(awardText, "{{item}}", d->selected_item);
                 awardText = TodReplaceString(awardText, "{{game}}", d->mDialogueFile.gameName);
                 d->awardScreen->mFakeText = awardText;

@@ -94,31 +94,28 @@ void APDialogueClient::DownloadGameMeta(std::string gameName)
     if (d->gameMeta.contains(gameName) && std::ranges::find(d->requestedGames, gameName) == d->requestedGames.end())
     {
         d->requestedGames.push_back(gameName);
-        auto gameDef = d->gameMeta[gameName];
-        for (auto stringLocation : gameDef.strings)
+        DownloadDialogueFileCallback(gameName, [this, gameName](std::optional<DialogueFile> result)
         {
-            downloadJson(d->app, DIALOGUE_BASE_URL + stringLocation,
-                         [this, stringLocation, gameName](std::optional<nlohmann::json> result)
-                         {
-                             try
-                             {
-                                 if (result.has_value())
-                                 {
-                                     this->d->gameDialogue.insert_or_assign(
-                                         gameName, result.value().get<DialogueFile>());
-                                 }
-                                 else
-                                 {
-                                     std::cout << "APDialogueClient: Failed to download " << stringLocation << "\n";
-                                 }
-                             }
-                             catch (...)
-                             {
-                                std::cout << "APDialogueClient: Failed to parse " << stringLocation << "\n";
-                             }
-                         });
-        }
+            if (result.has_value())
+            {
+                this->d->gameDialogue.insert_or_assign(gameName, result.value());
+            }
+            else
+            {
+                std::cout << "APDialogueClient: Failed to download dialogue file for " << gameName << "\n";
+            }
+        }, std::stop_token());
     }
+}
+
+std::vector<std::string> APDialogueClient::AvailableGames()
+{
+    std::vector<std::string> games;
+    for (const auto game : d->gameMeta | std::views::keys)
+    {
+        games.push_back(game);
+    }
+    return games;
 }
 
 void replace(std::string& string, std::string from, std::string to)
@@ -136,7 +133,8 @@ void replace(std::string& string, std::string from, std::string to)
 }
 
 std::optional<std::string> APDialogueClient::GetDialogue(DialogueType type, std::string gameName,
-                                                         std::string itemName, std::string playerName, std::string playerYourName, std::string playerYouName)
+                                                         std::string itemName, std::string playerName,
+                                                         std::string playerYourName, std::string playerYouName)
 {
     if (!d->gameDialogue.contains(gameName))
     {
@@ -148,7 +146,7 @@ std::optional<std::string> APDialogueClient::GetDialogue(DialogueType type, std:
     {
         return std::nullopt;
     }
-    
+
     auto itemDialogue = dialogue.dialogue[itemName];
     std::string sourceDialogue;
     switch (type)
@@ -170,4 +168,44 @@ std::optional<std::string> APDialogueClient::GetDialogue(DialogueType type, std:
     replace(sourceDialogue, "{{item}}", itemName);
     replace(sourceDialogue, "{{game}}", gameName);
     return sourceDialogue;
+}
+
+void APDialogueClient::DownloadDialogueFileCallback(std::string gameName,
+                                                    std::function<void(std::optional<DialogueFile>)> callback,
+                                                    std::stop_token stop_token)
+{
+    if (d->gameMeta.contains(gameName))
+    {
+        auto gameDef = d->gameMeta[gameName];
+        for (auto stringLocation : gameDef.strings)
+        {
+            downloadJson(d->app, DIALOGUE_BASE_URL + stringLocation,
+                         [this, stop_token, callback](std::optional<nlohmann::json> result)
+                         {
+                             std::optional<DialogueFile> callback_arg;
+                             try
+                             {
+                                 if (result.has_value())
+                                 {
+                                     callback_arg = result.value().get<DialogueFile>();
+                                 }
+                             }
+                             catch (...)
+                             {
+                                 
+                             }
+                             if (!stop_token.stop_requested())
+                             {
+                                 callback(callback_arg);
+                             }
+                         });
+        }
+    }
+    else
+    {
+        if (!stop_token.stop_requested())
+        {
+            callback(std::nullopt);
+        }
+    }
 }
