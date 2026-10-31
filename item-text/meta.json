@@ -2,5 +2,5 @@
     "Plants vs. Zombies": {
         "strings": ["/item-text/plants-vs-zombies.json"],
         "matureGame": false
-    },
+    }
 }
