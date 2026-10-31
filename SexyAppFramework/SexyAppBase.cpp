@@ -329,6 +329,7 @@ SexyAppBase::SexyAppBase()
 	mIsPreviewSaver = false;
 	mPreviewHWnd = NULL;
 	mIsParticleEditor = false;
+	mIsDialogueEditor = false;
 	mIsTouch = false;
 	mResolutionMode = 0;
 	mEnableVsync = true;

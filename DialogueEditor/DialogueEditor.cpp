@@ -426,7 +426,7 @@ void DialogueEditor::ImGuiDraw()
         SendMessage(d->mApp->mHWnd, WM_CLOSE, NULL, NULL);
     }
     
-    d->previewCurrentPlayer = ImGui::IsKeyDown(ImGuiKey_LeftAlt) || ImGui::IsKeyDown(ImGuiKey_RightAlt);
+    d->previewCurrentPlayer = (ImGui::IsKeyDown(ImGuiKey_LeftAlt) || ImGui::IsKeyDown(ImGuiKey_RightAlt)) && (ImGui::IsKeyDown(ImGuiKey_LeftShift) || ImGui::IsKeyDown(ImGuiKey_RightShift));
 
     ImGui::Render();
 }
