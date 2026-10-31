@@ -45,6 +45,8 @@ public:
 	std::string							mFakePlayerName;
 	std::string							mFakeItemName;
 	std::string							mFakeText;
+	ListenerHandle*						apLocationSentListener;
+	ListenerHandle*						apItemReceivedListener;
 
 public:
 	// @Patoke: added argument
@@ -66,6 +68,7 @@ public:
 	// @Patoke: implement functions
 	void				DrawAchievements(Graphics* g);
 	void				AchievementsContinuePressed();
+	void                UpdateButtonVisibility();
 };
 
 #endif

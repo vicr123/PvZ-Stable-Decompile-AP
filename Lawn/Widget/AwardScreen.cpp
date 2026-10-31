@@ -157,68 +157,8 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool theShowin
 	mMenuButton->mParentWidget = this;
 	mMenuButton->Resize(677, 16, 111, 26);
 	mMenuButton->mTextOffsetY = 1;
-	if (!mApp->HasFinishedAdventure() && aLevel <= 3)
-	{
-		mMenuButton->mBtnNoDraw = true;
-		mMenuButton->mDisabled = true;
-	}
-
-	if (mAwardType == AWARD_CREDITS_ZOMBIENOTE)
-	{
-		mStartButton->SetLabel(_S("[ROLL_CREDITS]"));
-		mStartButton->mButtonImage = Sexy::IMAGE_CREDITS_PLAYBUTTON;
-		mStartButton->mOverImage = nullptr;
-		mStartButton->mDownImage = nullptr;
-		mStartButton->mDisabledImage = nullptr;
-		mStartButton->mOverOverlayImage = nullptr;
-		mStartButton->SetFont(Sexy::FONT_HOUSEOFTERROR20);
-		mStartButton->mColors[ButtonWidget::COLOR_LABEL] = Color(255, 255, 255);
-		mStartButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(213, 159, 43);
-		mStartButton->Resize(325, 505, 190, 73);
-		mStartButton->mTextOffsetX = 33;
-		mStartButton->mTextOffsetY = -2;
-		mStartButton->mButtonOffsetX = -2;
-		mStartButton->mButtonOffsetY = 8;
-		mStartButton->mParentWidget = this;
-	}
-	else if (mAwardType == AWARD_HELP_ZOMBIENOTE)
-	{
-		mStartButton->SetLabel(_S("[MAIN_MENU_BUTTON]"));
-		mMenuButton->mBtnNoDraw = true;
-		mMenuButton->mDisabled = true;
-	}
-	else if (!mApp->IsAdventureMode())
-	{
-		mStartButton->SetLabel(_S("[MAIN_MENU_BUTTON]"));
-		mMenuButton->mBtnNoDraw = true;
-		mMenuButton->mDisabled = true;
-	}
-	else if (mApp->HasFinishedAdventure()) // @Patoke: change case
-	{
-		ReportAchievement::GiveAchievement(mApp, AchievementId::HomeSecurity, false); // @Patoke: add achievement
-		mStartButton->SetLabel(_S("[CONTINUE_BUTTON]"));
-		mMenuButton->mBtnNoDraw = true;
-		mMenuButton->mDisabled = true;
-	}
-	else if (!mApp->IsLevelOpen(aLevel))
-	{
-		mStartButton->SetLabel(_S("[MAIN_MENU_BUTTON]"));
-		mMenuButton->mBtnNoDraw = true;
-		mMenuButton->mDisabled = true;
-	}
-	else
-	{
-		mStartButton->SetLabel(_S("[NEXT_LEVEL_BUTTON]"));
-	}
-
-	if (mApp->EarnedGoldTrophy()) 
-		ReportAchievement::GiveAchievement(mApp, AchievementId::NovelPeasPrize, false);
-
-	if (mApp->IsFirstTimeAdventureMode() && aLevel == 25 && mApp->IsTrialStageLocked() && !mApp->mPlayerInfo->mHasSeenUpsell)
-	{
-		mMenuButton->mBtnNoDraw = true;
-		mMenuButton->mDisabled = true;
-	}
+	
+	UpdateButtonVisibility();
 
 	// @Patoke: implemented
 	if (mShowingAchievements) {
@@ -244,6 +184,15 @@ AwardScreen::AwardScreen(LawnApp* theApp, AwardType theAwardType, bool theShowin
 			mApp->mMusic->MakeSureMusicIsPlaying(MUSIC_TUNE_ZEN_GARDEN);
 		}
 	}
+	
+	apLocationSentListener = mApp->mAP->AddItemsSentListener([this](const APItem&, const int&)
+	{
+		this->UpdateButtonVisibility();
+	});
+	apItemReceivedListener = mApp->mAP->AddItemsReceivedListener([this](const std::list<APItem>&)
+	{
+		this->UpdateButtonVisibility();
+	});
 }
 
 //0x406420 & 0x406440
@@ -252,6 +201,8 @@ AwardScreen::~AwardScreen()
 	if (mStartButton) delete mStartButton;
 	if (mContinueButton) delete mContinueButton; // @Patoke: add new button
 	if (mMenuButton) delete mMenuButton;
+	delete apLocationSentListener;
+	delete apItemReceivedListener;
 }
 
 bool AwardScreen::IsPaperNote()
@@ -640,5 +591,51 @@ void AwardScreen::AchievementsContinuePressed() {
 			mApp->KillAwardScreen();
 			mApp->ShowAwardScreen(AWARD_CREDITS_ZOMBIENOTE, level, false);
 		}
+	}
+}
+
+void AwardScreen::UpdateButtonVisibility()
+{
+	if (mAwardType == AWARD_CREDITS_ZOMBIENOTE)
+	{
+		mStartButton->SetLabel(_S("[ROLL_CREDITS]"));
+		mStartButton->mButtonImage = Sexy::IMAGE_CREDITS_PLAYBUTTON;
+		mStartButton->mOverImage = nullptr;
+		mStartButton->mDownImage = nullptr;
+		mStartButton->mDisabledImage = nullptr;
+		mStartButton->mOverOverlayImage = nullptr;
+		mStartButton->SetFont(Sexy::FONT_HOUSEOFTERROR20);
+		mStartButton->mColors[ButtonWidget::COLOR_LABEL] = Color(255, 255, 255);
+		mStartButton->mColors[ButtonWidget::COLOR_LABEL_HILITE] = Color(213, 159, 43);
+		mStartButton->Resize(325, 505, 190, 73);
+		mStartButton->mTextOffsetX = 33;
+		mStartButton->mTextOffsetY = -2;
+		mStartButton->mButtonOffsetX = -2;
+		mStartButton->mButtonOffsetY = 8;
+		mStartButton->mParentWidget = this;
+	}
+	else if (mAwardType == AWARD_HELP_ZOMBIENOTE)
+	{
+		mStartButton->SetLabel(_S("[MAIN_MENU_BUTTON]"));
+		mMenuButton->mBtnNoDraw = true;
+		mMenuButton->mDisabled = true;
+	}
+	else if (!mApp->IsAdventureMode())
+	{
+		mStartButton->SetLabel(_S("[MAIN_MENU_BUTTON]"));
+		mMenuButton->mBtnNoDraw = true;
+		mMenuButton->mDisabled = true;
+	}
+	else if (!mApp->IsLevelOpen(mLevel))
+	{
+		mStartButton->SetLabel(_S("[MAIN_MENU_BUTTON]"));
+		mMenuButton->mBtnNoDraw = true;
+		mMenuButton->mDisabled = true;
+	}
+	else
+	{
+		mStartButton->SetLabel(_S("[NEXT_LEVEL_BUTTON]"));
+		mMenuButton->mBtnNoDraw = false;
+		mMenuButton->mDisabled = false;
 	}
 }

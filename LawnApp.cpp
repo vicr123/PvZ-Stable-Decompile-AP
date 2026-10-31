@@ -1366,6 +1366,7 @@ void LawnApp::ShowAwardScreen(AwardType theAwardType, int level, bool theShowAch
 	mAwardScreen = new AwardScreen(this, theAwardType, theShowAchievements);
 	mAwardScreen->mLevel = level + 1;
 	mAwardScreen->Resize(0, 0, mWidth, mHeight);
+	mAwardScreen->UpdateButtonVisibility();
 	mWidgetManager->AddWidget(mAwardScreen);
 	mWidgetManager->BringToBack(mAwardScreen);
 	mWidgetManager->SetFocus(mAwardScreen);
