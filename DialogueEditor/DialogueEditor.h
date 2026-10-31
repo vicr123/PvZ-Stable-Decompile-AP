@@ -19,6 +19,7 @@ public:
     void GoDown();
     void GoLeft();
     void GoRight();
+    void GoNext();
     
     void TriggerOpenAction();
 
