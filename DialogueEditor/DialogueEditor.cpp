@@ -39,6 +39,9 @@ struct DialogueEditorPrivate
     DialogueFile mDialogueFile;
     std::vector<string> availableDialogue;
     std::string selected_item;
+    
+    std::string oldSelection;
+    APDialogueClient::DialogueType oldDialogType;
 
     std::string apHostPort;
     std::string apSlot;
@@ -143,47 +146,6 @@ void DialogueEditor::ImGuiDraw()
     ImGui::NewFrame();
 
     MenuBar();
-    
-    if (ImGui::Shortcut(ImGuiMod_Alt | ImGuiKey_DownArrow, ImGuiInputFlags_RouteGlobal))
-    {
-        GoDown();
-    }
-    else if (ImGui::Shortcut(ImGuiMod_Alt | ImGuiKey_UpArrow, ImGuiInputFlags_RouteGlobal))
-    {
-        GoUp();
-    }
-    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_LeftArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused | ImGuiInputFlags_RouteOverActive))
-    {
-        GoLeft();
-    }
-    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_RightArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused | ImGuiInputFlags_RouteOverActive))
-    {
-        GoRight();
-    }
-    else if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_Enter, ImGuiInputFlags_RouteGlobal))
-    {
-        if (d->dialogueType == APDialogueClient::DialogueType::AwardScreen)
-        {
-            d->dialogueType = APDialogueClient::DialogueType::CrazyDave;
-            GoDown();
-        }
-        else
-        {
-            GoRight();
-        }
-    }
-    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_O, ImGuiInputFlags_RouteGlobal))
-    {
-        TriggerOpenAction();
-    }
-    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_N, ImGuiInputFlags_RouteGlobal))
-    {
-        d->showArchipelagoPopup = true;
-    }
-    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_Q, ImGuiInputFlags_RouteGlobal))
-    {
-        SendMessage(d->mApp->mHWnd, WM_CLOSE, NULL, NULL);
-    }
 
     if (!d->availableDialogue.empty())
     {
@@ -270,9 +232,16 @@ void DialogueEditor::ImGuiDraw()
                 ImGui::SameLine();
                 if (ImGui::InputText("Text", text_buffer, 128))
                 {
-                    *text_source = text_buffer;
+                    if (d->oldSelection == d->selected_item && d->oldDialogType == d->dialogueType)
+                    {
+                        *text_source = text_buffer;
+                    }
                     d->saveJson();
                 }
+                
+                // Retain these so we don't overwrite a different string if they were changed
+                d->oldSelection = d->selected_item;
+                d->oldDialogType = d->dialogueType;
                 ImGui::PopItemWidth();
 
                 ImGui::Text("Remaining placeholders:");
@@ -426,6 +395,47 @@ void DialogueEditor::ImGuiDraw()
 
     DialogueEditorComponents::DialogueEditorGuide(&d->showGuide);
     
+    if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_DownArrow, ImGuiInputFlags_RouteGlobal))
+    {
+        GoDown();
+    }
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_UpArrow, ImGuiInputFlags_RouteGlobal))
+    {
+        GoUp();
+    }
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_LeftArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused | ImGuiInputFlags_RouteOverActive))
+    {
+        GoLeft();
+    }
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_RightArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused | ImGuiInputFlags_RouteOverActive))
+    {
+        GoRight();
+    }
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_Enter, ImGuiInputFlags_RouteGlobal))
+    {
+        if (d->dialogueType == APDialogueClient::DialogueType::AwardScreen)
+        {
+            d->dialogueType = APDialogueClient::DialogueType::CrazyDave;
+            GoDown();
+        }
+        else
+        {
+            GoRight();
+        }
+    }
+    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_O, ImGuiInputFlags_RouteGlobal))
+    {
+        TriggerOpenAction();
+    }
+    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_N, ImGuiInputFlags_RouteGlobal))
+    {
+        d->showArchipelagoPopup = true;
+    }
+    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_Q, ImGuiInputFlags_RouteGlobal))
+    {
+        SendMessage(d->mApp->mHWnd, WM_CLOSE, NULL, NULL);
+    }
+    
     d->previewCurrentPlayer = ImGui::IsKeyDown(ImGuiKey_LeftAlt) || ImGui::IsKeyDown(ImGuiKey_RightAlt);
 
     ImGui::Render();
@@ -534,7 +544,7 @@ void DialogueEditor::Update()
                 crazyDaveText = item.crazyDave + "{NO_CLICK}";
                 crazyDaveText = TodReplaceString(crazyDaveText, "{{player}}", "Player1");
                 crazyDaveText = TodReplaceString(crazyDaveText, "{{player_you}}", d->previewCurrentPlayer ? "you" : "Player1");
-                crazyDaveText = TodReplaceString(crazyDaveText, "{{player_your}}", d->previewCurrentPlayer ? "your" : "Player1");
+                crazyDaveText = TodReplaceString(crazyDaveText, "{{player_your}}", d->previewCurrentPlayer ? "your" : "Player1's");
                 crazyDaveText = TodReplaceString(crazyDaveText, "{{item}}", d->selected_item);
                 crazyDaveText = TodReplaceString(crazyDaveText, "{{game}}", d->mDialogueFile.gameName);
             }
@@ -547,7 +557,7 @@ void DialogueEditor::Update()
             {
                 std::string awardText = item.awardScreen;
                 awardText = TodReplaceString(awardText, "{{player}}", "Player1's");
-                awardText = TodReplaceString(awardText, "{{player_you}}", d->previewCurrentPlayer ? "you" : "Player1's");
+                awardText = TodReplaceString(awardText, "{{player_you}}", d->previewCurrentPlayer ? "you" : "Player1");
                 awardText = TodReplaceString(awardText, "{{player_your}}", d->previewCurrentPlayer ? "your" : "Player1's");
                 awardText = TodReplaceString(awardText, "{{item}}", d->selected_item);
                 awardText = TodReplaceString(awardText, "{{game}}", d->mDialogueFile.gameName);

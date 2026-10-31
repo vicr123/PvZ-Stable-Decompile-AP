@@ -291,7 +291,7 @@ void AwardScreen::DrawAwardSeed(Graphics* g)
 		auto gameName = mApp->mAP->PlayerGameName(item.player);
 		auto itemName = mApp->mAP->ItemName(item);
 		auto playerYouName = item.player == mApp->mAP->MySlot() ? "you" : playerName;
-		auto playerYourName = item.player == mApp->mAP->MySlot() ? "your" : playerName;
+		auto playerYourName = item.player == mApp->mAP->MySlot() ? "your" : playerName + "'s";
 		auto playerYourNameCap = item.player == mApp->mAP->MySlot() ? "Your" : playerName + "'s";
 		auto customDialogue = mApp->mAPDialogueClient->GetDialogue(APDialogueClient::DialogueType::AwardScreen, gameName, itemName, playerName, playerYourName, playerYouName);
 		if (customDialogue.has_value())
