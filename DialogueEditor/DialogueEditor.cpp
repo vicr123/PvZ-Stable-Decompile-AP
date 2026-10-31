@@ -484,11 +484,11 @@ void DialogueEditor::MenuBar()
             {
                 GoDown();
             }
-            if (ImGui::MenuItem("Previous Scene", "Alt+Left", false, !d->current_file.empty()))
+            if (ImGui::MenuItem("Previous Scene", "Alt+Left"))
             {
                 GoLeft();
             }
-            if (ImGui::MenuItem("Next Scene", "Alt+Right", false, !d->current_file.empty()))
+            if (ImGui::MenuItem("Next Scene", "Alt+Right"))
             {
                 GoRight();
             }

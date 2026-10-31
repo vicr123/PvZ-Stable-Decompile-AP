@@ -28,6 +28,7 @@ namespace DialogueEditorComponents
                 ImGui::TextWrapped("This guide is broken up into two parts:");
                 ImGui::Indent();
                 ImGui::TextWrapped("- The Style Guide outlines the requirements for the text that you submit");
+                ImGui::TextWrapped("- The Dialogue Editor contains information about how to use the Dialogue Editor.");
                 ImGui::TextWrapped("- Submitting Dialogue contains instructions on what to do once you have finished.");
                 ImGui::Unindent();
                 
@@ -59,6 +60,42 @@ namespace DialogueEditorComponents
                 ImGui::TextWrapped("- MAINTAIN THE TONE OF THE CHARACTER. Crazy Dave has an esoteric way of communication, and the submitted text should take this into account and emulate his tone and mannerisms.");
                 ImGui::Unindent();
                 ImGui::TextWrapped("In the event of a violation of the style guide, you may be contacted to provide an alternative string, or the submitted dialogue may be edited to conform to the style guide.");
+                
+                ImGui::Separator();
+                
+                ImGui::Text("D I A L O G U E   E D I T O R");
+                ImGui::Text("");
+                ImGui::TextWrapped("Dialogue for a game can be defined for each item, and each scene. Each different scenario where dialogue text for an item can appear is called a scene. The available scenes are");
+                ImGui::Indent();
+                ImGui::TextWrapped("- Crazy Dave");
+                ImGui::TextWrapped("- Award Screen");
+                ImGui::Unindent();
+                ImGui::TextWrapped("To create dialogue for a game that doesn't have any dialogue yet, generate an Archipelago multiworld and connect to it, following the instructions in File > Create File from Archipelago.");
+                ImGui::TextWrapped("Once the available items have been discovered, you will be asked to save the file somewhere. Pick a place to save the file, and then continue.");
+                ImGui::TextWrapped("You can also open a file from your disk by selecting File > Open Local File.");
+                ImGui::Text("");
+                ImGui::Text("AVAILABLE ITEMS DIALOG");
+                ImGui::TextWrapped("Once you have opened (or created) a file, the Available Items dialog will appear. This is where you can pick an item to provide dialogue for. Each item has a status indicator on the left, indicating for which scenes dialogue text exists.");
+                ImGui::TextWrapped("In the event that text does not exist, standard fallback text will be used instead.");
+                ImGui::Text("");
+                ImGui::Text("TEXT EDITOR DIALOG");
+                ImGui::TextWrapped("After selecting an item to edit, the Text Editor dialog will appear. This is where you can edit the dialogue text for the selected item and scene.");
+                ImGui::TextWrapped("After entering dialogue text, check the preview and ensure the text renders correctly.");
+                ImGui::TextWrapped("Placeholders are available to substitute in specific strings of text. The following placeholders are available:");
+                ImGui::Indent();
+                ImGui::TextWrapped("- {{player}} will be replaced with the name of the player the item is being sent to.");
+                ImGui::TextWrapped("- {{item}} will be replaced with the name of the item that is being sent.");
+                ImGui::TextWrapped("- {{game}} will be replaced with the name of the game that the item is being sent to.");
+                ImGui::Unindent();
+                ImGui::TextWrapped(R"(To use a placeholder, enter its name, surrounded by two braces. It will disappear from the "Remaining Placeholders" list, and an example will be reflected in the preview. You are not required to use every placeholder.)");
+                ImGui::TextWrapped("While you are editing dialogue, you can use some keyboard shortcuts to make editing faster:");
+                ImGui::Indent();
+                ImGui::TextWrapped("- CTRL+ENTER  Go to the next dialogue in sequence.");
+                ImGui::TextWrapped("- ALT+LEFT    Go to the previous scene.");
+                ImGui::TextWrapped("- ALT+RIGHT   Go to the next scene.");
+                ImGui::TextWrapped("- ALT+UP      Go to the previous item.");
+                ImGui::TextWrapped("- ALT+DOWN    Go to the next item.");
+                ImGui::Unindent();
                 
                 ImGui::Separator();
                 
