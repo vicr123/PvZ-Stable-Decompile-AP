@@ -277,7 +277,7 @@ void AwardScreen::DrawAwardSeed(Graphics* g)
 	
 	if (mInert)
 	{
-		DrawBottom(g, _S("You sent an item!"), std::format("{}'s {}", mFakePlayerName, mFakeItemName), mFakeText);
+		DrawBottom(g, _S("You sent an item!"), std::format("{} {}", mFakePlayerName, mFakeItemName), mFakeText);
 		aSeedType = SeedType::SEED_AP_OFFWORLD_ITEM;
 	}
 	else

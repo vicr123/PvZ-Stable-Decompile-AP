@@ -143,6 +143,47 @@ void DialogueEditor::ImGuiDraw()
     ImGui::NewFrame();
 
     MenuBar();
+    
+    if (ImGui::Shortcut(ImGuiMod_Alt | ImGuiKey_DownArrow, ImGuiInputFlags_RouteGlobal))
+    {
+        GoDown();
+    }
+    else if (ImGui::Shortcut(ImGuiMod_Alt | ImGuiKey_UpArrow, ImGuiInputFlags_RouteGlobal))
+    {
+        GoUp();
+    }
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_LeftArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused | ImGuiInputFlags_RouteOverActive))
+    {
+        GoLeft();
+    }
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Alt | ImGuiKey_RightArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused | ImGuiInputFlags_RouteOverActive))
+    {
+        GoRight();
+    }
+    else if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_Enter, ImGuiInputFlags_RouteGlobal))
+    {
+        if (d->dialogueType == APDialogueClient::DialogueType::AwardScreen)
+        {
+            d->dialogueType = APDialogueClient::DialogueType::CrazyDave;
+            GoDown();
+        }
+        else
+        {
+            GoRight();
+        }
+    }
+    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_O, ImGuiInputFlags_RouteGlobal))
+    {
+        TriggerOpenAction();
+    }
+    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_N, ImGuiInputFlags_RouteGlobal))
+    {
+        d->showArchipelagoPopup = true;
+    }
+    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_Q, ImGuiInputFlags_RouteGlobal))
+    {
+        SendMessage(d->mApp->mHWnd, WM_CLOSE, NULL, NULL);
+    }
 
     if (!d->availableDialogue.empty())
     {
@@ -385,48 +426,6 @@ void DialogueEditor::ImGuiDraw()
 
     DialogueEditorComponents::DialogueEditorGuide(&d->showGuide);
     
-    
-    if (ImGui::Shortcut(ImGuiMod_Alt | ImGuiKey_DownArrow, ImGuiInputFlags_RouteGlobal))
-    {
-        GoDown();
-    }
-    else if (ImGui::Shortcut(ImGuiMod_Alt | ImGuiKey_UpArrow, ImGuiInputFlags_RouteGlobal))
-    {
-        GoUp();
-    }
-    else if (ImGui::Shortcut(ImGuiMod_Alt | ImGuiKey_LeftArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused | ImGuiInputFlags_RouteOverActive))
-    {
-        GoLeft();
-    }
-    else if (ImGui::Shortcut(ImGuiMod_Alt | ImGuiKey_RightArrow, ImGuiInputFlags_RouteGlobal | ImGuiInputFlags_RouteOverFocused | ImGuiInputFlags_RouteOverActive))
-    {
-        GoRight();
-    }
-    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_Enter, ImGuiInputFlags_RouteGlobal))
-    {
-        if (d->dialogueType == APDialogueClient::DialogueType::AwardScreen)
-        {
-            d->dialogueType = APDialogueClient::DialogueType::CrazyDave;
-            GoDown();
-        }
-        else
-        {
-            GoRight();
-        }
-    }
-    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_O, ImGuiInputFlags_RouteGlobal))
-    {
-        TriggerOpenAction();
-    }
-    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_N, ImGuiInputFlags_RouteGlobal))
-    {
-        d->showArchipelagoPopup = true;
-    }
-    else if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_Q, ImGuiInputFlags_RouteGlobal))
-    {
-        SendMessage(d->mApp->mHWnd, WM_CLOSE, NULL, NULL);
-    }
-    
     d->previewCurrentPlayer = ImGui::IsKeyDown(ImGuiKey_LeftAlt) || ImGui::IsKeyDown(ImGuiKey_RightAlt);
 
     ImGui::Render();
@@ -453,6 +452,19 @@ void DialogueEditor::MenuBar()
             if (ImGui::MenuItem("Exit", "Ctrl+Q"))
             {
                 SendMessage(d->mApp->mHWnd, WM_CLOSE, NULL, NULL);
+            }
+            ImGui::EndMenu();
+        }
+        
+        if (ImGui::BeginMenu("View"))
+        {
+            if (ImGui::MenuItem("Crazy Dave", nullptr, d->dialogueType == APDialogueClient::DialogueType::CrazyDave))
+            {
+                d->dialogueType = APDialogueClient::DialogueType::CrazyDave;
+            }
+            if (ImGui::MenuItem("Award Screen", nullptr, d->dialogueType == APDialogueClient::DialogueType::AwardScreen))
+            {
+                d->dialogueType = APDialogueClient::DialogueType::AwardScreen;
             }
             ImGui::EndMenu();
         }
@@ -505,6 +517,9 @@ void DialogueEditor::Update()
     if (d->mApp->mCrazyDaveState != CrazyDaveState::CRAZY_DAVE_ENTERING && d->mApp->mCrazyDaveState !=
         CrazyDaveState::CRAZY_DAVE_OFF)
     {
+        d->awardScreen->mFakeItemName = d->selected_item;
+        d->awardScreen->mFakePlayerName = d->previewCurrentPlayer ? "Your" : "Player1's";
+        
         std::string crazyDaveText;
         if (d->mDialogueFile.dialogue.contains(d->selected_item))
         {
@@ -542,13 +557,13 @@ void DialogueEditor::Update()
         else
         {
             crazyDaveText = "Welcome to the Dialogue Editor!{NO_CLICK}";
+            d->awardScreen->mFakeText = "Welcome to the Dialogue Editor!";
+            d->awardScreen->mFakeItemName = "Item";
         }
         if (crazyDaveText != d->crazyDaveText)
         {
             d->storeScreen->SetBubbleText(crazyDaveText, 1, false);
         }
-        d->awardScreen->mFakeItemName = d->selected_item;
-        d->awardScreen->mFakePlayerName = d->previewCurrentPlayer ? "Your" : "Player1";
     }
 
     this->MarkDirty();
