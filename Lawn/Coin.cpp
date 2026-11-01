@@ -1118,7 +1118,7 @@ void Coin::TryAutoCollectAfterLevelAward()
         aCanBeAutoCollected = true;
     }
 
-    if (aCanBeAutoCollected)
+    if (aCanBeAutoCollected && !mIsBeingCollected)
     {
         PlayCollectSound();
         Collect();
