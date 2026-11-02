@@ -679,7 +679,7 @@ void DialogueEditor::Update()
             else
             {
                 std::string awardText = item.awardScreen;
-                awardText = TodReplaceString(awardText, "{{player}}", "Player1's");
+                awardText = TodReplaceString(awardText, "{{player}}", "Player1");
                 awardText = TodReplaceString(awardText, "{{player_you}}", d->previewCurrentPlayer ? "you" : "Player1");
                 awardText = TodReplaceString(awardText, "{{player_your}}",
                                              d->previewCurrentPlayer ? "your" : "Player1's");
