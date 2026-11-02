@@ -2,5 +2,9 @@
     "Plants vs. Zombies": {
         "strings": ["/item-text/plants-vs-zombies.json"],
         "matureGame": false
+    },
+    "Candy Box 2": {
+        "strings": ["/item-text/candy-box-2.json"],
+        "matureGame": false
     }
 }

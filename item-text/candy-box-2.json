@@ -1,0 +1,305 @@
+{
+    "dialogue": {
+        "100 Candies": {
+            "awardScreen": "What will {{player}} buy with this?",
+            "crazyDave": ""
+        },
+        "2 Pains au Chocolat": {
+            "awardScreen": "Used to upgrade player statistics",
+            "crazyDave": ""
+        },
+        "20 Candies": {
+            "awardScreen": "What will {{player}} buy with this?",
+            "crazyDave": ""
+        },
+        "3 Chocolate Bars": {
+            "awardScreen": "Used to enchant weapons at the Wishing Well",
+            "crazyDave": ""
+        },
+        "3 Lollipops": {
+            "awardScreen": "What will {{player}} buy with this?",
+            "crazyDave": ""
+        },
+        "4 Chocolate Bars": {
+            "awardScreen": "Used to enchant weapons at the Wishing Well",
+            "crazyDave": ""
+        },
+        "500 Candies": {
+            "awardScreen": "What will {{player}} buy with this?",
+            "crazyDave": ""
+        },
+        "A Stone": {
+            "awardScreen": "Placed in the Tower",
+            "crazyDave": ""
+        },
+        "Acid Rain Spell": {
+            "awardScreen": "When cast, causes rain to fall on enemies",
+            "crazyDave": ""
+        },
+        "Advanced Grimoire": {
+            "awardScreen": "Contains a pack of two useful spells that can be used in battle",
+            "crazyDave": ""
+        },
+        "Beginners' Grimoire": {
+            "awardScreen": "Contains a pack of two useful spells that can be used in battle",
+            "crazyDave": ""
+        },
+        "Black Demons Spell": {
+            "awardScreen": "When cast, spawns demons that attack everything on the playfield",
+            "crazyDave": ""
+        },
+        "Black Magic Grimoire": {
+            "awardScreen": "Contains a pack of three useful spells that can be used in battle",
+            "crazyDave": ""
+        },
+        "Boots of Introspection": {
+            "awardScreen": "Stops you from moving forward constantly",
+            "crazyDave": ""
+        },
+        "Candy": {
+            "awardScreen": "What will {{player}} buy with this?",
+            "crazyDave": ""
+        },
+        "Candy Merchant's Hat": {
+            "awardScreen": "Multiplies the candy reward from defeating enemies",
+            "crazyDave": ""
+        },
+        "Chocolate Bar": {
+            "awardScreen": "Used to enchant weapons at the Wishing Well",
+            "crazyDave": ""
+        },
+        "Desert Fortress Key": {
+            "awardScreen": "Opens the Desert Fortress",
+            "crazyDave": ""
+        },
+        "Desert bird feather": {
+            "awardScreen": "Allows you to jump higher",
+            "crazyDave": ""
+        },
+        "Enchanted Knight Body Armour": {
+            "awardScreen": "Heavy armour that defends you in battle, but cuts your attack power in half",
+            "crazyDave": ""
+        },
+        "Enchanted Monkey Wizard Staff": {
+            "awardScreen": "When equipped, casts spells that hone in on enemies",
+            "crazyDave": ""
+        },
+        "Erase Magic Spell": {
+            "awardScreen": "When cast, causes all magic on the battlefield to disappear",
+            "crazyDave": ""
+        },
+        "Fireball Spell": {
+            "awardScreen": "When cast, summons a fireball that flies forwards",
+            "crazyDave": ""
+        },
+        "Font Trap": {
+            "awardScreen": "Temporarily changes the font of the entire game",
+            "crazyDave": ""
+        },
+        "Giant Spoon": {
+            "awardScreen": "A slow but powerful weapon",
+            "crazyDave": ""
+        },
+        "Giant Spoon of Doom": {
+            "awardScreen": "A slow but powerful weapon",
+            "crazyDave": ""
+        },
+        "Green Fin": {
+            "awardScreen": "Multiplies lollipop farm production by 5",
+            "crazyDave": ""
+        },
+        "HP Bar": {
+            "awardScreen": "Allows you to see your HP",
+            "crazyDave": ""
+        },
+        "Heart Pendant": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Heart Plug": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Iron Axe": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Knight Body Armour": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "L Stone": {
+            "awardScreen": "Placed in the Tower",
+            "crazyDave": ""
+        },
+        "Leather Boots": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Leather Gloves": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Lightweight Body Armour": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Locked Candy Box": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Lollipop": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Monkey Wizard Staff": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Nothing (Weapon)": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Obsidian Wall Spell": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Octopus King Crown": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Octopus King Crown with Jaspers": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Octopus King Crown with Obsidian": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "P Stone": {
+            "awardScreen": "Placed in the Tower",
+            "crazyDave": ""
+        },
+        "Pain au Chocolat": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Pink Enchanted Gloves": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Pitchfork": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Pogo Stick": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Polished Silver Sword": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Progressive Grimoire": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Progressive Jump": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Progressive Weapon": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Progressive World Map": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Purple Fin": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Red Enchanted Gloves": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Red Fin": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Rocket Boots": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Scythe": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Shell Powder": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Sorceress' Cauldron": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Sorceress' Hat": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Sponge": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Summoning Tribal Spear": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Talking Candy": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Teleport Spell": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Third House Key": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Thorns Shield Spell": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Time Ring": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Tribal Spear": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Troll's Bludgeon": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Unicorn Horn": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Wooden Sword": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Xinopherydon Claw": {
+            "awardScreen": "",
+            "crazyDave": ""
+        },
+        "Y Stone": {
+            "awardScreen": "Placed in the Tower",
+            "crazyDave": ""
+        }
+    },
+    "gameName": "Candy Box 2"
+}
