@@ -906,6 +906,17 @@ void SeedChooserScreen::OnStartButton()
 			return;
 	}
 
+	if (mSeedsInBank < mBoard->mSeedBank->mNumPackets)
+	{
+		if (!DisplayRepickWarningDialog(_S("[SEED_CHOOSER_LESS_THAN_MAX]")))
+		{
+			return;
+		}
+	}
+
+	if (mSeedsInBank < mBoard->mSeedBank->mNumPackets)
+		mBoard->mSeedBank->mNumPackets = mSeedsInBank;
+
 	CloseSeedChooser();
 }
 
@@ -1064,7 +1075,7 @@ void SeedChooserScreen::ButtonDepress(int theId)
 			}
 		}
 		
-		if (mSeedsInBank == mBoard->mSeedBank->mNumPackets)
+		if (mSeedsInBank >= 1)
 			EnableStartButton(true);
 		
 		if (!removed_seeds.empty())
@@ -1162,7 +1173,8 @@ void SeedChooserScreen::ClickedSeedInBank(ChosenSeed& theChosenSeed)
 	mSeedsInBank--;
 	mSeedsInFlight++;
 	RemoveToolTip();
-	EnableStartButton(false);
+	if (mSeedsInBank < 1)
+		EnableStartButton(false);
 	mApp->PlaySample(Sexy::SOUND_TAP);
 }
 
@@ -1186,7 +1198,7 @@ void SeedChooserScreen::ClickedSeedInChooser(ChosenSeed& theChosenSeed)
 
 	RemoveToolTip();
 	mApp->PlaySample(Sexy::SOUND_TAP);
-	if (mSeedsInBank == mBoard->mSeedBank->mNumPackets)
+	if (mSeedsInBank <= mBoard->mSeedBank->mNumPackets && mSeedsInBank >= 1)
 		EnableStartButton(true);
 }
 
@@ -1471,7 +1483,7 @@ bool SeedChooserScreen::PickedPlantType(SeedType theSeedType)
 void SeedChooserScreen::CloseSeedChooser()
 {
 	DBG_ASSERT(mBoard->mSeedBank->mNumPackets == mBoard->GetNumSeedsInBank());
-	for (int anIndex = 0; anIndex < mBoard->mSeedBank->mNumPackets; anIndex++)
+	for (int anIndex = 0; anIndex < 10; anIndex++) //only changed to reset all seeds, since having the number of seeds at the number in the bank doesn't
 	{
 		SeedType aSeedType = FindSeedInBank(anIndex);
 		ChosenSeed& aChosenSeed = mChosenSeeds[aSeedType];
@@ -1535,7 +1547,7 @@ void SeedChooserScreen::UpdateAfterPurchase()
 		aChosenSeed.mEndX = aChosenSeed.mX;
 		aChosenSeed.mEndY = aChosenSeed.mY;
 	}
-	EnableStartButton(mSeedsInBank == mBoard->mSeedBank->mNumPackets);
+	EnableStartButton(mSeedsInBank >= 1);
 	UpdateImitaterButton();
 }
 
