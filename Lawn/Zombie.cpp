@@ -3854,8 +3854,8 @@ void Zombie::DropPole()
     if (mZombieType != ZombieType::ZOMBIE_POLEVAULTER)
         return;
 
-    //ReanimShowPrefix("Zombie_polevaulter_innerarm", RENDER_GROUP_HIDDEN);
-    //ReanimShowPrefix("Zombie_polevaulter_innerhand", RENDER_GROUP_HIDDEN);
+    ReanimShowPrefix("Zombie_polevaulter_innerarm", RENDER_GROUP_HIDDEN);
+    ReanimShowPrefix("Zombie_polevaulter_innerhand", RENDER_GROUP_HIDDEN);
     ReanimShowPrefix("Zombie_polevaulter_pole", RENDER_GROUP_HIDDEN);
 
     mZombiePhase = ZombiePhase::PHASE_POLEVAULTER_POST_VAULT;
