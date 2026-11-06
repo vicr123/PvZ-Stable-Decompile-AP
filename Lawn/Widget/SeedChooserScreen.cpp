@@ -908,7 +908,7 @@ void SeedChooserScreen::OnStartButton()
 
 	if (mSeedsInBank < mBoard->mSeedBank->mNumPackets)
 	{
-		if (!DisplayRepickWarningDialog(_S("[SEED_CHOOSER_LESS_THAN_MAX]")))
+		if (!DisplayRepickWarningDialog(_S("You haven't filled out all of your seed slots, are you sure you want to continue?")))//[SEED_CHOOSER_LESS_THAN_MAX] don't know how to edit the strings in my own :< vicr if you can please do
 		{
 			return;
 		}
