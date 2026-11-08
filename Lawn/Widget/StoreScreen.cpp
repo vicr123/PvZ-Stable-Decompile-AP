@@ -816,7 +816,7 @@ void StoreScreen::Draw(Graphics* g)
     g->DrawImage(Sexy::IMAGE_COINBANK, STORESCREEN_COINBANK_X - mX, STORESCREEN_COINBANK_Y);
     g->SetColor(Color(180, 255, 90));
     g->SetFont(Sexy::FONT_CONTINUUMBOLD14);
-    SexyString aCoinLabel = mApp->GetMoneyString(mApp->mPlayerInfo->mCoins);
+    SexyString aCoinLabel = this->mInert ? mApp->GetMoneyString(500) : mApp->GetMoneyString(mApp->mPlayerInfo->mCoins);
     g->DrawString(
         aCoinLabel, STORESCREEN_COINBANK_X - mX + 7 + 111 - Sexy::FONT_CONTINUUMBOLD14->StringWidth(aCoinLabel),
         STORESCREEN_COINBANK_Y + 24);
